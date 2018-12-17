@@ -1,0 +1,225 @@
+import sys
+import io
+import os
+import random
+import json
+import csv
+import requests
+from Crypto.Cipher import AES
+from elasticsearch import Elasticsearch
+from flask import Flask, request
+from flask_cors import *
+import time
+from base64 import b64encode
+
+datapath = '/home/ubuntu/data/xingnanzhuli/data'
+os.chdir(datapath)
+app = Flask(__name__)
+CORS(app, supports_credentials=True)
+es = [Elasticsearch([{"host": "123.207.27.168", "port": 9218, "timeout": 3600}]),
+Elasticsearch([{"host": "119.29.67.239", "port": 9218, "timeout": 3600}]),
+Elasticsearch([{"host": "139.199.192.34", "port": 9218, "timeout": 3600}]),
+Elasticsearch([{"host": "119.29.147.239", "port": 9218, "timeout": 3600}]),
+Elasticsearch([{"host": "132.232.16.50", "port": 9218, "timeout": 3600}]),
+Elasticsearch([{"host": "123.207.45.250", "port": 9218, "timeout": 3600}])]
+appid = 'wx6e2807f3bb07c07e'
+secret = 'c08b116bb87bef6db62ab60d7c5478a8'
+userKeyWordHisList = {}
+key = "pangyuming920318"
+iv = "abcdefabcdefabcd"
+BLOCK_SIZE = 16
+pad = lambda s: s + (BLOCK_SIZE - len(s) % BLOCK_SIZE) * bytes(chr(BLOCK_SIZE - len(s) % BLOCK_SIZE), encoding='utf8')
+unpad = lambda s: s[0:-ord(s[-1])]
+userdata = {}
+whitelist = {}
+
+
+def getTime():
+    struct_time = time.localtime(time.time())
+    return str(struct_time[0]) + '-' + str(struct_time[1]) + '-' + str(struct_time[2]) + ' ' + str(
+        struct_time[3]) + ':' + str(struct_time[
+                                        4]) + ':' + str(struct_time[5])
+
+
+def check_user(userid):
+    if userid in whitelist:
+        return 1
+    timelist = time.asctime().split()
+    strtime = timelist[1] + timelist[2] + timelist[4]
+    if userid not in userdata:
+        userdata[userid] = {'num': 2900, 'time': strtime}
+        return 1
+    if userdata[userid]['time'] != strtime:
+        userdata[userid] = {'num': 2900, 'time': strtime}
+        return 1
+    if userdata[userid]['num'] > 0:
+        userdata[userid]['num'] -= 1
+        return 1
+    return 0
+
+
+def encrypt(encrypting):
+    encrypting = bytes(encrypting, encoding='utf8')
+    aes = AES.new(key, AES.MODE_CBC, iv)
+    return b64encode(aes.encrypt(pad(encrypting)))
+
+
+def decrypt(encrypted):
+    aes = AES.new(key, AES.MODE_CBC, iv)
+    decrypted = aes.decrypt(bytes.fromhex(str(encrypted)[2:-1])).decode('utf8')
+    return unpad(decrypted)
+
+
+def addKeyword(params):
+    openid = params['openid']
+    inputValue = params['query']
+    f = open('query.csv', 'a+', newline='')
+    ff = csv.writer(f)
+    ff.writerow([openid, inputValue, getTime(), '0'])
+    f.close()
+    if openid in userKeyWordHisList:
+        if len(userKeyWordHisList[openid]) == 0 or inputValue != userKeyWordHisList[openid][0]:
+            flag = 1
+            for index, value in enumerate(userKeyWordHisList[openid]):
+                if inputValue == value:
+                    flag = 0
+                    userKeyWordHisList[openid] = [inputValue] + userKeyWordHisList[openid][:index] + userKeyWordHisList[
+                                                                                                         openid][
+                                                                                                     index + 1:]
+            if flag:
+                userKeyWordHisList[openid] = [inputValue] + userKeyWordHisList[openid]
+                userKeyWordHisList[openid] = userKeyWordHisList[openid][:12]
+    else:
+        userKeyWordHisList[openid] = [inputValue]
+
+
+@app.route("/getSearch", methods=["POST"])
+def getSearch():
+    try:
+        params = json.loads(decrypt(request.stream.read()))
+        openid = params['openid']
+        query = params['query']
+    except Exception as e:
+        print(e)
+        return json.dumps({'MSG': '警告！非法入侵！！！'})
+    if check_user(openid) == 0:
+        return encrypt(json.dumps({'MSG': 'LIMIT'}))
+    addKeyword(params)
+    retdata = {}
+    huashu = []
+    huashu_search = {'query': {'match': {'MM': query}}}
+    while 1:
+        index=random.randint(0,5)
+        try:
+            es[index].info()
+            break
+        except:
+            None
+    huashuDoc = es[index].search(index='huashu', doc_type='huashu', body=huashu_search, size=30)
+    huashuDoc = huashuDoc['hits']['hits']
+    for doc in huashuDoc:
+        huashu.append(doc['_source'])
+    guanli = []
+    guanli_search = {'query': {'match': {'title': query}}}
+    guanliDoc = es[index].search(index='guanli', doc_type='guanli', body=guanli_search, size=30)
+    guanliDoc = guanliDoc['hits']['hits']
+    for doc in guanliDoc:
+        guanli.append(doc['_source'])
+    biaoqing = []
+    biaoqing_search = {'query': {'match': {'imgExplain': query}}}
+    biaoqingDoc = es[index].search(index='biaoqing', doc_type='biaoqing', body=biaoqing_search, size=30)
+    biaoqingDoc = biaoqingDoc['hits']['hits']
+    for doc in biaoqingDoc:
+        biaoqing.append(doc['_source']['path'])
+    retdata['huashuList'] = huashu
+    retdata['guanliList'] = guanli
+    retdata['biaoqingList'] = biaoqing
+    return encrypt(json.dumps({'MSG': 'OK', 'data': retdata}))
+
+
+@app.route("/getMethodologyList", methods=["POST"])
+def getMethodologyList():
+    try:
+        params = json.loads(decrypt(request.stream.read()))
+        openid = params['openid']
+        cid = params['cid']
+    except Exception as e:
+        print(e)
+        return json.dumps({'MSG': '警告！非法入侵！！！'})
+    f = open('query.csv', 'a+', newline='')
+    ff = csv.writer(f)
+    ff.writerow([openid, cid, getTime(), '1'])
+    f.close()
+    retdata = []
+    laosan_search = {'query': {'bool': {'filter': {"term": {'cid': cid}}}}}
+    while 1:
+        index=random.randint(0,5)
+        try:
+            es[index].info()
+            break
+        except:
+            None
+    laosanDoc = es[index].search(index='laosan', doc_type='laosan', body=laosan_search, size=30)
+    laosanDoc = laosanDoc['hits']['hits']
+    for doc in laosanDoc:
+        retdata.append(doc['_source'])
+    return encrypt(json.dumps({'MSG': 'OK', 'data': retdata}))
+
+
+@app.route("/getOpenid", methods=["POST"])
+def getOpenid():
+    try:
+        params = json.loads(decrypt(request.stream.read()))
+        js_code = params['jsCode']
+    except Exception as e:
+        print(e)
+        return json.dumps({'MSG': '警告！非法入侵！！！'})
+    url = 'https://api.weixin.qq.com/sns/jscode2session?appid=' + appid + '&secret=' + secret + '&js_code=' + js_code + '&grant_type=authorization_code'
+    response = requests.get(url)
+    response = response.json()
+    return encrypt(json.dumps({'MSG': 'OK', 'data': {'openid': response['openid']}}))
+
+
+@app.route("/getHiswordList", methods=["POST"])
+def getHiswordList():
+    try:
+        params = json.loads(decrypt(request.stream.read()))
+        openid = params['openid']
+    except Exception as e:
+        print(e)
+        return json.dumps({'MSG': '警告！非法入侵！！！'})
+    if openid in userKeyWordHisList:
+        return encrypt(json.dumps({'MSG': 'OK', 'data': userKeyWordHisList[openid]}))
+    else:
+        userKeyWordHisList[openid] = []
+        return encrypt(json.dumps({'MSG': 'OK', 'data': []}))
+
+
+@app.route("/clearHiswords", methods=["POST"])
+def clearHiswords():
+    try:
+        params = json.loads(decrypt(request.stream.read()))
+        openid = params['openid']
+    except Exception as e:
+        print(e)
+        return json.dumps({'MSG': '警告！非法入侵！！！'})
+    userKeyWordHisList[openid] = []
+    return encrypt(json.dumps({'MSG': 'OK'}))
+
+
+@app.route("/getRecommend", methods=["POST"])
+def getRecommend():
+    try:
+        params = json.loads(decrypt(request.stream.read()))
+        openid = params['openid']
+    except Exception as e:
+        print(e)
+        return json.dumps({'MSG': '警告！非法入侵！！！'})
+    hotWords = ['自恋', '厉害', '睡觉', '生气', '干嘛', '烦', '哈哈', '好吧', '介绍', '丑', '表白', '呵呵']
+    hotMethods = ['开场白', '赞美', '拉升关系', '高价值展示', '幽默搞笑', '冷读', '推拉', '角色扮演', '框架', '打压', '进挪', '背景植入']
+    return encrypt(json.dumps({'MSG': 'OK', 'data': {'hotWordsList': hotWords, 'hotMethodsList': hotMethods}}))
+
+
+if __name__ == "__main__":
+    app.run(host='0.0.0.0', port=443, threaded=True, processes=1,
+            ssl_context=('1_www.lianaizhuli.com_bundle.crt', '2_www.lianaizhuli.com.key'))
