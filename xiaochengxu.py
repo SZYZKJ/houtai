@@ -27,7 +27,7 @@ os.chdir(datapath)
 app = Flask(__name__)
 CORS(app, supports_credentials=True)
 es = Elasticsearch([{"host": "182.254.227.188", "port": 9218, "timeout": 3600}])
-escopy = Elasticsearch([{"host": "123.207.27.168", "port": 9218, "timeout": 3600}])
+escopy = Elasticsearch([{"host": "119.29.67.239", "port": 9218, "timeout": 3600}])
 appid = 'wxa9ef833cef143ce1'
 secret = '574ba86bc66b664ab42e4d60276afb7c'
 mch_id = '1519367291'
@@ -47,6 +47,10 @@ sijiaotime = [0, 0, 0, 0, 7776000, 31536000, 3153600000]
 total_fees = [0, 100, 2900, 19900, 99900, 299900, 499900]
 wenzhang = ['恋爱', '挽回', '形象', '搭讪', '聊天', '约会', '异地', '相亲']
 ganhuo = ['套路', '搭讪', '电影', '干货']
+tuweiqinghua = []
+for line in open('tuweiqinghua.json'):
+    line = json.loads(line)
+    tuweiqinghua.append(line['chatId'])
 islianmeng = 1
 issystem = 1
 
@@ -112,8 +116,10 @@ def check_user(openid, isjianshao):
         if doc['tiyancishu'] > 0:
             doc['tiyancishu'] -= 1
             es.index(index='userinfo', doc_type='userinfo', id=openid, body=doc)
+            escopy.index(index='userinfo', doc_type='userinfo', id=openid, body=doc)
             return 2
         es.index(index='userinfo', doc_type='userinfo', id=openid, body=doc)
+        escopy.index(index='userinfo', doc_type='userinfo', id=openid, body=doc)
     return 0
 
 
@@ -181,7 +187,7 @@ def getOpenid():
         escopy.index(index='userinfo', doc_type='userinfo', id=userInfo['openid'], body=newdoc)
     except Exception as e:
         print(e)
-        userInfo['addtime']= time.strftime("%Y%m%d", time.localtime())
+        userInfo['addtime'] = time.strftime("%Y%m%d", time.localtime())
         userInfo['tiyancishu'] = tiyancishu
         userInfo['vipdengji'] = 0
         userInfo['viptime'] = 0
@@ -488,7 +494,7 @@ def searchWenzhangList():
     except Exception as e:
         print(e)
         return json.dumps({'MSG': '警告！非法入侵！！！'})
-    adduserhis({'openid': openid, 'time': getTime(), 'event': 'getWenzhangList', 'detail': query, 'type': '0'})
+    adduserhis({'openid': openid, 'time': getTime(), 'event': 'searchWenzhangList', 'detail': query, 'type': '0'})
     retdata = []
     search = {'query': {'match': {'title': query}}}
     if scroll:
@@ -532,6 +538,49 @@ def searchGanhuoList():
     for doc in Docs:
         retdata.append(doc['_source'])
     return encrypt(json.dumps({'MSG': 'OK', 'data': retdata, 'scroll': scroll}))
+
+
+@app.route("/api/getTuweiqinghuaList", methods=["POST"])
+def getTuweiqinghuaList():
+    try:
+        params = json.loads(decrypt(request.stream.read()))
+        openid = params['openid']
+        scroll = params['scroll']
+    except Exception as e:
+        print(e)
+        return json.dumps({'MSG': '警告！非法入侵！！！'})
+    adduserhis({'openid': openid, 'time': getTime(), 'event': 'getTuweiqinghuaList', 'detail': 'getTuweiqinghuaList',
+                'type': '0'})
+    retdata = []
+    search = {"query": {"match_all": {}}}
+    if scroll:
+        try:
+            Docs = es.scroll(scroll_id=scroll, scroll="5m")
+        except:
+            Docs = es.search(index='tuweiqinghua', doc_type='tuweiqinghua', body=search, size=10, scroll="5m")
+
+    else:
+        Docs = es.search(index='tuweiqinghua', doc_type='tuweiqinghua', body=search, size=10, scroll="5m")
+    scroll = Docs['_scroll_id']
+    Docs = Docs['hits']['hits']
+    for doc in Docs:
+        retdata.append(doc['_source'])
+    return encrypt(json.dumps({'MSG': 'OK', 'data': retdata, 'scroll': scroll}))
+
+
+@app.route("/api/getTuweiqinghua", methods=["POST"])
+def getTuweiqinghua():
+    try:
+        params = json.loads(decrypt(request.stream.read()))
+        openid = params['openid']
+    except Exception as e:
+        print(e)
+        return json.dumps({'MSG': '警告！非法入侵！！！'})
+    adduserhis(
+        {'openid': openid, 'time': getTime(), 'event': 'getTuweiqinghua', 'detail': 'getTuweiqinghua', 'type': '0'})
+    tuweiqinghuaid = tuweiqinghua[random.randint(0, len(tuweiqinghua) - 1)]
+    doc = es.get(index='tuweiqinghua', doc_type='tuweiqinghua', id=tuweiqinghuaid)
+    return encrypt(json.dumps({'MSG': 'OK', 'data': doc['_source']}))
 
 
 @app.route("/api/getPhoneNumber", methods=["POST"])
@@ -646,9 +695,9 @@ def paynotify():
         print(e)
     if isnew or (isnew == 0 and flag == 1):
         es.index(index='userzhifu', doc_type='userzhifu', id=zhifures['openid'],
-                 body={'openid': zhifures['openid'], 'zhifudata': zhifudata})
+                 body={'openid': zhifures['openid'], 'zhifudata': zhifudata, 'updatatime': zhifures['time_end']})
         escopy.index(index='userzhifu', doc_type='userzhifu', id=zhifures['openid'],
-                     body={'openid': zhifures['openid'], 'zhifudata': zhifudata})
+                     body={'openid': zhifures['openid'], 'zhifudata': zhifudata, 'updatatime': zhifures['time_end']})
         try:
             zhifutype = int(json.loads(zhifures['attach'])['zhifutype'])
             doc = es.get(index='userinfo', doc_type='userinfo', id=zhifures['openid'])
@@ -745,9 +794,9 @@ def getIslianmeng():
     doc = es.get(index='userinfo', doc_type='userinfo', id=openid)
     doc = doc['_source']
     if doc['system'][:3].lower() == 'ios':
-        return encrypt(json.dumps({'MSG': 'OK', 'issystem': issystem, 'data': islianmeng}))
+        return encrypt(json.dumps({'MSG': 'OK', 'issystem': issystem, 'islianmeng': islianmeng, 'data': islianmeng}))
     else:
-        return encrypt(json.dumps({'MSG': 'OK', 'issystem': 1, 'data': islianmeng}))
+        return encrypt(json.dumps({'MSG': 'OK', 'issystem': 1, 'islianmeng': islianmeng, 'data': islianmeng}))
 
 
 @app.route("/api/setJilu", methods=["POST"])
@@ -780,15 +829,18 @@ def getAdList():
     adduserhis({'openid': openid, 'time': getTime(), 'event': 'getAdList', 'detail': 'getAdList',
                 'type': '0'})
     return encrypt(json.dumps({'MSG': 'OK', 'data': [
-        {'title': '小程序使用介绍', 'adurl': 'cloud://lianailianmeng-086596.6c69-lianailianmeng-086596/shouye/shiyongjieshaobanner.jpg',
-         'type': 'ganhuo', 'url': 'cloud://lianailianmeng-086596.6c69-lianailianmeng-086596/shouye/shiyongjieshao.mp4','duration':'04:04','direction':'0'}
-        , {'title': '恋爱有方法，脱单找联盟', 'adurl': 'cloud://lianailianmeng-086596.6c69-lianailianmeng-086596/shouye/gongxinhuashubanner.jpg',
+        {'title': '圣诞节快乐😄', 'adurl': 'https://www.lianaizhuli.com/shouye/flag.jpg',
+         'type': 'html', 'url': 'https://mp.weixin.qq.com/s/gqGKWk_MfTJ35zCdNBli6w'},
+        {'title': '聊天有方法，恋爱找联盟', 'adurl': 'https://www.lianaizhuli.com/shouye/tuweiqinghua1.jpg',
+         'type': 'html', 'url': 'https://mp.weixin.qq.com/s/1ImUQv67m7bQBuc7Rr1KPA'},
+        {'title': '小程序使用介绍', 'adurl': 'https://www.lianaizhuli.com/shouye/shiyongjieshaobanner.jpg',
+         'type': 'ganhuo', 'url': 'cloud://lianailianmeng-086596.6c69-lianailianmeng-086596/shouye/shiyongjieshao.mp4',
+         'duration': '04:04', 'direction': '0'}
+        , {'title': '恋爱有方法，脱单找联盟', 'adurl': 'https://www.lianaizhuli.com/shouye/gongxinhuashubanner.jpg',
            'type': 'image', 'url': 'cloud://lianailianmeng-086596.6c69-lianailianmeng-086596/shouye/gongxinhuashu.jpg'}
-        , {'title': '聊天有方法，恋爱找联盟', 'adurl': 'cloud://lianailianmeng-086596.6c69-lianailianmeng-086596/shouye/chuandanbanner.jpg',
-           'type': 'image', 'url': 'cloud://lianailianmeng-086596.6c69-lianailianmeng-086596/shouye/chuandan.jpg'}
         , {'title': '恋爱联盟招聘',
-           'adurl': 'cloud://lianailianmeng-086596.6c69-lianailianmeng-086596/shouye/zhaopinbanner.jpg',
-           'type': 'image', 'url': 'cloud://lianailianmeng-086596.6c69-lianailianmeng-086596/shouye/zhaopin.jpg'}
+           'adurl': 'https://www.lianaizhuli.com/shouye/zhaopinbanner.jpg',
+           'type': 'image', 'url': 'cloud://lianailianmeng-086596.6c69-lianailianmeng-086596/shouye/zhaopin1.jpg'}
     ]}))
 
 

@@ -19,34 +19,30 @@ class Lianaizhuli_ES:
         # self.es.indices.delete(index='guanli')
         # self.es.indices.delete(index='methodology')
         # self.es.indices.delete(index='wenzhang')
-        self.es.indices.delete(index='ganhuo')
+        # self.es.indices.delete(index='ganhuo')
         # self.es.indices.delete(index='kecheng')
         # self.es.indices.delete(index='biaoqing')
+        # self.es.indices.delete(index='tuweiqinghua')
         # self.es.indices.delete(index='userhis')
         # self.es.indices.delete(index='userinfo')
         # self.es.indices.delete(index='userzhifu')
-        if self.es.indices.exists(index='ganhuo') is not True:
+        if self.es.indices.exists(index='biaoqing') is not True:
             lianaizhuli_index = {
                 "settings": {
                     "number_of_shards": 1,
                     "number_of_replicas": 1,
-                    "analysis": {
-                        "analyzer": {
-                            "charSplit": {
-                                "type": "custom",
-                                "tokenizer": "ngram_tokenizer"
-                            }
-                        },
-                        "tokenizer": {
-                            "ngram_tokenizer": {
-                                "type": "nGram",
-                                "min_gram": "1",
-                                "max_gram": "1",
-                                "token_chars": [
-                                    "letter",
-                                    "digit",
-                                    "punctuation"
-                                ]
+                },
+                "properties": {
+                    "title": {
+                        "type": "text",
+                        "fields": {
+                            "cn": {
+                                "type": "text",
+                                "analyzer": "ik_smart"
+                            },
+                            "en": {
+                                "type": "text",
+                                "analyzer": "english"
                             }
                         }
                     }
@@ -60,12 +56,14 @@ class Lianaizhuli_ES:
             # print(ret_methodology)
             # ret_wenzhang = self.es.indices.create(index='wenzhang', body=lianaizhuli_index, ignore=400)
             # print(ret_wenzhang)
-            ret_ganhuo = self.es.indices.create(index='ganhuo', body=lianaizhuli_index, ignore=400)
-            print(ret_ganhuo)
+            # ret_ganhuo = self.es.indices.create(index='ganhuo', body=lianaizhuli_index, ignore=400)
+            # print(ret_ganhuo)
             # ret_kecheng = self.es.indices.create(index='kecheng', body=lianaizhuli_index, ignore=400)
             # print(ret_kecheng)
             # ret_biaoqing = self.es.indices.create(index='biaoqing', body=lianaizhuli_index, ignore=400)
             # print(ret_biaoqing)
+            # ret_tuweiqinghua = self.es.indices.create(index='tuweiqinghua', body=lianaizhuli_index, ignore=400)
+            # print(ret_tuweiqinghua)
             # ret_userhis = self.es.indices.create(index='userhis', body=lianaizhuli_index, ignore=400)
             # print(ret_userhis)
             # ret_userinfo = self.es.indices.create(index='userinfo', body=lianaizhuli_index, ignore=400)
@@ -124,18 +122,18 @@ class Lianaizhuli_ES:
             # while len(actions):
             #     helpers.bulk(self.es, actions[:blocklen])
             #     actions = actions[blocklen:]
-            with open('ganhuo.json', 'r') as f:
-                for line in f:
-                    item = json.loads(line.strip())
-                    action = {
-                        "_index": "ganhuo",
-                        "_type": "ganhuo",
-                        "_source": item
-                    }
-                    actions.append(action)
-            while len(actions):
-                helpers.bulk(self.es, actions[:blocklen])
-                actions = actions[blocklen:]
+            # with open('ganhuo.json', 'r') as f:
+            #     for line in f:
+            #         item = json.loads(line.strip())
+            #         action = {
+            #             "_index": "ganhuo",
+            #             "_type": "ganhuo",
+            #             "_source": item
+            #         }
+            #         actions.append(action)
+            # while len(actions):
+            #     helpers.bulk(self.es, actions[:blocklen])
+            #     actions = actions[blocklen:]
             # with open('kecheng.json', 'r') as f:
             #     for line in f:
             #         item = json.loads(line.strip())
@@ -158,6 +156,20 @@ class Lianaizhuli_ES:
             #             "_source": item
             #         }
             #         actions.append(action)
+            # while len(actions):
+            #     helpers.bulk(self.es, actions[:blocklen])
+            #     actions = actions[blocklen:]
+            # with open('tuweiqinghua.json', 'r') as f:
+            #     for line in f:
+            #         item = json.loads(line.strip())
+            #         action = {
+            #             "_index": "tuweiqinghua",
+            #             "_type": "tuweiqinghua",
+            #             "_source": item,
+            #             '_id':item['chatId']
+            #         }
+            #         actions.append(action)
+            # random.shuffle(actions)
             # while len(actions):
             #     helpers.bulk(self.es, actions[:blocklen])
             #     actions = actions[blocklen:]
