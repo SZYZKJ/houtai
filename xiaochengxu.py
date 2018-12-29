@@ -713,7 +713,7 @@ def paynotify():
             else:
                 newdoc['sijiaotime'] += sijiaotime[zhifutype]
             newdoc['xiaofeicishu'] += 1
-            newdoc['xiaofeizonge'] += int(zhifures['cash_fee'])
+            newdoc['xiaofeizonge'] += int(zhifures['total_fee'])
             es.index(index='userinfo', doc_type='userinfo', id=zhifures['openid'], body=newdoc)
             escopy.index(index='userinfo', doc_type='userinfo', id=zhifures['openid'], body=newdoc)
         except Exception as e:
