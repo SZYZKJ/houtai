@@ -103,16 +103,13 @@ def lianaizhuli():
         timestamp = request.args.get('timestamp')
         nonce = request.args.get('nonce')
         echostr = request.args.get('echostr')
-        # print(echostr)
-        return echostr
         data = [token, timestamp, nonce]
         data.sort()
-        sha1 = hashlib.sha1()
-        map(sha1.update, data)
+        newstring=data[0]+data[1]+data[2]
+        sha1=hashlib.sha1()
+        sha1.update(newstring.encode())
         hashcode = sha1.hexdigest()
         if hashcode == signature:
-            return echostr
-        else:
             return echostr
     elif request.method == 'POST':
         rec_xml = request.stream.read()

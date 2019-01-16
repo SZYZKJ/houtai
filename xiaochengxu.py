@@ -45,14 +45,17 @@ vipdengji = [0, 1, 2, 3, 4, 5, 6]
 viptime = [0, 259200, 2592000, 31536000, 31536000, 3153600000, 3153600000]
 sijiaotime = [0, 0, 0, 0, 7776000, 31536000, 3153600000]
 total_fees = [0, 100, 2900, 19900, 99900, 299900, 499900]
+# viptime = [0, 60, 60, 60, 60, 60, 60]
+# sijiaotime = [0, 0, 0, 0, 60, 60, 60]
+# total_fees = [0, 1, 2, 3, 4, 5, 6]
 wenzhang = ['恋爱', '挽回', '形象', '搭讪', '聊天', '约会', '异地', '相亲']
 ganhuo = ['套路', '搭讪', '电影', '干货']
 tuweiqinghua = []
 for line in open('tuweiqinghua.json'):
     line = json.loads(line)
     tuweiqinghua.append(line['chatId'])
-islianmeng = 1
-issystem = 1
+islianmeng = 0
+issystem = 0
 
 
 def dict_to_xml(dict_data):
@@ -208,11 +211,18 @@ def checkOpenid():
     try:
         params = json.loads(decrypt(request.stream.read()))
         openid = params['openid']
+        userInfo = params['userInfo']
+        system = params['system']
     except Exception as e:
         print(e)
         return encrypt(json.dumps({'MSG': 'NO'}))
     try:
-        es.get(index='userinfo', doc_type='userinfo', id=openid)
+        doc = es.get(index='userinfo', doc_type='userinfo', id=openid)
+        newdoc = doc['_source']
+        newdoc.update(userInfo)
+        newdoc['system'] = system
+        es.index(index='userinfo', doc_type='userinfo', id=openid, body=newdoc)
+        escopy.index(index='userinfo', doc_type='userinfo', id=openid, body=newdoc)
         return encrypt(json.dumps({'MSG': 'YES'}))
     except Exception as e:
         print(e)
@@ -270,7 +280,7 @@ def searchGuanli():
     addKeyword(params)
     adduserhis({'openid': openid, 'time': getTime(), 'event': 'searchGuanli', 'detail': query, 'type': '0'})
     retdata = []
-    search = {'query': {'match': {'title': query}}}
+    search = {'query': {'bool': {'should': [{'match': {'title': query}}, {'match': {'content': query}}]}}}
     if scroll:
         try:
             Docs = es.scroll(scroll_id=scroll, scroll="5m")
@@ -812,6 +822,18 @@ def setJilu():
     query = ''
     if 'query' in params:
         query = params['query']
+    if jilutype == 'html':
+        htmlid = jilucontent.split('/')[-1].split('.')[0]
+        doc = es.get(index='wenzhang', doc_type='wenzhang', id=htmlid)
+        doc = doc['_source']
+        doc['views'] += 1
+        es.index(index='wenzhang', doc_type='wenzhang', id=htmlid, body=doc)
+    if jilutype == 'ganhuo':
+        htmlid = jilucontent.split('/')[-1].split('.')[0]
+        doc = es.get(index='ganhuo', doc_type='ganhuo', id=htmlid)
+        doc = doc['_source']
+        doc['views'] += 1
+        es.index(index='ganhuo', doc_type='ganhuo', id=htmlid, body=doc)
     adduserhis({'openid': openid, 'time': getTime(), 'event': 'setJilu', 'detail': query, 'jilutype': jilutype,
                 'jilucontent': jilucontent,
                 'type': '0'})
@@ -829,15 +851,15 @@ def getAdList():
     adduserhis({'openid': openid, 'time': getTime(), 'event': 'getAdList', 'detail': 'getAdList',
                 'type': '0'})
     return encrypt(json.dumps({'MSG': 'OK', 'data': [
+        {'title': '猪年硬福利', 'adurl': 'https://www.lianaizhuli.com/shouye/zhunianfuli.jpg',
+         'type': 'html', 'url': 'https://mp.weixin.qq.com/s/vu3y8Ig4ji8iQJagRJn0dA'},
+        {'title': '元旦快乐😄', 'adurl': 'https://www.lianaizhuli.com/shouye/yuandan.jpg',
+         'type': 'html', 'url': 'https://mp.weixin.qq.com/s/SIrsotZJLhZO8V1AdKliKA'},
         {'title': '圣诞节快乐😄', 'adurl': 'https://www.lianaizhuli.com/shouye/flag.jpg',
          'type': 'html', 'url': 'https://mp.weixin.qq.com/s/gqGKWk_MfTJ35zCdNBli6w'},
-        {'title': '聊天有方法，恋爱找联盟', 'adurl': 'https://www.lianaizhuli.com/shouye/tuweiqinghua1.jpg',
-         'type': 'html', 'url': 'https://mp.weixin.qq.com/s/1ImUQv67m7bQBuc7Rr1KPA'},
         {'title': '小程序使用介绍', 'adurl': 'https://www.lianaizhuli.com/shouye/shiyongjieshaobanner.jpg',
          'type': 'ganhuo', 'url': 'cloud://lianailianmeng-086596.6c69-lianailianmeng-086596/shouye/shiyongjieshao.mp4',
          'duration': '04:04', 'direction': '0'}
-        , {'title': '恋爱有方法，脱单找联盟', 'adurl': 'https://www.lianaizhuli.com/shouye/gongxinhuashubanner.jpg',
-           'type': 'image', 'url': 'cloud://lianailianmeng-086596.6c69-lianailianmeng-086596/shouye/gongxinhuashu.jpg'}
         , {'title': '恋爱联盟招聘',
            'adurl': 'https://www.lianaizhuli.com/shouye/zhaopinbanner.jpg',
            'type': 'image', 'url': 'cloud://lianailianmeng-086596.6c69-lianailianmeng-086596/shouye/zhaopin1.jpg'}

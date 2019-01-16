@@ -16,17 +16,17 @@ class Lianaizhuli_ES:
 
     def __init__(self):
         # self.es.indices.delete(index='huashu')
-        # self.es.indices.delete(index='guanli')
+        self.es.indices.delete(index='guanli')
         # self.es.indices.delete(index='methodology')
         # self.es.indices.delete(index='wenzhang')
         # self.es.indices.delete(index='ganhuo')
         # self.es.indices.delete(index='kecheng')
-        # self.es.indices.delete(index='biaoqing')
         # self.es.indices.delete(index='tuweiqinghua')
+        # self.es.indices.delete(index='biaoqing')
         # self.es.indices.delete(index='userhis')
         # self.es.indices.delete(index='userinfo')
         # self.es.indices.delete(index='userzhifu')
-        if self.es.indices.exists(index='biaoqing') is not True:
+        if self.es.indices.exists(index='guanli') is not True:
             lianaizhuli_index = {
                 "settings": {
                     "number_of_shards": 1,
@@ -50,8 +50,8 @@ class Lianaizhuli_ES:
             }
             # ret_huashu = self.es.indices.create(index='huashu', body=lianaizhuli_index, ignore=400)
             # print(ret_huashu)
-            # ret_guanli = self.es.indices.create(index='guanli', body=lianaizhuli_index, ignore=400)
-            # print(ret_guanli)
+            ret_guanli = self.es.indices.create(index='guanli', body=lianaizhuli_index, ignore=400)
+            print(ret_guanli)
             # ret_methodology = self.es.indices.create(index='methodology', body=lianaizhuli_index, ignore=400)
             # print(ret_methodology)
             # ret_wenzhang = self.es.indices.create(index='wenzhang', body=lianaizhuli_index, ignore=400)
@@ -60,10 +60,10 @@ class Lianaizhuli_ES:
             # print(ret_ganhuo)
             # ret_kecheng = self.es.indices.create(index='kecheng', body=lianaizhuli_index, ignore=400)
             # print(ret_kecheng)
-            # ret_biaoqing = self.es.indices.create(index='biaoqing', body=lianaizhuli_index, ignore=400)
-            # print(ret_biaoqing)
             # ret_tuweiqinghua = self.es.indices.create(index='tuweiqinghua', body=lianaizhuli_index, ignore=400)
             # print(ret_tuweiqinghua)
+            # ret_biaoqing = self.es.indices.create(index='biaoqing', body=lianaizhuli_index, ignore=400)
+            # print(ret_biaoqing)
             # ret_userhis = self.es.indices.create(index='userhis', body=lianaizhuli_index, ignore=400)
             # print(ret_userhis)
             # ret_userinfo = self.es.indices.create(index='userinfo', body=lianaizhuli_index, ignore=400)
@@ -86,17 +86,18 @@ class Lianaizhuli_ES:
             # while len(actions):
             #     helpers.bulk(self.es, actions[:blocklen])
             #     actions=actions[blocklen:]
-            # with open('guanli.csv', 'r') as f:
-            #     for line in csv.reader(f):
-            #         action = {
-            #             "_index": "guanli",
-            #             "_type": "guanli",
-            #             "_source": {'title': line[0].strip(), 'content': line[1].strip()}
-            #         }
-            #         actions.append(action)
-            # while len(actions):
-            #     helpers.bulk(self.es, actions[:blocklen])
-            #     actions=actions[blocklen:]
+            with open('guanli.json', 'r') as f:
+                for line in f:
+                    item = json.loads(line.strip())
+                    action = {
+                        "_index": "guanli",
+                        "_type": "guanli",
+                        "_source": item
+                    }
+                    actions.append(action)
+            while len(actions):
+                helpers.bulk(self.es, actions[:blocklen])
+                actions=actions[blocklen:]
             # with open('methodology.json', 'r') as f:
             #     for line in f:
             #         item = json.loads(line.strip())
@@ -116,9 +117,11 @@ class Lianaizhuli_ES:
             #         action = {
             #             "_index": "wenzhang",
             #             "_type": "wenzhang",
-            #             "_source": item
+            #             '_id': item['id'],
+            #             "_source": item,
             #         }
             #         actions.append(action)
+            # random.shuffle(actions)
             # while len(actions):
             #     helpers.bulk(self.es, actions[:blocklen])
             #     actions = actions[blocklen:]
@@ -128,9 +131,11 @@ class Lianaizhuli_ES:
             #         action = {
             #             "_index": "ganhuo",
             #             "_type": "ganhuo",
-            #             "_source": item
+            #             '_id': item['id'],
+            #             "_source": item,
             #         }
             #         actions.append(action)
+            # random.shuffle(actions)
             # while len(actions):
             #     helpers.bulk(self.es, actions[:blocklen])
             #     actions = actions[blocklen:]
@@ -147,18 +152,6 @@ class Lianaizhuli_ES:
             # while len(actions):
             #     helpers.bulk(self.es, actions[:blocklen])
             #     actions = actions[blocklen:]
-            # with open('biaoqing.json', 'r') as f:
-            #     for line in f:
-            #         item = json.loads(line.strip())
-            #         action = {
-            #             "_index": "biaoqing",
-            #             "_type": "biaoqing",
-            #             "_source": item
-            #         }
-            #         actions.append(action)
-            # while len(actions):
-            #     helpers.bulk(self.es, actions[:blocklen])
-            #     actions = actions[blocklen:]
             # with open('tuweiqinghua.json', 'r') as f:
             #     for line in f:
             #         item = json.loads(line.strip())
@@ -170,6 +163,18 @@ class Lianaizhuli_ES:
             #         }
             #         actions.append(action)
             # random.shuffle(actions)
+            # while len(actions):
+            #     helpers.bulk(self.es, actions[:blocklen])
+            #     actions = actions[blocklen:]
+            # with open('biaoqing.json', 'r') as f:
+            #     for line in f:
+            #         item = json.loads(line.strip())
+            #         action = {
+            #             "_index": "biaoqing",
+            #             "_type": "biaoqing",
+            #             "_source": item
+            #         }
+            #         actions.append(action)
             # while len(actions):
             #     helpers.bulk(self.es, actions[:blocklen])
             #     actions = actions[blocklen:]
