@@ -21,6 +21,7 @@ import urllib.request
 import string
 import hashlib
 import xml.etree.ElementTree as ET
+import logging
 
 datapath = '/home/ubuntu/data/lianaizhuli/data'
 os.chdir(datapath)
@@ -28,6 +29,13 @@ app = Flask(__name__)
 CORS(app, supports_credentials=True)
 es = Elasticsearch([{"host": "182.254.227.188", "port": 9218, "timeout": 3600}])
 escopy = Elasticsearch([{"host": "119.29.67.239", "port": 9218, "timeout": 3600}])
+logger = logging.getLogger(__name__)
+logger.setLevel(level=logging.INFO)
+handler = logging.FileHandler("log/log.txt")
+handler.setLevel(logging.INFO)
+formatter = logging.Formatter('%(asctime)s - %(funcName)s - %(name)s - %(levelname)s - %(message)s')
+handler.setFormatter(formatter)
+logger.addHandler(handler)
 appid = 'wxa9ef833cef143ce1'
 secret = '574ba86bc66b664ab42e4d60276afb7c'
 mch_id = '1519367291'
@@ -119,10 +127,16 @@ def check_user(openid, isjianshao):
         if doc['tiyancishu'] > 0:
             doc['tiyancishu'] -= 1
             es.index(index='userinfo', doc_type='userinfo', id=openid, body=doc)
-            escopy.index(index='userinfo', doc_type='userinfo', id=openid, body=doc)
+            try:
+                escopy.index(index='userinfo', doc_type='userinfo', id=openid, body=doc)
+            except Exception as e:
+                logger.error(e)
             return 2
         es.index(index='userinfo', doc_type='userinfo', id=openid, body=doc)
-        escopy.index(index='userinfo', doc_type='userinfo', id=openid, body=doc)
+        try:
+            escopy.index(index='userinfo', doc_type='userinfo', id=openid, body=doc)
+        except Exception as e:
+            logger.error(e)
     return 0
 
 
@@ -175,7 +189,7 @@ def getOpenid():
         system = params['system']
         options = params['options']
     except Exception as e:
-        print(e)
+        logger.error(e)
         return json.dumps({'MSG': '警告！非法入侵！！！'})
     url = 'https://api.weixin.qq.com/sns/jscode2session?appid=' + appid + '&secret=' + secret + '&js_code=' + js_code + '&grant_type=authorization_code'
     response = requests.get(url)
@@ -187,9 +201,12 @@ def getOpenid():
         newdoc = doc['_source']
         newdoc.update(userInfo)
         es.index(index='userinfo', doc_type='userinfo', id=userInfo['openid'], body=newdoc)
-        escopy.index(index='userinfo', doc_type='userinfo', id=userInfo['openid'], body=newdoc)
+        try:
+            escopy.index(index='userinfo', doc_type='userinfo', id=userInfo['openid'], body=newdoc)
+        except Exception as e:
+            logger.error(e)
     except Exception as e:
-        print(e)
+        logger.error(e)
         userInfo['addtime'] = time.strftime("%Y%m%d", time.localtime())
         userInfo['tiyancishu'] = tiyancishu
         userInfo['vipdengji'] = 0
@@ -199,7 +216,10 @@ def getOpenid():
         userInfo['xiaofeizonge'] = 0
         userInfo['options'] = json.loads(options)
         es.index(index='userinfo', doc_type='userinfo', id=userInfo['openid'], body=userInfo)
-        escopy.index(index='userinfo', doc_type='userinfo', id=userInfo['openid'], body=userInfo)
+        try:
+            escopy.index(index='userinfo', doc_type='userinfo', id=userInfo['openid'], body=userInfo)
+        except Exception as e:
+            logger.error(e)
     # print(decryptweixin(params['encryptedData'], response['session_key'], params['iv'])['unionId'])
     adduserhis(
         {'openid': response['openid'], 'time': getTime(), 'event': 'getOpenid', 'detail': 'getOpenid', 'type': '0'})
@@ -214,7 +234,7 @@ def checkOpenid():
         userInfo = params['userInfo']
         system = params['system']
     except Exception as e:
-        print(e)
+        logger.error(e)
         return encrypt(json.dumps({'MSG': 'NO'}))
     try:
         doc = es.get(index='userinfo', doc_type='userinfo', id=openid)
@@ -222,10 +242,13 @@ def checkOpenid():
         newdoc.update(userInfo)
         newdoc['system'] = system
         es.index(index='userinfo', doc_type='userinfo', id=openid, body=newdoc)
-        escopy.index(index='userinfo', doc_type='userinfo', id=openid, body=newdoc)
+        try:
+            escopy.index(index='userinfo', doc_type='userinfo', id=openid, body=newdoc)
+        except Exception as e:
+            logger.error(e)
         return encrypt(json.dumps({'MSG': 'YES'}))
     except Exception as e:
-        print(e)
+        logger.error(e)
         return encrypt(json.dumps({'MSG': 'NO'}))
 
 
@@ -237,7 +260,7 @@ def searchHuashu():
         query = params['query']
         scroll = params['scroll']
     except Exception as e:
-        print(e)
+        logger.error(e)
         return json.dumps({'MSG': '警告！非法入侵！！！'})
     check_user_res = check_user(openid, 1)
     if check_user_res == 0:
@@ -272,7 +295,7 @@ def searchGuanli():
         query = params['query']
         scroll = params['scroll']
     except Exception as e:
-        print(e)
+        logger.error(e)
         return json.dumps({'MSG': '警告！非法入侵！！！'})
     check_user_res = check_user(openid, 1)
     if check_user_res == 0:
@@ -307,7 +330,7 @@ def searchBiaoqing():
         query = params['query']
         scroll = params['scroll']
     except Exception as e:
-        print(e)
+        logger.error(e)
         return json.dumps({'MSG': '警告！非法入侵！！！'})
     check_user_res = check_user(openid, 1)
     if check_user_res == 0:
@@ -342,7 +365,7 @@ def getMethodologyList():
         cid = params['cid']
         scroll = params['scroll']
     except Exception as e:
-        print(e)
+        logger.error(e)
         return json.dumps({'MSG': '警告！非法入侵！！！'})
     check_user_res = check_user(openid, 0)
     adduserhis({'openid': openid, 'time': getTime(), 'event': 'getMethodologyList', 'detail': cid, 'type': '0'})
@@ -372,7 +395,7 @@ def getHiswordList():
         params = json.loads(decrypt(request.stream.read()))
         openid = params['openid']
     except Exception as e:
-        print(e)
+        logger.error(e)
         return json.dumps({'MSG': '警告！非法入侵！！！'})
     if openid in userKeyWordHisList:
         return encrypt(json.dumps({'MSG': 'OK', 'data': userKeyWordHisList[openid]}))
@@ -387,7 +410,7 @@ def clearHiswords():
         params = json.loads(decrypt(request.stream.read()))
         openid = params['openid']
     except Exception as e:
-        print(e)
+        logger.error(e)
         return json.dumps({'MSG': '警告！非法入侵！！！'})
     adduserhis({'openid': response['openid'], 'time': getTime(), 'event': 'clearHiswords', 'type': '0'})
     userKeyWordHisList[openid] = []
@@ -400,7 +423,7 @@ def getRecommend():
         params = json.loads(decrypt(request.stream.read()))
         openid = params['openid']
     except Exception as e:
-        print(e)
+        logger.error(e)
         return json.dumps({'MSG': '警告！非法入侵！！！'})
     hotWords = ['自恋', '厉害', '睡觉', '生气', '干嘛', '烦', '哈哈', '好吧', '介绍', '丑', '表白', '呵呵']
     hotMethods = ['开场白', '赞美', '拉升关系', '高价值展示', '幽默搞笑', '冷读', '推拉', '角色扮演', '框架', '打压', '进挪', '背景植入']
@@ -415,7 +438,7 @@ def getWenzhangList():
         scroll = params['scroll']
         tab = int(params['tab'])
     except Exception as e:
-        print(e)
+        logger.error(e)
         return json.dumps({'MSG': '警告！非法入侵！！！'})
     adduserhis({'openid': openid, 'time': getTime(), 'event': 'getWenzhangList', 'detail': wenzhang[tab], 'type': '0'})
     retdata = []
@@ -444,7 +467,7 @@ def getGanhuoList():
         scroll = params['scroll']
         tab = int(params['tab'])
     except Exception as e:
-        print(e)
+        logger.error(e)
         return json.dumps({'MSG': '警告！非法入侵！！！'})
     adduserhis({'openid': openid, 'time': getTime(), 'event': 'getGanhuoList', 'detail': ganhuo[tab], 'type': '0'})
     retdata = []
@@ -473,7 +496,7 @@ def getKechengList():
         scroll = params['scroll']
         tab = params['tab']
     except Exception as e:
-        print(e)
+        logger.error(e)
         return json.dumps({'MSG': '警告！非法入侵！！！'})
     adduserhis({'openid': openid, 'time': getTime(), 'event': 'getKechengList', 'detail': tab, 'type': '0'})
     retdata = []
@@ -502,7 +525,7 @@ def searchWenzhangList():
         scroll = params['scroll']
         query = params['query']
     except Exception as e:
-        print(e)
+        logger.error(e)
         return json.dumps({'MSG': '警告！非法入侵！！！'})
     adduserhis({'openid': openid, 'time': getTime(), 'event': 'searchWenzhangList', 'detail': query, 'type': '0'})
     retdata = []
@@ -530,7 +553,7 @@ def searchGanhuoList():
         scroll = params['scroll']
         query = params['query']
     except Exception as e:
-        print(e)
+        logger.error(e)
         return json.dumps({'MSG': '警告！非法入侵！！！'})
     adduserhis({'openid': openid, 'time': getTime(), 'event': 'searchGanhuoList', 'detail': query, 'type': '0'})
     retdata = []
@@ -557,7 +580,7 @@ def getTuweiqinghuaList():
         openid = params['openid']
         scroll = params['scroll']
     except Exception as e:
-        print(e)
+        logger.error(e)
         return json.dumps({'MSG': '警告！非法入侵！！！'})
     adduserhis({'openid': openid, 'time': getTime(), 'event': 'getTuweiqinghuaList', 'detail': 'getTuweiqinghuaList',
                 'type': '0'})
@@ -584,7 +607,7 @@ def getTuweiqinghua():
         params = json.loads(decrypt(request.stream.read()))
         openid = params['openid']
     except Exception as e:
-        print(e)
+        logger.error(e)
         return json.dumps({'MSG': '警告！非法入侵！！！'})
     adduserhis(
         {'openid': openid, 'time': getTime(), 'event': 'getTuweiqinghua', 'detail': 'getTuweiqinghua', 'type': '0'})
@@ -600,7 +623,7 @@ def getPhoneNumber():
         openid = params['openid']
         js_code = params['jsCode']
     except Exception as e:
-        print(e)
+        logger.error(e)
         return json.dumps({'MSG': '警告！非法入侵！！！'})
     url = 'https://api.weixin.qq.com/sns/jscode2session?appid=' + appid + '&secret=' + secret + '&js_code=' + js_code + '&grant_type=authorization_code'
     response = requests.get(url)
@@ -610,7 +633,10 @@ def getPhoneNumber():
     doc = es.get(index='userinfo', doc_type='userinfo', id=openid)
     userphone.update(doc['_source'])
     es.index(index='userinfo', doc_type='userinfo', id=openid, body=userphone)
-    escopy.index(index='userinfo', doc_type='userinfo', id=openid, body=userphone)
+    try:
+        escopy.index(index='userinfo', doc_type='userinfo', id=openid, body=userphone)
+    except Exception as e:
+        logger.error(e)
     adduserhis({'openid': openid, 'time': getTime(), 'event': 'getPhoneNumber', 'detail': 'getPhoneNumber',
                 'type': '0'})
     return encrypt(json.dumps({'MSG': 'OK', 'data': {'openid': response['openid']}}))
@@ -624,7 +650,7 @@ def get_prepay_id():
         zhifutype = int(params['zhifutype'])
         detail = params['detail']
     except Exception as e:
-        print(e)
+        logger.error(e)
         return json.dumps({'MSG': '警告！非法入侵！！！'})
     check_user(openid, 0)
     doc = es.get(index='userinfo', doc_type='userinfo', id=openid)
@@ -641,7 +667,7 @@ def get_prepay_id():
                 if int(json.loads(item['attach'])['zhifutype']) == 1:
                     return encrypt(json.dumps({'MSG': 'notiyan'}))
         except Exception as e:
-            print(e)
+            logger.error(e)
     url = 'https://api.mch.weixin.qq.com/pay/unifiedorder'
     prepaydata = {
         'appid': appid,
@@ -702,12 +728,16 @@ def paynotify():
         if flag:
             zhifudata += doc['_source']['zhifudata']
     except Exception as e:
-        print(e)
+        logger.error(e)
     if isnew or (isnew == 0 and flag == 1):
         es.index(index='userzhifu', doc_type='userzhifu', id=zhifures['openid'],
                  body={'openid': zhifures['openid'], 'zhifudata': zhifudata, 'updatatime': zhifures['time_end']})
-        escopy.index(index='userzhifu', doc_type='userzhifu', id=zhifures['openid'],
-                     body={'openid': zhifures['openid'], 'zhifudata': zhifudata, 'updatatime': zhifures['time_end']})
+        try:
+            escopy.index(index='userzhifu', doc_type='userzhifu', id=zhifures['openid'],
+                         body={'openid': zhifures['openid'], 'zhifudata': zhifudata,
+                               'updatatime': zhifures['time_end']})
+        except Exception as e:
+            logger.error(e)
         try:
             zhifutype = int(json.loads(zhifures['attach'])['zhifutype'])
             doc = es.get(index='userinfo', doc_type='userinfo', id=zhifures['openid'])
@@ -725,9 +755,12 @@ def paynotify():
             newdoc['xiaofeicishu'] += 1
             newdoc['xiaofeizonge'] += int(zhifures['total_fee'])
             es.index(index='userinfo', doc_type='userinfo', id=zhifures['openid'], body=newdoc)
-            escopy.index(index='userinfo', doc_type='userinfo', id=zhifures['openid'], body=newdoc)
+            try:
+                escopy.index(index='userinfo', doc_type='userinfo', id=zhifures['openid'], body=newdoc)
+            except Exception as e:
+                logger.error(e)
         except Exception as e:
-            print(e)
+            logger.error(e)
     return dict_to_xml({'return_code': 'SUCCESS', 'return_msg': 'OK'})
 
 
@@ -737,7 +770,7 @@ def getTequan():
         params = json.loads(decrypt(request.stream.read()))
         openid = params['openid']
     except Exception as e:
-        print(e)
+        logger.error(e)
         return json.dumps({'MSG': '警告！非法入侵！！！'})
     check_user(openid, 0)
     doc = es.get(index='userinfo', doc_type='userinfo', id=openid)
@@ -755,7 +788,7 @@ def getJifen():
         openid = params['openid']
         iszhudong = params['iszhudong']
     except Exception as e:
-        print(e)
+        logger.error(e)
         return json.dumps({'MSG': '警告！非法入侵！！！'})
     check_user(openid, 0)
     doc = es.get(index='userinfo', doc_type='userinfo', id=openid)
@@ -772,7 +805,7 @@ def getDingdan():
         params = json.loads(decrypt(request.stream.read()))
         openid = params['openid']
     except Exception as e:
-        print(e)
+        logger.error(e)
         return json.dumps({'MSG': '警告！非法入侵！！！'})
     adduserhis({'openid': openid, 'time': getTime(), 'event': 'getDingdan', 'detail': 'getDingdan',
                 'type': '0'})
@@ -797,16 +830,22 @@ def getIslianmeng():
         params = json.loads(decrypt(request.stream.read()))
         openid = params['openid']
     except Exception as e:
-        print(e)
+        logger.error(e)
         return json.dumps({'MSG': '警告！非法入侵！！！'})
     adduserhis({'openid': openid, 'time': getTime(), 'event': 'getIslianmeng', 'detail': 'getIslianmeng',
                 'type': '0'})
     doc = es.get(index='userinfo', doc_type='userinfo', id=openid)
     doc = doc['_source']
     if doc['system'][:3].lower() == 'ios':
-        return encrypt(json.dumps({'MSG': 'OK', 'issystem': issystem, 'islianmeng': islianmeng, 'data': islianmeng}))
+        if doc['viptime'] > int(time.time()) and doc['vipdengji'] > 1:
+            return encrypt(json.dumps({'MSG': 'OK', 'issystem': issystem, 'islianmeng': 1}))
+        else:
+            return encrypt(json.dumps({'MSG': 'OK', 'issystem': issystem, 'islianmeng': islianmeng}))
     else:
-        return encrypt(json.dumps({'MSG': 'OK', 'issystem': 1, 'islianmeng': islianmeng, 'data': islianmeng}))
+        if doc['viptime'] > int(time.time()) and doc['vipdengji'] > 1:
+            return encrypt(json.dumps({'MSG': 'OK', 'issystem': 1, 'islianmeng': 1}))
+        else:
+            return encrypt(json.dumps({'MSG': 'OK', 'issystem': 1, 'islianmeng': islianmeng}))
 
 
 @app.route("/api/setJilu", methods=["POST"])
@@ -817,7 +856,7 @@ def setJilu():
         jilutype = params['jilutype']
         jilucontent = params['jilucontent']
     except Exception as e:
-        print(e)
+        logger.error(e)
         return json.dumps({'MSG': '警告！非法入侵！！！'})
     query = ''
     if 'query' in params:
@@ -846,23 +885,23 @@ def getAdList():
         params = json.loads(decrypt(request.stream.read()))
         openid = params['openid']
     except Exception as e:
-        print(e)
+        logger.error(e)
         return json.dumps({'MSG': '警告！非法入侵！！！'})
     adduserhis({'openid': openid, 'time': getTime(), 'event': 'getAdList', 'detail': 'getAdList',
                 'type': '0'})
     return encrypt(json.dumps({'MSG': 'OK', 'data': [
-        {'title': '猪年硬福利', 'adurl': 'https://www.lianaizhuli.com/shouye/zhunianfuli.jpg',
-         'type': 'html', 'url': 'https://mp.weixin.qq.com/s/vu3y8Ig4ji8iQJagRJn0dA'},
-        {'title': '元旦快乐😄', 'adurl': 'https://www.lianaizhuli.com/shouye/yuandan.jpg',
-         'type': 'html', 'url': 'https://mp.weixin.qq.com/s/SIrsotZJLhZO8V1AdKliKA'},
-        {'title': '圣诞节快乐😄', 'adurl': 'https://www.lianaizhuli.com/shouye/flag.jpg',
-         'type': 'html', 'url': 'https://mp.weixin.qq.com/s/gqGKWk_MfTJ35zCdNBli6w'},
         {'title': '小程序使用介绍', 'adurl': 'https://www.lianaizhuli.com/shouye/shiyongjieshaobanner.jpg',
          'type': 'ganhuo', 'url': 'cloud://lianailianmeng-086596.6c69-lianailianmeng-086596/shouye/shiyongjieshao.mp4',
-         'duration': '04:04', 'direction': '0'}
-        , {'title': '恋爱联盟招聘',
-           'adurl': 'https://www.lianaizhuli.com/shouye/zhaopinbanner.jpg',
-           'type': 'image', 'url': 'cloud://lianailianmeng-086596.6c69-lianailianmeng-086596/shouye/zhaopin1.jpg'}
+         'duration': '04:04', 'direction': '0'},
+        {'title': '恋爱联盟招聘',
+         'adurl': 'https://www.lianaizhuli.com/shouye/zhaopinbanner.jpg',
+         'type': 'image', 'url': 'cloud://lianailianmeng-086596.6c69-lianailianmeng-086596/shouye/zhaopin1.jpg'},
+        # {'title': '迷男方法第一步', 'adurl': 'https://www.lianaizhuli.com/shouye/diyibu.jpg',
+        #  'type': 'html', 'url': 'https://mp.weixin.qq.com/s/6ouchJC7qurRuwe6MbIxbA'},
+        # {'title': '迷男方法第二步', 'adurl': 'https://www.lianaizhuli.com/shouye/dierbu.jpg',
+        #  'type': 'html', 'url': 'https://mp.weixin.qq.com/s/-3eouLbbREZFUHGxiJ6NHA'},
+        # {'title': '迷男方法第三步', 'adurl': 'https://www.lianaizhuli.com/shouye/disanbu.jpg',
+        #  'type': 'html', 'url': 'https://mp.weixin.qq.com/s/qnYR4DiOtmvcLcbfAVmuUA'},
     ]}))
 
 
