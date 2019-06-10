@@ -18,8 +18,8 @@ CORS(app, supports_credentials=True)
 # 恋爱助理
 appid = 'wxc1deae6a065dffa9'
 encodingAESKey = "UmBlx5gtFv7zravWwE9tCLjC99qPxRZQDPDdfeFCBfg"
-token = 'lianaizhuli'
-os.chdir('/home/ubuntu/data/lianaizhuli/data')
+token = 'lianailianmeng'
+os.chdir('/home/ubuntu/data/lianailianmeng/data')
 HD = handel.Handel()
 
 
@@ -96,8 +96,8 @@ def index():
     return "ok"
 
 
-@app.route("/lianaizhuli", methods=["GET", "POST"])
-def lianaizhuli():
+@app.route("/lianailianmeng", methods=["GET", "POST"])
+def lianailianmeng():
     if request.method == "GET":
         signature = request.args.get('signature')
         timestamp = request.args.get('timestamp')

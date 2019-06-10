@@ -6,7 +6,7 @@ import time
 from random import randint
 from requests import post
 
-datapath = '/home/ubuntu/data/lianaizhuli/data'
+datapath = '/home/ubuntu/data/lianailianmeng/data'
 os.chdir(datapath)
 tulinkey = [
     '1dea0cd4b44a4613b19d0a02442624a8',
@@ -44,7 +44,7 @@ def getTime():
     return time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
 
 
-class Lianaizhuli_ES:
+class Lianailianmeng_ES:
     emoji = {'\ue412': ["喜极而泣，😂这个是最新的撩汉表情", "怎么了呀，跟我说说看", "原谅我放荡不羁的笑声"],
              '\ue40e': ["一双天使的眼睛被你用坏了", "你这是在糟蹋我们的革命友谊", "这小眼神，秒杀了多少像我一样的帅哥"],
              '\ue409': ['突然好嫌弃你（打压）']}

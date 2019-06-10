@@ -1,0 +1,81 @@
+2019-04-28 13:57:09,382 - checkOpenid - __main__ - ERROR - 'openid'
+2019-05-05 19:46:09,896 - getOpenid - __main__ - ERROR - TransportError(400, 'illegal_argument_exception', 'failed to parse setting [timeout] with value [100] as a time value: unit is missing or unrecognized')
+2019-05-05 21:18:25,225 - checkOpenid - __main__ - ERROR - 'openid'
+2019-05-06 02:33:28,310 - getOpenid - __main__ - ERROR - TransportError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64vY7L4JoLb3I-xT7Q4EVwKE","found":false}')
+2019-05-06 03:41:14,013 - checkOpenid - __main__ - ERROR - ConnectionError(<urllib3.connection.HTTPConnection object at 0x7f3b02cf1860>: Failed to establish a new connection: [Errno 111] Connection refused) caused by: NewConnectionError(<urllib3.connection.HTTPConnection object at 0x7f3b02cf1860>: Failed to establish a new connection: [Errno 111] Connection refused)
+2019-05-06 03:41:40,784 - getOpenid - __main__ - ERROR - ConnectionError(<urllib3.connection.HTTPConnection object at 0x7f3b02cd9860>: Failed to establish a new connection: [Errno 111] Connection refused) caused by: NewConnectionError(<urllib3.connection.HTTPConnection object at 0x7f3b02cd9860>: Failed to establish a new connection: [Errno 111] Connection refused)
+2019-05-06 03:43:52,621 - checkOpenid - __main__ - ERROR - ConnectionError(<urllib3.connection.HTTPConnection object at 0x7f3b01bb5be0>: Failed to establish a new connection: [Errno 111] Connection refused) caused by: NewConnectionError(<urllib3.connection.HTTPConnection object at 0x7f3b01bb5be0>: Failed to establish a new connection: [Errno 111] Connection refused)
+2019-05-06 03:44:08,930 - getOpenid - __main__ - ERROR - ConnectionError(<urllib3.connection.HTTPConnection object at 0x7f3b01bb55f8>: Failed to establish a new connection: [Errno 111] Connection refused) caused by: NewConnectionError(<urllib3.connection.HTTPConnection object at 0x7f3b01bb55f8>: Failed to establish a new connection: [Errno 111] Connection refused)
+2019-05-06 05:04:19,198 - checkOpenid - __main__ - ERROR - 'openid'
+2019-05-06 10:23:11,814 - checkOpenid - __main__ - ERROR - 'openid'
+2019-05-06 15:38:57,506 - getOpenid - __main__ - ERROR - TransportError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64lNejrVQltTuIFpJDiGV9kg","found":false}')
+2019-05-06 16:03:13,564 - getOpenid - __main__ - ERROR - TransportError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64v6T4HLbN04QCjPrSPtFNRI","found":false}')
+2019-05-06 16:27:22,562 - getOpenid - __main__ - ERROR - TransportError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64sxdjmDUmncyUN2LIPmMAg8","found":false}')
+2019-05-06 16:35:33,525 - getOpenid - __main__ - ERROR - TransportError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64iab4_AFAVY43g78sUrlUcw","found":false}')
+2019-05-06 16:46:05,618 - checkOpenid - __main__ - ERROR - 'openid'
+2019-05-06 16:49:28,796 - getOpenid - __main__ - ERROR - TransportError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64n_OOsZS1IJjyVeD1_QsGGM","found":false}')
+2019-05-06 17:58:51,922 - getOpenid - __main__ - ERROR - TransportError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64ltqbp7slHqq6hEJ75LGYvw","found":false}')
+2019-05-06 18:03:10,047 - getOpenid - __main__ - ERROR - TransportError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64v8QwQbhgdhmKClk9A_mPi4","found":false}')
+2019-05-06 18:09:30,898 - getOpenid - __main__ - ERROR - TransportError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64pGi5P4qKc-XMv7QrtwR5XU","found":false}')
+2019-05-06 19:52:45,306 - getOpenid - __main__ - ERROR - TransportError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64jDmxisV15y9sOYp_bHcipA","found":false}')
+2019-05-06 20:02:00,175 - checkOpenid - __main__ - ERROR - 'openid'
+2019-05-06 20:20:10,102 - getOpenid - __main__ - ERROR - TransportError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64nMc1EfdngrSLiHHBIL7cD4","found":false}')
+2019-05-06 20:20:48,267 - getOpenid - __main__ - ERROR - TransportError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64jKguMll0rbxUX1CdN2_YqE","found":false}')
+2019-05-06 20:21:00,352 - getOpenid - __main__ - ERROR - TransportError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64o0AVfL9u-jx_ysMMYkVpvc","found":false}')
+2019-05-06 20:33:02,635 - getOpenid - __main__ - ERROR - TransportError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64pGwKSx4iXgfR5vHhc5Qec8","found":false}')
+2019-05-06 20:38:34,861 - getOpenid - __main__ - ERROR - TransportError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64sBEiLFb-sB69aaKfinEkjM","found":false}')
+2019-05-06 21:24:40,996 - getOpenid - __main__ - ERROR - TransportError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64rHbNqvvsn73ct5kPWfaCkc","found":false}')
+2019-05-06 22:28:41,414 - checkOpenid - __main__ - ERROR - 'openid'
+2019-05-06 22:30:34,702 - getOpenid - __main__ - ERROR - TransportError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64nRYLlOYYK9oJyUvJy8PvH4","found":false}')
+2019-05-06 22:32:03,588 - getOpenid - __main__ - ERROR - TransportError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64g_kga5Dk5hVBBZ0NgYN7SI","found":false}')
+2019-05-06 22:32:12,192 - checkOpenid - __main__ - ERROR - 'openid'
+2019-05-06 22:32:51,941 - checkOpenid - __main__ - ERROR - 'openid'
+2019-05-06 22:33:04,606 - getOpenid - __main__ - ERROR - TransportError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64lwP27LAClMnnXX3ZpZb0mo","found":false}')
+2019-05-06 22:33:34,891 - checkOpenid - __main__ - ERROR - 'openid'
+2019-05-06 22:35:07,461 - getOpenid - __main__ - ERROR - TransportError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64nXZ6giYxrcn1yLTNPM4S-0","found":false}')
+2019-05-06 22:35:34,959 - getOpenid - __main__ - ERROR - TransportError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64pJDfhNqP8nSCaBNjm1Frpw","found":false}')
+2019-05-06 22:35:52,679 - getOpenid - __main__ - ERROR - TransportError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64tj5BYFM81K0krRoZPs6k0k","found":false}')
+2019-05-06 22:42:24,172 - getOpenid - __main__ - ERROR - TransportError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64mbxVPIrbS3j6E9DgcMxeU0","found":false}')
+2019-05-06 22:43:03,584 - getOpenid - __main__ - ERROR - TransportError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64ofBms5KtqbzjKTcynDuGT4","found":false}')
+2019-05-06 22:48:12,391 - getOpenid - __main__ - ERROR - TransportError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64hgFfgacRxYiOI-8bquNGTg","found":false}')
+2019-05-06 23:08:43,073 - getOpenid - __main__ - ERROR - TransportError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64nwPSRQq_IRR6smtohKmpyM","found":false}')
+2019-05-06 23:10:35,863 - getOpenid - __main__ - ERROR - TransportError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64owCDau9F4w4onYKWTDX8l0","found":false}')
+2019-05-06 23:17:44,792 - getOpenid - __main__ - ERROR - TransportError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64nEoj0tYhrHTL1jB2nkXT1A","found":false}')
+2019-05-06 23:24:21,118 - getOpenid - __main__ - ERROR - TransportError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64hT224wllEj0kxxz_oI4jdg","found":false}')
+2019-05-06 23:29:18,529 - getOpenid - __main__ - ERROR - TransportError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64otpBICTwmmBW_M4Ds5dSxY","found":false}')
+2019-05-06 23:32:44,093 - getOpenid - __main__ - ERROR - TransportError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64kdZBBBP36WLgfpkRb-gCvg","found":false}')
+2019-05-06 23:37:12,340 - getOpenid - __main__ - ERROR - TransportError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64mrgOnGLJFmNS3slihUEQZo","found":false}')
+2019-05-07 00:09:14,998 - getOpenid - __main__ - ERROR - TransportError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64nRKFJZui5Zf2uwki7zCsfU","found":false}')
+2019-05-07 00:19:00,596 - getOpenid - __main__ - ERROR - TransportError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64nHetBr_mgC2Ok-4YwI5O7s","found":false}')
+2019-05-07 00:28:54,446 - getOpenid - __main__ - ERROR - TransportError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64qq98rGTSYBSUHeWA8h3fQk","found":false}')
+2019-05-07 02:15:00,166 - getOpenid - __main__ - ERROR - TransportError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64rnBAwbD-4O-Pna-qU9ZWbw","found":false}')
+2019-05-07 03:00:15,492 - getOpenid - __main__ - ERROR - TransportError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64iS_mvjcfRW417jqc1D4a-k","found":false}')
+2019-05-07 03:28:08,922 - getOpenid - __main__ - ERROR - TransportError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64tl7b07Fje0XHUWcDF4ugR0","found":false}')
+2019-05-07 04:11:21,383 - checkOpenid - __main__ - ERROR - 'openid'
+2019-05-07 04:28:23,051 - getOpenid - __main__ - ERROR - TransportError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64iXrr3W09BVPOTI3cLWmQ9Q","found":false}')
+2019-05-07 05:19:12,893 - getOpenid - __main__ - ERROR - TransportError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64k1mGyL7nTzgHzWMzxZ_Nrg","found":false}')
+2019-05-07 05:39:45,352 - getOpenid - __main__ - ERROR - TransportError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64hZ74cMfwEqD7iHZfOupcmE","found":false}')
+2019-05-07 07:37:55,675 - getOpenid - __main__ - ERROR - TransportError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64mRXzmDKv28bNkM07Da03is","found":false}')
+2019-05-16 22:51:49,926 - checkOpenid - __main__ - ERROR - 'openid'
+2019-05-17 00:38:53,909 - checkOpenid - __main__ - ERROR - 'openid'
+2019-05-17 02:09:01,243 - getOpenid - __main__ - ERROR - TransportError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64iiKzNV83CoI2f2uxZFSHfk","found":false}')
+2019-05-17 06:12:48,899 - getOpenid - __main__ - ERROR - TransportError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64rtrJPg2H_b_Iao5c70LaeY","found":false}')
+2019-05-17 11:06:36,730 - getOpenid - __main__ - ERROR - TransportError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64u5DiCoHgTLXIZI0GYYIcGU","found":false}')
+2019-05-17 17:47:11,224 - getOpenid - __main__ - ERROR - TransportError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64moGNDIOyZgJB9W56NwJg4c","found":false}')
+2019-05-17 18:44:48,306 - checkOpenid - __main__ - ERROR - 'openid'
+2019-05-17 23:44:16,970 - getOpenid - __main__ - ERROR - TransportError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64oHm15ZDCmtJmDmHNCG6MLI","found":false}')
+2019-05-18 07:42:39,176 - getOpenid - __main__ - ERROR - TransportError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64slrbNCOL7WxU3PPjtLbLTY","found":false}')
+2019-05-18 09:35:13,931 - getOpenid - __main__ - ERROR - TransportError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64qW0oFwCD_Z88wb8_kErb8o","found":false}')
+2019-05-18 11:01:49,547 - getOpenid - __main__ - ERROR - TransportError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64h3WLrJxEdUHvCMz-jwLzHg","found":false}')
+2019-05-18 12:43:11,325 - getOpenid - __main__ - ERROR - TransportError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64uRuMKhbGG2_jHXr3OpRIAA","found":false}')
+2019-05-18 15:38:06,153 - getOpenid - __main__ - ERROR - TransportError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64urCAfn2Ir7ZLseLZQQcDds","found":false}')
+2019-05-18 17:26:21,294 - getOpenid - __main__ - ERROR - TransportError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64jHCm8jqOB_NT1V6TsEipdo","found":false}')
+2019-05-18 19:44:18,524 - getOpenid - __main__ - ERROR - TransportError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64jllvtx6Pt0sZfFhVHma-bM","found":false}')
+2019-05-18 20:15:48,904 - getOpenid - __main__ - ERROR - TransportError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64gvYYi4g7jdJoWVz48uG6hE","found":false}')
+2019-05-18 20:53:57,885 - getOpenid - __main__ - ERROR - TransportError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64oRAByDiNlZzt-D3xQweF2A","found":false}')
+2019-05-18 20:54:10,956 - setJilu - __main__ - ERROR - 'jilucontent'
+2019-05-18 21:43:28,020 - checkOpenid - __main__ - ERROR - 'openid'
+2019-05-18 21:47:58,961 - getOpenid - __main__ - ERROR - TransportError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64lbIQBJzovupVmmKTF9pff4","found":false}')
+2019-05-19 06:46:28,167 - getOpenid - __main__ - ERROR - TransportError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64pKICSRU3gvrhUNzXWiFpyA","found":false}')
+2019-05-19 12:33:36,126 - getOpenid - __main__ - ERROR - TransportError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64vAJRpWbrK6RhchZLUoRbfw","found":false}')
+2019-06-02 07:27:32,595 - checkOpenid - __main__ - ERROR - 'openid'

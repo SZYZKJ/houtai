@@ -23,12 +23,12 @@ import hashlib
 import xml.etree.ElementTree as ET
 import logging
 
-datapath = '/home/ubuntu/data/lianaizhuli/data'
+datapath = '/home/ubuntu/data/lianailianmeng/data'
 os.chdir(datapath)
 app = Flask(__name__)
 CORS(app, supports_credentials=True)
-es = Elasticsearch([{"host": "182.254.227.188", "port": 9218, "timeout": 3600}])
-escopy = Elasticsearch([{"host": "119.29.67.239", "port": 9218, "timeout": 3600}])
+es = Elasticsearch([{"host": "182.254.227.188", "port": 9218}])
+escopy = Elasticsearch([{"host": "119.29.67.239", "port": 9218}])
 logger = logging.getLogger(__name__)
 logger.setLevel(level=logging.INFO)
 handler = logging.FileHandler("log/log.txt")
@@ -43,18 +43,17 @@ merchant_key = 'shenzhenyuzikejiyouxiangongsi888'
 userKeyWordHisList = {}
 key = "pangyuming920318"
 iv = "abcdefabcdefabcd"
-tiyancishu = 20
 BLOCK_SIZE = 16
 pad = lambda s: s + (BLOCK_SIZE - len(s) % BLOCK_SIZE) * bytes(chr(BLOCK_SIZE - len(s) % BLOCK_SIZE), encoding='utf8')
 unpad = lambda s: s[0:-ord(s[-1])]
 whitelist = {}
 # userhiss = []
 vipdengji = [0, 1, 2, 3, 4, 5, 6]
-viptime = [0, 259200, 2592000, 31536000, 31536000, 3153600000, 3153600000]
-sijiaotime = [0, 0, 0, 0, 7776000, 31536000, 3153600000]
-total_fees = [0, 100, 2900, 19900, 99900, 299900, 499900]
+viptime = [259200, 2592000, 31536000, 31536000, 31536000, 3153600000, 3153600000]
+sijiaotime = [0, 0, 0, 2592000, 7776000, 31536000, 3153600000]
+total_fees = [0, 2900, 19900, 49900, 99900, 299900, 499900]
 # viptime = [0, 60, 60, 60, 60, 60, 60]
-# sijiaotime = [0, 0, 0, 0, 60, 60, 60]
+# sijiaotime = [0, 60, 60, 60, 60, 60, 60]
 # total_fees = [0, 1, 2, 3, 4, 5, 6]
 wenzhang = ['恋爱', '挽回', '形象', '搭讪', '聊天', '约会', '异地', '相亲']
 ganhuo = ['套路', '搭讪', '电影', '干货']
@@ -111,30 +110,18 @@ def getTime():
     return time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
 
 
-def check_user(openid, isjianshao):
+def check_user(openid):
     if openid in whitelist:
         return 1
     doc = es.get(index='userinfo', doc_type='userinfo', id=openid)
     doc = doc['_source']
     if doc['viptime'] > int(time.time()):
         return 1
-    else:
-        if doc['vipdengji'] == 0 and doc['tiyancishu'] == 0:
-            return 0
-        if doc['vipdengji'] == 0 and isjianshao == 0:
-            return 2
+    elif doc['vipdengji'] > 0:
         doc['vipdengji'] = 0
-        if doc['tiyancishu'] > 0:
-            doc['tiyancishu'] -= 1
-            es.index(index='userinfo', doc_type='userinfo', id=openid, body=doc)
-            try:
-                escopy.index(index='userinfo', doc_type='userinfo', id=openid, body=doc)
-            except Exception as e:
-                logger.error(e)
-            return 2
         es.index(index='userinfo', doc_type='userinfo', id=openid, body=doc)
         try:
-            escopy.index(index='userinfo', doc_type='userinfo', id=openid, body=doc)
+            escopy.index(index='userinfo', doc_type='userinfo', id=openid, body=doc, timeout="1s")
         except Exception as e:
             logger.error(e)
     return 0
@@ -202,22 +189,21 @@ def getOpenid():
         newdoc.update(userInfo)
         es.index(index='userinfo', doc_type='userinfo', id=userInfo['openid'], body=newdoc)
         try:
-            escopy.index(index='userinfo', doc_type='userinfo', id=userInfo['openid'], body=newdoc)
+            escopy.index(index='userinfo', doc_type='userinfo', id=userInfo['openid'], body=newdoc, timeout="1s")
         except Exception as e:
             logger.error(e)
     except Exception as e:
         logger.error(e)
         userInfo['addtime'] = time.strftime("%Y%m%d", time.localtime())
-        userInfo['tiyancishu'] = tiyancishu
         userInfo['vipdengji'] = 0
-        userInfo['viptime'] = 0
+        userInfo['viptime'] = int(time.time()) + viptime[0]
         userInfo['sijiaotime'] = 0
         userInfo['xiaofeicishu'] = 0
         userInfo['xiaofeizonge'] = 0
         userInfo['options'] = json.loads(options)
         es.index(index='userinfo', doc_type='userinfo', id=userInfo['openid'], body=userInfo)
         try:
-            escopy.index(index='userinfo', doc_type='userinfo', id=userInfo['openid'], body=userInfo)
+            escopy.index(index='userinfo', doc_type='userinfo', id=userInfo['openid'], body=userInfo, timeout="1s")
         except Exception as e:
             logger.error(e)
     # print(decryptweixin(params['encryptedData'], response['session_key'], params['iv'])['unionId'])
@@ -243,7 +229,7 @@ def checkOpenid():
         newdoc['system'] = system
         es.index(index='userinfo', doc_type='userinfo', id=openid, body=newdoc)
         try:
-            escopy.index(index='userinfo', doc_type='userinfo', id=openid, body=newdoc)
+            escopy.index(index='userinfo', doc_type='userinfo', id=openid, body=newdoc, timeout="1s")
         except Exception as e:
             logger.error(e)
         return encrypt(json.dumps({'MSG': 'YES'}))
@@ -262,7 +248,7 @@ def searchHuashu():
     except Exception as e:
         logger.error(e)
         return json.dumps({'MSG': '警告！非法入侵！！！'})
-    check_user_res = check_user(openid, 1)
+    check_user_res = check_user(openid)
     if check_user_res == 0:
         return encrypt(json.dumps({'MSG': 'LIMIT'}))
     addKeyword(params)
@@ -281,10 +267,7 @@ def searchHuashu():
     Docs = Docs['hits']['hits']
     for doc in Docs:
         retdata.append(doc['_source'])
-    if check_user_res == 1:
-        return encrypt(json.dumps({'MSG': 'OK', 'data': retdata, 'scroll': scroll}))
-    else:
-        return encrypt(json.dumps({'MSG': 'TIYAN', 'data': retdata, 'scroll': scroll}))
+    return encrypt(json.dumps({'MSG': 'OK', 'data': retdata, 'scroll': scroll}))
 
 
 @app.route("/api/searchGuanli", methods=["POST"])
@@ -297,7 +280,7 @@ def searchGuanli():
     except Exception as e:
         logger.error(e)
         return json.dumps({'MSG': '警告！非法入侵！！！'})
-    check_user_res = check_user(openid, 1)
+    check_user_res = check_user(openid)
     if check_user_res == 0:
         return encrypt(json.dumps({'MSG': 'LIMIT'}))
     addKeyword(params)
@@ -316,10 +299,7 @@ def searchGuanli():
     Docs = Docs['hits']['hits']
     for doc in Docs:
         retdata.append(doc['_source'])
-    if check_user_res == 1:
-        return encrypt(json.dumps({'MSG': 'OK', 'data': retdata, 'scroll': scroll}))
-    else:
-        return encrypt(json.dumps({'MSG': 'TIYAN', 'data': retdata, 'scroll': scroll}))
+    return encrypt(json.dumps({'MSG': 'OK', 'data': retdata, 'scroll': scroll}))
 
 
 @app.route("/api/searchBiaoqing", methods=["POST"])
@@ -332,7 +312,7 @@ def searchBiaoqing():
     except Exception as e:
         logger.error(e)
         return json.dumps({'MSG': '警告！非法入侵！！！'})
-    check_user_res = check_user(openid, 1)
+    check_user_res = check_user(openid)
     if check_user_res == 0:
         return encrypt(json.dumps({'MSG': 'LIMIT'}))
     addKeyword(params)
@@ -351,10 +331,7 @@ def searchBiaoqing():
     Docs = Docs['hits']['hits']
     for doc in Docs:
         retdata.append(doc['_source']['url'])
-    if check_user_res == 1:
-        return encrypt(json.dumps({'MSG': 'OK', 'data': retdata, 'scroll': scroll}))
-    else:
-        return encrypt(json.dumps({'MSG': 'TIYAN', 'data': retdata, 'scroll': scroll}))
+    return encrypt(json.dumps({'MSG': 'OK', 'data': retdata, 'scroll': scroll}))
 
 
 @app.route("/api/getMethodologyList", methods=["POST"])
@@ -367,7 +344,9 @@ def getMethodologyList():
     except Exception as e:
         logger.error(e)
         return json.dumps({'MSG': '警告！非法入侵！！！'})
-    check_user_res = check_user(openid, 0)
+    check_user_res = check_user(openid)
+    if check_user_res == 0 and scroll != '':
+        return encrypt(json.dumps({'MSG': 'LIMIT'}))
     adduserhis({'openid': openid, 'time': getTime(), 'event': 'getMethodologyList', 'detail': cid, 'type': '0'})
     retdata = []
     search = {'query': {'bool': {'filter': {"term": {'cid': cid}}}}}
@@ -383,10 +362,7 @@ def getMethodologyList():
     Docs = Docs['hits']['hits']
     for doc in Docs:
         retdata.append(doc['_source'])
-    if check_user_res == 1:
-        return encrypt(json.dumps({'MSG': 'OK', 'data': retdata, 'scroll': scroll}))
-    else:
-        return encrypt(json.dumps({'MSG': 'TIYAN', 'data': retdata, 'scroll': scroll}))
+    return encrypt(json.dumps({'MSG': 'OK', 'data': retdata, 'scroll': scroll}))
 
 
 @app.route("/api/getHiswordList", methods=["POST"])
@@ -634,7 +610,7 @@ def getPhoneNumber():
     userphone.update(doc['_source'])
     es.index(index='userinfo', doc_type='userinfo', id=openid, body=userphone)
     try:
-        escopy.index(index='userinfo', doc_type='userinfo', id=openid, body=userphone)
+        escopy.index(index='userinfo', doc_type='userinfo', id=openid, body=userphone, timeout="1s")
     except Exception as e:
         logger.error(e)
     adduserhis({'openid': openid, 'time': getTime(), 'event': 'getPhoneNumber', 'detail': 'getPhoneNumber',
@@ -652,22 +628,10 @@ def get_prepay_id():
     except Exception as e:
         logger.error(e)
         return json.dumps({'MSG': '警告！非法入侵！！！'})
-    check_user(openid, 0)
     doc = es.get(index='userinfo', doc_type='userinfo', id=openid)
     doc = doc['_source']
-    if doc['vipdengji'] >= zhifutype:
-        return encrypt(json.dumps({'MSG': 'THK'}))
-    if zhifutype > 1:
-        if 'phoneNumber' not in doc:
-            return encrypt(json.dumps({'MSG': 'nophoneNumber'}))
-    else:
-        try:
-            zhifudoc = es.get(index='userzhifu', doc_type='userzhifu', id=openid)
-            for item in zhifudoc['_source']['zhifudata']:
-                if int(json.loads(item['attach'])['zhifutype']) == 1:
-                    return encrypt(json.dumps({'MSG': 'notiyan'}))
-        except Exception as e:
-            logger.error(e)
+    if 'phoneNumber' not in doc:
+        return encrypt(json.dumps({'MSG': 'nophoneNumber'}))
     url = 'https://api.mch.weixin.qq.com/pay/unifiedorder'
     prepaydata = {
         'appid': appid,
@@ -735,7 +699,7 @@ def paynotify():
         try:
             escopy.index(index='userzhifu', doc_type='userzhifu', id=zhifures['openid'],
                          body={'openid': zhifures['openid'], 'zhifudata': zhifudata,
-                               'updatatime': zhifures['time_end']})
+                               'updatatime': zhifures['time_end']}, timeout="1s")
         except Exception as e:
             logger.error(e)
         try:
@@ -756,7 +720,7 @@ def paynotify():
             newdoc['xiaofeizonge'] += int(zhifures['total_fee'])
             es.index(index='userinfo', doc_type='userinfo', id=zhifures['openid'], body=newdoc)
             try:
-                escopy.index(index='userinfo', doc_type='userinfo', id=zhifures['openid'], body=newdoc)
+                escopy.index(index='userinfo', doc_type='userinfo', id=zhifures['openid'], body=newdoc, timeout="1s")
             except Exception as e:
                 logger.error(e)
         except Exception as e:
@@ -772,7 +736,6 @@ def getTequan():
     except Exception as e:
         logger.error(e)
         return json.dumps({'MSG': '警告！非法入侵！！！'})
-    check_user(openid, 0)
     doc = es.get(index='userinfo', doc_type='userinfo', id=openid)
     adduserhis({'openid': openid, 'time': getTime(), 'event': 'getTequan', 'detail': 'getTequan',
                 'type': '0'})
@@ -790,7 +753,6 @@ def getJifen():
     except Exception as e:
         logger.error(e)
         return json.dumps({'MSG': '警告！非法入侵！！！'})
-    check_user(openid, 0)
     doc = es.get(index='userinfo', doc_type='userinfo', id=openid)
     if iszhudong == "1":
         adduserhis({'openid': openid, 'time': getTime(), 'event': 'getJifen', 'detail': 'getJifen',

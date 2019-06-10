@@ -4,9 +4,9 @@ import csv
 from weixin_app import reply
 from elasticsearch import Elasticsearch
 from elasticsearch import helpers
-from es.es import Lianaizhuli_ES
+from es.es import Lianailianmeng_ES
 
-datapath = '/home/ubuntu/data/lianaizhuli/data'
+datapath = '/home/ubuntu/data/lianailianmeng/data'
 os.chdir(datapath)
 
 reply_sentens = {
@@ -52,7 +52,7 @@ class Handel:
     usercache = {}
     userdata = {}
     whitelist = {}
-    laes = Lianaizhuli_ES()
+    laes = Lianailianmeng_ES()
 
     def __init__(self):
         self.whitelist['oswSD0qc_PK8GpQpv8_sM10Ktar8'] = 0

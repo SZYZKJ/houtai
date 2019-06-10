@@ -9,7 +9,7 @@ import requests
 
 datapath = '/home/ubuntu/data/lianaizhuli/data'
 os.chdir(datapath)
-blocklen=500
+blocklen=100000
 
 class Lianaizhuli_ES:
     es = Elasticsearch([{"host": "182.254.227.188", "port": 9218, "timeout": 3600}])
@@ -22,10 +22,7 @@ class Lianaizhuli_ES:
         self.es.indices.delete(index='ganhuo')
         self.es.indices.delete(index='kecheng')
         self.es.indices.delete(index='tuweiqinghua')
-        # self.es.indices.delete(index='biaoqing')
-        # self.es.indices.delete(index='userhis')
-        # self.es.indices.delete(index='userinfo')
-        # self.es.indices.delete(index='userzhifu')
+        self.es.indices.delete(index='biaoqing')
         if self.es.indices.exists(index='wenzhang') is not True:
             lianaizhuli_index = {
                 "settings": {
@@ -62,8 +59,8 @@ class Lianaizhuli_ES:
             print(ret_kecheng)
             ret_tuweiqinghua = self.es.indices.create(index='tuweiqinghua', body=lianaizhuli_index, ignore=400)
             print(ret_tuweiqinghua)
-            # ret_biaoqing = self.es.indices.create(index='biaoqing', body=lianaizhuli_index, ignore=400)
-            # print(ret_biaoqing)
+            ret_biaoqing = self.es.indices.create(index='biaoqing', body=lianaizhuli_index, ignore=400)
+            print(ret_biaoqing)
             # ret_userhis = self.es.indices.create(index='userhis', body=lianaizhuli_index, ignore=400)
             # print(ret_userhis)
             # ret_userinfo = self.es.indices.create(index='userinfo', body=lianaizhuli_index, ignore=400)
@@ -167,18 +164,19 @@ class Lianaizhuli_ES:
             while len(actions):
                 helpers.bulk(self.es, actions[:blocklen])
                 actions = actions[blocklen:]
-            # with open('biaoqing.json', 'r') as f:
-            #     for line in f:
-            #         item = json.loads(line.strip())
-            #         action = {
-            #             "_index": "biaoqing",
-            #             "_type": "biaoqing",
-            #             "_source": item
-            #         }
-            #         actions.append(action)
-            # while len(actions):
-            #     helpers.bulk(self.es, actions[:blocklen])
-            #     actions = actions[blocklen:]
+            with open('biaoqing.json', 'r') as f:
+                for line in f:
+                    item = json.loads(line.strip())
+                    action = {
+                        "_index": "biaoqing",
+                        "_type": "biaoqing",
+                        "_source": item
+                    }
+                    actions.append(action)
+            while len(actions):
+                print(len(actions))
+                helpers.bulk(self.es, actions[:blocklen])
+                actions = actions[blocklen:]
             print('创建结束！')
 
     def add(self):
