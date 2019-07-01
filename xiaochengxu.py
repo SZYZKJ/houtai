@@ -79,8 +79,8 @@ def getShouyekuai():
     adduserhis({'openid': openid, 'time': getTime(), 'event': 'getShouye', 'detail': 'getShouye',
                 'type': '0'})
     return encrypt(json.dumps({'MSG': 'OK', 'lunbotu': [
-        {'title': '新用户', 'adurl': wangzhi + 'shouye/lunbotu/xinyonghu.png',
-         'type': 'html', 'url': 'https://mp.weixin.qq.com/s/CQqCd6tQ0Tv2AvE_-6aclQ'},
+        {'title': '新用户', 'adurl': wangzhi + 'shouye/lunbotu/tuibian.png',
+         'type': 'html', 'url': 'https://mp.weixin.qq.com/s/2-StlZoGKA-rpcQN-QrlUg'},
         # {'title': '小程序使用介绍', 'adurl': 'https://www.lianaizhuli.com/shouye/shiyongjieshaobanner.jpg',
         #  'type': 'ganhuo', 'url': 'cloud://lianailianmeng-086596.6c69-lianailianmeng-086596/shouye/shiyongjieshao.mp4',
         #  'duration': '04:04', 'direction': '0'},
@@ -103,7 +103,7 @@ def getShouyekuai():
                                           {'title': '心理测试', 'image': wangzhi + 'shouye/tubiao/xinliceshi.png',
                                            'page': 'xinliceshilist'}, ],
                                'searchicon': wangzhi + 'shouye/search.png',
-                               'miaoshu': '复制女生聊天的话搜索获得最佳回复，轻轻一点即可复制',
+                               'miaoshu': '①女生回了一句话 ②你恐惧回复不好 ③复制粘贴在这里试试？',
                                'tuijian': ['我有男朋友了', '你真自恋', '我去洗澡了', '表白', '哈哈'],
                                }))
 
@@ -732,7 +732,8 @@ def getLiaomeishizhanList():
         try:
             Docs = es.scroll(scroll_id=scroll, scroll="5m")
         except:
-            Docs = es.search(index='liaomeishizhanlist', doc_type='liaomeishizhanlist', body=search, size=10, scroll="5m")
+            Docs = es.search(index='liaomeishizhanlist', doc_type='liaomeishizhanlist', body=search, size=10,
+                             scroll="5m")
 
     else:
         Docs = es.search(index='liaomeishizhanlist', doc_type='liaomeishizhanlist', body=search, size=10, scroll="5m")
@@ -786,6 +787,7 @@ def getKechengList():
     try:
         params = json.loads(decrypt(request.stream.read()))
         openid = params['openid']
+        scroll = params['scroll']
     except Exception as e:
         logger.error(e)
         return json.dumps({'MSG': '警告！非法入侵！！！'})
@@ -794,7 +796,15 @@ def getKechengList():
          'type': '0'})
     retdata = []
     search = {"query": {"match_all": {}}}
-    Docs = es.search(index='kechenglist', doc_type='kechenglist', body=search, size=10000)
+    if scroll:
+        try:
+            Docs = es.scroll(scroll_id=scroll, scroll="5m")
+        except:
+            Docs = es.search(index='kechenglist', doc_type='kechenglist', body=search, size=10, scroll="5m")
+
+    else:
+        Docs = es.search(index='kechenglist', doc_type='kechenglist', body=search, size=10, scroll="5m")
+    scroll = Docs['_scroll_id']
     Docs = Docs['hits']['hits']
     try:
         goumaidoc = es.get(index='kechenggoumai', doc_type='kechenggoumai', id=openid)['_source']
@@ -809,7 +819,7 @@ def getKechengList():
         else:
             doc['yigoumai'] = 0
         retdata.append(doc)
-    return encrypt(json.dumps({'MSG': 'OK', 'data': retdata}))
+    return encrypt(json.dumps({'MSG': 'OK', 'data': retdata, 'scroll': scroll}))
 
 
 @app.route("/api/getKecheng", methods=["POST"])
@@ -1158,18 +1168,6 @@ def setJilu():
     query = ''
     if 'query' in params:
         query = params['query']
-    if jilutype == 'html':
-        htmlid = jilucontent.split('/')[-1].split('.')[0]
-        doc = es.get(index='wenzhang', doc_type='wenzhang', id=htmlid)
-        doc = doc['_source']
-        doc['views'] += 1
-        es.index(index='wenzhang', doc_type='wenzhang', id=htmlid, body=doc)
-    if jilutype == 'ganhuo':
-        htmlid = jilucontent.split('/')[-1].split('.')[0]
-        doc = es.get(index='ganhuo', doc_type='ganhuo', id=htmlid)
-        doc = doc['_source']
-        doc['views'] += 1
-        es.index(index='ganhuo', doc_type='ganhuo', id=htmlid, body=doc)
     adduserhis({'openid': openid, 'time': getTime(), 'event': 'setJilu', 'detail': query, 'jilutype': jilutype,
                 'jilucontent': jilucontent,
                 'type': '0'})
@@ -1686,6 +1684,7 @@ def kechengpaynotify():
         except Exception as e:
             logger.error(e)
     return dict_to_xml({'return_code': 'SUCCESS', 'return_msg': 'OK'})
+
 
 @app.route("/api/getAdList", methods=["POST"])
 def getAdList():

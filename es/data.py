@@ -48,10 +48,10 @@ actions = []
 # es.indices.delete(index='kecheng')
 # es.indices.delete(index='sijiao')
 # es.indices.delete(index='xingxiangjianshe')
-es.indices.delete(index='liaomeishizhanlist')
-es.indices.delete(index='liaomeishizhan')
-es.indices.delete(index='baikelist')
-es.indices.delete(index='baike')
+# es.indices.delete(index='liaomeishizhanlist')
+# es.indices.delete(index='liaomeishizhan')
+# es.indices.delete(index='baikelist')
+# es.indices.delete(index='baike')
 # es.indices.delete(index='wendalist')
 # es.indices.delete(index='wenda')
 # es.indices.delete(index='xinliceshilist')
@@ -71,14 +71,14 @@ es.indices.delete(index='baike')
 # print(ret_data)
 # ret_data = es.indices.create(index='xingxiangjianshe', body=lianaizhuli_index, ignore=400)
 # print(ret_data)
-ret_data = es.indices.create(index='liaomeishizhanlist', body=lianaizhuli_index, ignore=400)
-print(ret_data)
-ret_data = es.indices.create(index='liaomeishizhan', body=lianaizhuli_index, ignore=400)
-print(ret_data)
-ret_data = es.indices.create(index='baikelist', body=lianaizhuli_index, ignore=400)
-print(ret_data)
-ret_data = es.indices.create(index='baike', body=lianaizhuli_index, ignore=400)
-print(ret_data)
+# ret_data = es.indices.create(index='liaomeishizhanlist', body=lianaizhuli_index, ignore=400)
+# print(ret_data)
+# ret_data = es.indices.create(index='liaomeishizhan', body=lianaizhuli_index, ignore=400)
+# print(ret_data)
+# ret_data = es.indices.create(index='baikelist', body=lianaizhuli_index, ignore=400)
+# print(ret_data)
+# ret_data = es.indices.create(index='baike', body=lianaizhuli_index, ignore=400)
+# print(ret_data)
 # ret_data = es.indices.create(index='wendalist', body=lianaizhuli_index, ignore=400)
 # print(ret_data)
 # ret_data = es.indices.create(index='wenda', body=lianaizhuli_index, ignore=400)
@@ -93,6 +93,9 @@ print(ret_data)
 # print(ret_data)
 # ret_data = es.indices.create(index='search', body=lianaizhuli_index, ignore=400)
 # print(ret_data)
+
+ret_data = es.indices.create(index='unioninfo', body=lianaizhuli_index, ignore=400)
+print(ret_data)
 
 # with open('biaoqing.json', 'r') as f:
 #     for line in f:
@@ -211,65 +214,65 @@ print(ret_data)
 #     helpers.bulk(es, actions[:blocklen])
 #     actions = actions[blocklen:]
 
-with open('liaomeishizhanlist.json', 'r') as f:
-    for line in f:
-        item = json.loads(line.strip())
-        action = {
-            "_index": "liaomeishizhanlist",
-            "_type": "liaomeishizhanlist",
-            '_id': item['id'],
-            "_source": item
-        }
-        actions.append(action)
-random.shuffle(actions)
-while len(actions):
-    helpers.bulk(es, actions[:blocklen])
-    actions = actions[blocklen:]
+# with open('liaomeishizhanlist.json', 'r') as f:
+#     for line in f:
+#         item = json.loads(line.strip())
+#         action = {
+#             "_index": "liaomeishizhanlist",
+#             "_type": "liaomeishizhanlist",
+#             '_id': item['id'],
+#             "_source": item
+#         }
+#         actions.append(action)
+# random.shuffle(actions)
+# while len(actions):
+#     helpers.bulk(es, actions[:blocklen])
+#     actions = actions[blocklen:]
+#
+# with open('liaomeishizhan.json', 'r') as f:
+#     for line in f:
+#         item = json.loads(line.strip())
+#         action = {
+#             "_index": "liaomeishizhan",
+#             "_type": "liaomeishizhan",
+#             '_id': item['id'],
+#             "_source": item
+#         }
+#         actions.append(action)
+# random.shuffle(actions)
+# while len(actions):
+#     helpers.bulk(es, actions[:blocklen])
+#     actions = actions[blocklen:]
+#
+# with open('baikelist.json', 'r') as f:
+#     for line in f:
+#         item = json.loads(line.strip())
+#         action = {
+#             "_index": "baikelist",
+#             "_type": "baikelist",
+#             '_id': item['id'],
+#             "_source": item
+#         }
+#         actions.append(action)
+# random.shuffle(actions)
+# while len(actions):
+#     helpers.bulk(es, actions[:blocklen])
+#     actions = actions[blocklen:]
 
-with open('liaomeishizhan.json', 'r') as f:
-    for line in f:
-        item = json.loads(line.strip())
-        action = {
-            "_index": "liaomeishizhan",
-            "_type": "liaomeishizhan",
-            '_id': item['id'],
-            "_source": item
-        }
-        actions.append(action)
-random.shuffle(actions)
-while len(actions):
-    helpers.bulk(es, actions[:blocklen])
-    actions = actions[blocklen:]
-
-with open('baikelist.json', 'r') as f:
-    for line in f:
-        item = json.loads(line.strip())
-        action = {
-            "_index": "baikelist",
-            "_type": "baikelist",
-            '_id': item['id'],
-            "_source": item
-        }
-        actions.append(action)
-random.shuffle(actions)
-while len(actions):
-    helpers.bulk(es, actions[:blocklen])
-    actions = actions[blocklen:]
-
-with open('baike.json', 'r') as f:
-    for line in f:
-        item = json.loads(line.strip())
-        action = {
-            "_index": "baike",
-            "_type": "baike",
-            '_id': item['id'],
-            "_source": item
-        }
-        actions.append(action)
-random.shuffle(actions)
-while len(actions):
-    helpers.bulk(es, actions[:blocklen])
-    actions = actions[blocklen:]
+# with open('baike.json', 'r') as f:
+#     for line in f:
+#         item = json.loads(line.strip())
+#         action = {
+#             "_index": "baike",
+#             "_type": "baike",
+#             '_id': item['id'],
+#             "_source": item
+#         }
+#         actions.append(action)
+# random.shuffle(actions)
+# while len(actions):
+#     helpers.bulk(es, actions[:blocklen])
+#     actions = actions[blocklen:]
 
 # with open('wendalist.json', 'r') as f:
 #     for line in f:
