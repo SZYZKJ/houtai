@@ -41,38 +41,20 @@ if __name__ == '__main__':
     postJson ={
         "button": [
             {
-                "name": "恋爱课程",
+                "name": "加入会员",
                 "sub_button": [
                     {
                         "type": "view",
-                        "name": "形象提升",
-                        "url": "https://mp.weixin.qq.com/mp/homepage?__biz=MzUyODk3NjUwOQ==&hid=1&sn=66d54470bbd5338f199614dba695400b",
+                        "name": "会员",
+                        "url": "http://www.lianaizhuli.com/huiyuan",
                         "sub_button": []
                     },
                     {
                         "type": "view",
-                        "name": "搭讪",
-                        "url": "https://mp.weixin.qq.com/mp/homepage?__biz=MzUyODk3NjUwOQ==&hid=2&sn=14a2e3efd432042e5053556888f4255d",
+                        "name": "课程",
+                        "url": "http://www.lianaizhuli.com/kechenglist",
                         "sub_button": []
                     },
-                    {
-                        "type": "view",
-                        "name": "聊天",
-                        "url": "https://mp.weixin.qq.com/mp/homepage?__biz=MzUyODk3NjUwOQ==&hid=3&sn=f9cdf3300a1539cc2b0cd6d458f71933",
-                        "sub_button": []
-                    },
-                    {
-                        "type": "view",
-                        "name": "约会",
-                        "url": "https://mp.weixin.qq.com/mp/homepage?__biz=MzUyODk3NjUwOQ==&hid=4&sn=db9702ba660d5547696ffb9c17af65bd",
-                        "sub_button": []
-                    },
-                    {
-                        "type": "view",
-                        "name": "挽回",
-                        "url": "https://mp.weixin.qq.com/mp/homepage?__biz=MzUyODk3NjUwOQ==&hid=5&sn=763f1954829d490d7d7a4ed7b5ae6481",
-                        "sub_button": []
-                    }
                 ]
             },
             {

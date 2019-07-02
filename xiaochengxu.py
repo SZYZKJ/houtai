@@ -306,7 +306,7 @@ def getOpenid():
             logger.error(e)
     except Exception as e:
         logger.error(e)
-        userInfo['addtime'] = time.strftime("%Y%m%d", time.localtime())
+        userInfo['addtime'] = getTime()
         userInfo['vipdengji'] = 0
         userInfo['viptime'] = int(time.time()) + viptime[0]
         userInfo['sijiaotime'] = 0

@@ -30,18 +30,26 @@ from msg_crypto.WXBizMsgCrypt import WXBizMsgCrypt
 
 app = Flask(__name__)
 CORS(app, supports_credentials=True)
-wangzhi = 'https://www.lianaizhuli.com/'
+wangzhi = 'http://www.lianaizhuli.com/'
 logger = logging.getLogger(__name__)
 logger.setLevel(level=logging.INFO)
 handler = logging.FileHandler("log/log.txt")
 handler.setLevel(logging.INFO)
 es = Elasticsearch([{"host": "182.254.227.188", "port": 9218}])
+escopy = Elasticsearch([{"host": "119.29.67.239", "port": 9218}])
 formatter = logging.Formatter('%(asctime)s - %(funcName)s - %(name)s - %(levelname)s - %(message)s')
 handler.setFormatter(formatter)
 logger.addHandler(handler)
 BLOCK_SIZE = 16
 pad = lambda s: s + (BLOCK_SIZE - len(s) % BLOCK_SIZE) * bytes(chr(BLOCK_SIZE - len(s) % BLOCK_SIZE), encoding='utf8')
 unpad = lambda s: s[0:-ord(s[-1])]
+vipdengji = [0, 1, 2, 3, 4, 5, 6]
+viptime = [259200, 2592000, 31536000, 31536000, 31536000, 3153600000, 3153600000]
+sijiaotime = [0, 0, 0, 2592000, 7776000, 31536000, 3153600000]
+total_fees = [0, 2900, 19900, 49900, 99900, 299900, 499900]
+# viptime = [0, 60, 60, 60, 60, 60, 60]
+# sijiaotime = [0, 60, 60, 60, 60, 60, 60]
+# total_fees = [0, 1, 2, 3, 4, 5, 6]
 dingyuehaoappid = 'wxc1deae6a065dffa9'
 dingyuehaoencodingAESKey = "UmBlx5gtFv7zravWwE9tCLjC99qPxRZQDPDdfeFCBfg"
 token = 'lianailianmeng'
@@ -57,6 +65,32 @@ mch_id = '1519367291'
 merchant_key = 'shenzhenyuzikejiyouxiangongsi888'
 key = "pangyuming920318"
 iv = "abcdefabcdefabcd"
+
+
+def openid_unionid(openid,access_token):
+    unionidurl = 'https://api.weixin.qq.com/sns/userinfo?access_token='+access_token+'&openid='+openid+'&lang=zh_CN'
+    response = requests.get(unionidurl)
+    response = response.json()
+    return response
+
+
+def adduserhis(userhis):
+    es.index(index='userhis', doc_type='userhis', body=userhis)
+    # global userhiss:
+    # action = {
+    #     "_index": "userhis",
+    #     "_type": "userhis",
+    #     "_source": userhis
+    # }
+    # userhiss.append(action)
+    # if len(userhis) >= 500:
+    #     helpers.bulk(es, userhiss)
+    #     userhiss = []
+    return None
+
+
+def getTime():
+    return time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
 
 
 def dict_to_xml(dict_data):
@@ -253,47 +287,23 @@ def yuzikeji():
             return rep_xml
 
 
-@app.route("/v1/shouquanhuitiao", methods=["GET", "POST"])
-def shouquanhuitiao():
-    print(request.args)
-    return "OK"
-
-
-@app.route("/v1/ceshi", methods=["GET", "POST"])
-def ceshi():
-    if request.method == "GET":
-        signature = request.args.get('signature')
-        timestamp = request.args.get('timestamp')
-        nonce = request.args.get('nonce')
-        echostr = request.args.get('echostr')
-        data = [token, timestamp, nonce]
-        data.sort()
-        newstring = data[0] + data[1] + data[2]
-        sha1 = hashlib.sha1()
-        sha1.update(newstring.encode())
-        hashcode = sha1.hexdigest()
-        if hashcode == signature:
-            return echostr
-    return None
-
-
 @app.route("/v1/getKechengList", methods=["POST"])
 def getKechengList():
-    # try:
-    #     params = json.loads(decrypt(request.stream.read()))
-    #     openid = params['openid']
-    # except Exception as e:
-    #     logger.error(e)
-    #     return json.dumps({'MSG': '警告！非法入侵！！！'})
-    # adduserhis(
-    #     {'openid': openid, 'time': getTime(), 'event': 'getKechengList', 'detail': 'getKechengList',
-    #      'type': '0'})
+    try:
+        params = json.loads(decrypt(request.stream.read()))
+        unionid = params['unionid']
+    except Exception as e:
+        logger.error(e)
+        return json.dumps({'MSG': '警告！非法入侵！！！'})
+    adduserhis(
+        {'unionid': unionid, 'time': getTime(), 'event': 'getKechengList', 'detail': 'getKechengList',
+         'type': '1'})
     retdata = []
     search = {"query": {"match_all": {}}}
     Docs = es.search(index='kechenglist', doc_type='kechenglist', body=search, size=10000)
     Docs = Docs['hits']['hits']
     try:
-        goumaidoc = es.get(index='kechenggoumai', doc_type='kechenggoumai', id=openid)['_source']
+        goumaidoc = es.get(index='kechenggoumai', doc_type='kechenggoumai', id=unionid)['_source']
         goumaidoc['data'] = json.loads(goumaidoc['data'])
     except:
         goumaidoc = {}
@@ -312,83 +322,73 @@ def getKechengList():
 def getKecheng():
     try:
         params = json.loads(decrypt(request.stream.read()))
-        # openid = params['openid']
+        unionid = params['unionid']
         neirongid = params['neirongid']
     except Exception as e:
         logger.error(e)
         return json.dumps({'MSG': '警告！非法入侵！！！'})
-    # adduserhis({'openid': openid, 'time': getTime(), 'event': 'getKecheng', 'detail': neirongid,
-    #             'type': '0'})
+    adduserhis({'unionid': unionid, 'time': getTime(), 'event': 'getKecheng', 'detail': neirongid,
+                'type': '1'})
     doc = es.get(index='kecheng', doc_type='kecheng', id=neirongid)['_source']
     return encrypt(json.dumps({'MSG': 'OK', 'data': doc}))
 
 
-@app.route("/v1/getOpenid", methods=["POST"])
-def getOpenid():
+@app.route("/v1/getUnionid", methods=["POST"])
+def getUnionid():
     try:
         params = json.loads(decrypt(request.stream.read()))
         code = params['code']
-        # userInfo = params['userInfo']
-        # system = params['system']
-        # options = params['options']
     except Exception as e:
         logger.error(e)
         return json.dumps({'MSG': '警告！非法入侵！！！'})
-    url ='https://api.weixin.qq.com/sns/oauth2/access_token?appid='+fuwuhaoappid+'&secret='+fuwuhaoAppSecret+'&code='+code+'&grant_type=authorization_code'
+    url = 'https://api.weixin.qq.com/sns/oauth2/access_token?appid=' + fuwuhaoappid + '&secret=' + fuwuhaoAppSecret + '&code=' + code + '&grant_type=authorization_code'
     response = requests.get(url)
     response = response.json()
     print(response)
-    # userInfo['openid'] = response['openid']
-    # userInfo['system'] = system
-    # try:
-    #     doc = es.get(index='userinfo', doc_type='userinfo', id=response['openid'])
-    #     newdoc = doc['_source']
-    #     newdoc.update(userInfo)
-    #     es.index(index='userinfo', doc_type='userinfo', id=userInfo['openid'], body=newdoc)
-    #     try:
-    #         escopy.index(index='userinfo', doc_type='userinfo', id=userInfo['openid'], body=newdoc, timeout="1s")
-    #     except Exception as e:
-    #         logger.error(e)
-    # except Exception as e:
-    #     logger.error(e)
-    #     userInfo['addtime'] = time.strftime("%Y%m%d", time.localtime())
-    #     userInfo['vipdengji'] = 0
-    #     userInfo['viptime'] = int(time.time()) + viptime[0]
-    #     userInfo['sijiaotime'] = 0
-    #     userInfo['xiaofeicishu'] = 0
-    #     userInfo['xiaofeizonge'] = 0
-    #     userInfo['options'] = json.loads(options)
-    #     es.index(index='userinfo', doc_type='userinfo', id=userInfo['openid'], body=userInfo)
-    #     try:
-    #         escopy.index(index='userinfo', doc_type='userinfo', id=userInfo['openid'], body=userInfo, timeout="1s")
-    #     except Exception as e:
-    #         logger.error(e)
-    # # print(decryptweixin(params['encryptedData'], response['session_key'], params['iv'])['unionId'])
-    # adduserhis(
-    #     {'openid': response['openid'], 'time': getTime(), 'event': 'getOpenid', 'detail': 'getOpenid', 'type': '0'})
-    return encrypt(json.dumps({'MSG': 'OK', 'data': {'openid': response['openid']}}))
+    resdata = openid_unionid(response['openid'],response['access_token'])
+    print(resdata)
+    unionid = resdata['unionid']
+    resdata['gzhid'] = resdata['openid']
+    resdata.pop('openid')
+    try:
+        userinfodoc = es.get(index='userinfo', doc_type='userinfo', id=unionid)['_source']
+        userinfodoc.update(resdata)
+        resdata = userinfodoc
+    except:
+        resdata['addtime'] = getTime()
+        resdata['vipdengji'] = 0
+        resdata['viptime'] = int(time.time()) + viptime[0]
+        resdata['sijiaotime'] = 0
+        resdata['xiaofeicishu'] = 0
+        resdata['xiaofeizonge'] = 0
+    es.index(index='userinfo', doc_type='userinfo', id=unionid, body=resdata)
+    try:
+        escopy.index(index='userinfo', doc_type='userinfo', id=unionid, body=resdata, timeout="1s")
+    except Exception as e:
+        logger.error(e)
+    return encrypt(json.dumps({'MSG': 'OK', 'data': {'unionid': unionid}}))
+
 
 @app.route("/v1/get_prepay_id", methods=["POST"])
 def get_prepay_id():
     try:
         params = json.loads(decrypt(request.stream.read()))
-        openid = params['openid']
-        zhifutype = params['zhifutype']
+        unionid = params['unionid']
+        zhifutype = int(params['zhifutype'])
         detail = params['detail']
     except Exception as e:
         logger.error(e)
         return json.dumps({'MSG': '警告！非法入侵！！！'})
-    # kechengjiage = int(es.get(index='kechenglist', doc_type='kechenglist', id=kechengid)['_source']['jiage'] * 100)
-    kechengjiage=1
+    openid = es.get(index='userinfo', doc_type='userinfo', id=unionid)['_source']['gzhid']
     url = 'https://api.mch.weixin.qq.com/pay/unifiedorder'
     prepaydata = {
         'appid': fuwuhaoappid,
         'mch_id': mch_id,
         'nonce_str': ''.join(random.sample(string.ascii_letters + string.digits, 32)),
         'body': detail,
-        'attach': json.dumps({'zhifutype': zhifutype, 'detail': detail}, ensure_ascii=False),
+        'attach': json.dumps({'zhifutype': zhifutype, 'detail': detail, 'unionid': unionid}, ensure_ascii=False),
         'out_trade_no': str(int(time.time())) + '_' + str((random.randint(1000000, 9999999))),
-        'total_fee': kechengjiage,
+        'total_fee': total_fees[zhifutype],
         'spbill_create_ip': request.remote_addr,
         'notify_url': wangzhi + "v1/paynotify",
         'trade_type': "JSAPI",
@@ -402,6 +402,7 @@ def get_prepay_id():
                                  headers={'Content-Type': 'application/xml'})
     result = urllib.request.urlopen(req, timeout=10).read().decode('utf8')
     result = xml_to_dict(result)
+    print(result)
     prepay_id = result['prepay_id']
     paySign_data = {
         'appId': fuwuhaoappid,
@@ -414,13 +415,8 @@ def get_prepay_id():
     stringSignTemp = '{0}&key={1}'.format(stringA, merchant_key)
     paySign = hashlib.md5(stringSignTemp.encode('utf8')).hexdigest()
     paySign_data['paySign'] = paySign
-    # paySign_data.pop('appId')
-    # doc = es.get(index='userinfo', doc_type='userinfo', id=openid)
-    # doc = doc['_source']
-    # if 'phoneNumber' not in doc:
-    #     return encrypt(json.dumps({'MSG': 'nophoneNumber', 'data': paySign_data}))
-    print(paySign_data)
     return encrypt(json.dumps({'MSG': 'OK', 'data': paySign_data}))
+
 
 @app.route("/v1/paynotify", methods=["POST"])
 def paynotify():
@@ -432,81 +428,75 @@ def paynotify():
     paySign = hashlib.md5(stringSignTemp.encode('utf8')).hexdigest().upper()
     if sign != paySign:
         return dict_to_xml({'return_code': 'FAIL', 'return_msg': 'SIGNERROR'})
-    print(zhifures)
-    # zhifudata = [zhifures]
-    # isnew = 1
-    # flag = 1
-    # try:
-    #     doc = es.get(index='userzhifu', doc_type='userzhifu', id=zhifures['openid'])
-    #     isnew = 0
-    #     for line in doc['_source']['zhifudata']:
-    #         if line['transaction_id'] == zhifudata[0]['transaction_id']:
-    #             flag = 0
-    #     if flag:
-    #         zhifudata += doc['_source']['zhifudata']
-    # except Exception as e:
-    #     logger.error(e)
-    # if isnew or (isnew == 0 and flag == 1):
-    #     es.index(index='userzhifu', doc_type='userzhifu', id=zhifures['openid'],
-    #              body={'openid': zhifures['openid'], 'zhifudata': zhifudata, 'updatatime': zhifures['time_end']})
-    #     try:
-    #         escopy.index(index='userzhifu', doc_type='userzhifu', id=zhifures['openid'],
-    #                      body={'openid': zhifures['openid'], 'zhifudata': zhifudata,
-    #                            'updatatime': zhifures['time_end']}, timeout="1s")
-    #     except Exception as e:
-    #         logger.error(e)
-    #     try:
-    #         kechengid = json.loads(zhifures['attach'])['kechengid']
-    #         try:
-    #             goumaidoc = es.get(index='kechenggoumai', doc_type='kechenggoumai', id=zhifures['openid'])['_source']
-    #             goumaidoc['data'] = json.loads(goumaidoc['data'])
-    #             goumaidoc['data'][kechengid] = 1
-    #         except:
-    #             goumaidoc = {}
-    #             goumaidoc['openid'] = zhifures['openid']
-    #             goumaidoc['data'] = {}
-    #             goumaidoc['data'][kechengid] = 1
-    #         goumaidoc['data'] = json.dumps(goumaidoc['data'])
-    #         es.index(index='kechenggoumai', doc_type='kechenggoumai', id=zhifures['openid'], body=goumaidoc)
-    #         try:
-    #             escopy.index(index='kechenggoumai', doc_type='kechenggoumai', id=zhifures['openid'], body=goumaidoc,
-    #                          timeout="1s")
-    #         except Exception as e:
-    #             logger.error(e)
-    #         doc = es.get(index='userinfo', doc_type='userinfo', id=zhifures['openid'])
-    #         newdoc = doc['_source']
-    #         newdoc['xiaofeicishu'] += 1
-    #         newdoc['xiaofeizonge'] += int(zhifures['total_fee'])
-    #         es.index(index='userinfo', doc_type='userinfo', id=zhifures['openid'], body=newdoc)
-    #         try:
-    #             escopy.index(index='userinfo', doc_type='userinfo', id=zhifures['openid'], body=newdoc, timeout="1s")
-    #         except Exception as e:
-    #             logger.error(e)
-    #     except Exception as e:
-    #         logger.error(e)
+    unionid = json.loads(zhifures['attach'])['unionid']
+    zhifudata = [zhifures]
+    isnew = 1
+    flag = 1
+    try:
+        doc = es.get(index='userzhifu', doc_type='userzhifu', id=unionid)
+        isnew = 0
+        for line in doc['_source']['zhifudata']:
+            if line['transaction_id'] == zhifudata[0]['transaction_id']:
+                flag = 0
+        if flag:
+            zhifudata += doc['_source']['zhifudata']
+    except Exception as e:
+        logger.error(e)
+    if isnew or (isnew == 0 and flag == 1):
+        es.index(index='userzhifu', doc_type='userzhifu', id=unionid,
+                 body={'unionid': unionid, 'zhifudata': zhifudata, 'updatatime': zhifures['time_end']})
+        try:
+            escopy.index(index='userzhifu', doc_type='userzhifu', id=unionid,
+                         body={'unionid': unionid, 'zhifudata': zhifudata,
+                               'updatatime': zhifures['time_end']}, timeout="1s")
+        except Exception as e:
+            logger.error(e)
+        try:
+            zhifutype = int(json.loads(zhifures['attach'])['zhifutype'])
+            doc = es.get(index='userinfo', doc_type='userinfo', id=unionid)
+            newdoc = doc['_source']
+            if newdoc['vipdengji'] < zhifutype:
+                newdoc['vipdengji'] = zhifutype
+            if newdoc['viptime'] < int(time.time()):
+                newdoc['viptime'] = int(time.time()) + viptime[zhifutype]
+            else:
+                newdoc['viptime'] += viptime[zhifutype]
+            if newdoc['sijiaotime'] < int(time.time()):
+                newdoc['sijiaotime'] = int(time.time()) + sijiaotime[zhifutype]
+            else:
+                newdoc['sijiaotime'] += sijiaotime[zhifutype]
+            newdoc['xiaofeicishu'] += 1
+            newdoc['xiaofeizonge'] += int(zhifures['total_fee'])
+            es.index(index='userinfo', doc_type='userinfo', id=unionid, body=newdoc)
+            try:
+                escopy.index(index='userinfo', doc_type='userinfo', id=unionid, body=newdoc, timeout="1s")
+            except Exception as e:
+                logger.error(e)
+        except Exception as e:
+            logger.error(e)
     return dict_to_xml({'return_code': 'SUCCESS', 'return_msg': 'OK'})
-
 
 
 @app.route("/v1/get_kechengprepay_id", methods=["POST"])
 def get_kechengprepay_id():
     try:
         params = json.loads(decrypt(request.stream.read()))
-        openid = params['openid']
+        unionid = params['unionid']
         kechengid = params['kechengid']
         detail = params['detail']
     except Exception as e:
         logger.error(e)
         return json.dumps({'MSG': '警告！非法入侵！！！'})
-    # kechengjiage = int(es.get(index='kechenglist', doc_type='kechenglist', id=kechengid)['_source']['jiage'] * 100)
-    kechengjiage=1
+    openid = es.get(index='userinfo', doc_type='userinfo', id=unionid)['_source']['gzhid']
+    kechengjiage = int(es.get(index='kechenglist', doc_type='kechenglist', id=kechengid)['_source']['jiage'] * 100)
+    # kechengjiage = 1
     url = 'https://api.mch.weixin.qq.com/pay/unifiedorder'
     prepaydata = {
         'appid': fuwuhaoappid,
         'mch_id': mch_id,
         'nonce_str': ''.join(random.sample(string.ascii_letters + string.digits, 32)),
         'body': detail,
-        'attach': json.dumps({'kechengid': kechengid, 'detail': detail}, ensure_ascii=False),
+        'attach': json.dumps({'kechengid': kechengid, 'detail': '课程', 'unionid': unionid}, ensure_ascii=False),
         'out_trade_no': str(int(time.time())) + '_' + str((random.randint(1000000, 9999999))),
         'total_fee': kechengjiage,
         'spbill_create_ip': request.remote_addr,
@@ -522,6 +512,7 @@ def get_kechengprepay_id():
                                  headers={'Content-Type': 'application/xml'})
     result = urllib.request.urlopen(req, timeout=10).read().decode('utf8')
     result = xml_to_dict(result)
+    print(result)
     prepay_id = result['prepay_id']
     paySign_data = {
         'appId': fuwuhaoappid,
@@ -534,11 +525,6 @@ def get_kechengprepay_id():
     stringSignTemp = '{0}&key={1}'.format(stringA, merchant_key)
     paySign = hashlib.md5(stringSignTemp.encode('utf8')).hexdigest()
     paySign_data['paySign'] = paySign
-    # paySign_data.pop('appId')
-    # doc = es.get(index='userinfo', doc_type='userinfo', id=openid)
-    # doc = doc['_source']
-    # if 'phoneNumber' not in doc:
-    #     return encrypt(json.dumps({'MSG': 'nophoneNumber', 'data': paySign_data}))
     return encrypt(json.dumps({'MSG': 'OK', 'data': paySign_data}))
 
 
@@ -552,58 +538,58 @@ def kechengpaynotify():
     paySign = hashlib.md5(stringSignTemp.encode('utf8')).hexdigest().upper()
     if sign != paySign:
         return dict_to_xml({'return_code': 'FAIL', 'return_msg': 'SIGNERROR'})
-    print(zhifures)
-    # zhifudata = [zhifures]
-    # isnew = 1
-    # flag = 1
-    # try:
-    #     doc = es.get(index='userzhifu', doc_type='userzhifu', id=zhifures['openid'])
-    #     isnew = 0
-    #     for line in doc['_source']['zhifudata']:
-    #         if line['transaction_id'] == zhifudata[0]['transaction_id']:
-    #             flag = 0
-    #     if flag:
-    #         zhifudata += doc['_source']['zhifudata']
-    # except Exception as e:
-    #     logger.error(e)
-    # if isnew or (isnew == 0 and flag == 1):
-    #     es.index(index='userzhifu', doc_type='userzhifu', id=zhifures['openid'],
-    #              body={'openid': zhifures['openid'], 'zhifudata': zhifudata, 'updatatime': zhifures['time_end']})
-    #     try:
-    #         escopy.index(index='userzhifu', doc_type='userzhifu', id=zhifures['openid'],
-    #                      body={'openid': zhifures['openid'], 'zhifudata': zhifudata,
-    #                            'updatatime': zhifures['time_end']}, timeout="1s")
-    #     except Exception as e:
-    #         logger.error(e)
-    #     try:
-    #         kechengid = json.loads(zhifures['attach'])['kechengid']
-    #         try:
-    #             goumaidoc = es.get(index='kechenggoumai', doc_type='kechenggoumai', id=zhifures['openid'])['_source']
-    #             goumaidoc['data'] = json.loads(goumaidoc['data'])
-    #             goumaidoc['data'][kechengid] = 1
-    #         except:
-    #             goumaidoc = {}
-    #             goumaidoc['openid'] = zhifures['openid']
-    #             goumaidoc['data'] = {}
-    #             goumaidoc['data'][kechengid] = 1
-    #         goumaidoc['data'] = json.dumps(goumaidoc['data'])
-    #         es.index(index='kechenggoumai', doc_type='kechenggoumai', id=zhifures['openid'], body=goumaidoc)
-    #         try:
-    #             escopy.index(index='kechenggoumai', doc_type='kechenggoumai', id=zhifures['openid'], body=goumaidoc,
-    #                          timeout="1s")
-    #         except Exception as e:
-    #             logger.error(e)
-    #         doc = es.get(index='userinfo', doc_type='userinfo', id=zhifures['openid'])
-    #         newdoc = doc['_source']
-    #         newdoc['xiaofeicishu'] += 1
-    #         newdoc['xiaofeizonge'] += int(zhifures['total_fee'])
-    #         es.index(index='userinfo', doc_type='userinfo', id=zhifures['openid'], body=newdoc)
-    #         try:
-    #             escopy.index(index='userinfo', doc_type='userinfo', id=zhifures['openid'], body=newdoc, timeout="1s")
-    #         except Exception as e:
-    #             logger.error(e)
-    #     except Exception as e:
-    #         logger.error(e)
+    unionid = json.loads(zhifures['attach'])['unionid']
+    zhifudata = [zhifures]
+    isnew = 1
+    flag = 1
+    try:
+        doc = es.get(index='userzhifu', doc_type='userzhifu', id=unionid)
+        isnew = 0
+        for line in doc['_source']['zhifudata']:
+            if line['transaction_id'] == zhifudata[0]['transaction_id']:
+                flag = 0
+        if flag:
+            zhifudata += doc['_source']['zhifudata']
+    except Exception as e:
+        logger.error(e)
+    if isnew or (isnew == 0 and flag == 1):
+        es.index(index='userzhifu', doc_type='userzhifu', id=unionid,
+                 body={'unionid': unionid, 'zhifudata': zhifudata, 'updatatime': zhifures['time_end']})
+        try:
+            escopy.index(index='userzhifu', doc_type='userzhifu', id=unionid,
+                         body={'unionid': unionid, 'zhifudata': zhifudata,
+                               'updatatime': zhifures['time_end']}, timeout="1s")
+        except Exception as e:
+            logger.error(e)
+        try:
+            kechengid = json.loads(zhifures['attach'])['kechengid']
+            try:
+                goumaidoc = es.get(index='kechenggoumai', doc_type='kechenggoumai', id=unionid)['_source']
+                goumaidoc['data'] = json.loads(goumaidoc['data'])
+                goumaidoc['data'][kechengid] = 1
+            except:
+                goumaidoc = {}
+                goumaidoc['unionid'] = unionid
+                goumaidoc['data'] = {}
+                goumaidoc['data'][kechengid] = 1
+            goumaidoc['data'] = json.dumps(goumaidoc['data'])
+            es.index(index='kechenggoumai', doc_type='kechenggoumai', id=unionid, body=goumaidoc)
+            try:
+                escopy.index(index='kechenggoumai', doc_type='kechenggoumai', id=unionid, body=goumaidoc,
+                             timeout="1s")
+            except Exception as e:
+                logger.error(e)
+            doc = es.get(index='userinfo', doc_type='userinfo', id=unionid)
+            newdoc = doc['_source']
+            newdoc['xiaofeicishu'] += 1
+            newdoc['xiaofeizonge'] += int(zhifures['total_fee'])
+            es.index(index='userinfo', doc_type='userinfo', id=unionid, body=newdoc)
+            try:
+                escopy.index(index='userinfo', doc_type='userinfo', id=unionid, body=newdoc, timeout="1s")
+            except Exception as e:
+                logger.error(e)
+        except Exception as e:
+            logger.error(e)
     return dict_to_xml({'return_code': 'SUCCESS', 'return_msg': 'OK'})
 
 

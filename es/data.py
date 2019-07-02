@@ -34,11 +34,6 @@ lianaizhuli_index = {
 }
 es = Elasticsearch([{"host": "182.254.227.188", "port": 9218, "timeout": 3600}])
 actions = []
-# es.indices.delete(index='huashu')
-# es.indices.delete(index='guanli')
-# es.indices.delete(index='methodology')
-# es.indices.delete(index='wenzhang')
-# es.indices.delete(index='ganhuo')
 # es.indices.delete(index='biaoqing')
 
 # es.indices.delete(index='liaomeihuashu')
@@ -93,9 +88,6 @@ actions = []
 # print(ret_data)
 # ret_data = es.indices.create(index='search', body=lianaizhuli_index, ignore=400)
 # print(ret_data)
-
-ret_data = es.indices.create(index='unioninfo', body=lianaizhuli_index, ignore=400)
-print(ret_data)
 
 # with open('biaoqing.json', 'r') as f:
 #     for line in f:
@@ -355,7 +347,6 @@ print(ret_data)
 #         action = {
 #             "_index": "search",
 #             "_type": "search",
-#             # '_id': item['id'],
 #             "_source": item
 #         }
 #         actions.append(action)

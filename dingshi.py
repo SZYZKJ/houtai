@@ -46,7 +46,8 @@ def solve():
             Docs=es.search(index=docname,doc_type=docname,body=search,size=10000)['hits']['hits']
             for doc in Docs:
                 xinzeng = random.randint(10, 100)
-                doc['_source']['count'] += xinzeng
+                if 'count' in doc:
+                    doc['_source']['count'] += xinzeng
                 action = {
                     "_index": docname,
                     "_type": docname,

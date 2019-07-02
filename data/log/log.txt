@@ -544,3 +544,269 @@
 2019-07-02 00:44:57,196 - checkOpenid - __main__ - ERROR - 'openid'
 2019-07-02 00:45:22,181 - checkOpenid - __main__ - ERROR - 'openid'
 2019-07-02 00:45:34,485 - checkOpenid - __main__ - ERROR - 'openid'
+2019-07-02 02:07:52,640 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64lP7cl-27s2J6qMUnYqyaes","found":false}')
+2019-07-02 02:36:12,385 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64gpYoCrH3ueDdU8-3G4-o5A","found":false}')
+2019-07-02 03:42:29,159 - checkUnionid - __main__ - ERROR - 'unionid'
+2019-07-02 03:42:59,886 - checkUnionid - __main__ - ERROR - 'unionid'
+2019-07-02 03:43:00,606 - getUnionid - __main__ - ERROR - 'unioninfo'
+2019-07-02 03:43:07,583 - checkUnionid - __main__ - ERROR - 'unionid'
+2019-07-02 03:43:08,011 - getUnionid - __main__ - ERROR - 'unioninfo'
+2019-07-02 03:43:48,556 - checkUnionid - __main__ - ERROR - 'unionid'
+2019-07-02 03:44:35,460 - checkUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"unioninfo","_type":"unioninfo","_id":"ofIsD1YLw3q_1v4d2NgX9GrS3ZEM","found":false}')
+2019-07-02 03:55:43,533 - checkUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"unioninfo","_type":"unioninfo","_id":"ofIsD1YLw3q_1v4d2NgX9GrS3ZEM","found":false}')
+2019-07-02 03:56:23,068 - checkUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"unioninfo","_type":"unioninfo","_id":"ofIsD1YLw3q_1v4d2NgX9GrS3ZEM","found":false}')
+2019-07-02 04:00:09,490 - checkUnionid - __main__ - ERROR - 'userInfo'
+2019-07-02 04:00:09,935 - getUnionid - __main__ - ERROR - 'userInfo'
+2019-07-02 04:02:14,985 - checkUnionid - __main__ - ERROR - 'userInfo'
+2019-07-02 04:02:15,421 - getUnionid - __main__ - ERROR - 'userInfo'
+2019-07-02 04:03:41,094 - checkUnionid - __main__ - ERROR - 'userInfo'
+2019-07-02 04:03:41,732 - getUnionid - __main__ - ERROR - 'userInfo'
+2019-07-02 04:04:30,268 - checkUnionid - __main__ - ERROR - 'userInfo'
+2019-07-02 04:04:30,768 - getUnionid - __main__ - ERROR - 'userInfo'
+2019-07-02 04:07:49,479 - checkUnionid - __main__ - ERROR - 'userInfo'
+2019-07-02 04:07:50,029 - getUnionid - __main__ - ERROR - 'userInfo'
+2019-07-02 04:09:08,194 - checkUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"unioninfo","_type":"unioninfo","_id":"ofIsD1YLw3q_1v4d2NgX9GrS3ZEM","found":false}')
+2019-07-02 04:09:53,381 - checkUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"unioninfo","_type":"unioninfo","_id":"ofIsD1YLw3q_1v4d2NgX9GrS3ZEM","found":false}')
+2019-07-02 04:10:25,774 - checkUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"unioninfo","_type":"unioninfo","_id":"ofIsD1YLw3q_1v4d2NgX9GrS3ZEM","found":false}')
+2019-07-02 04:10:30,738 - checkUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"unioninfo","_type":"unioninfo","_id":"ofIsD1YLw3q_1v4d2NgX9GrS3ZEM","found":false}')
+2019-07-02 04:11:56,638 - checkUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"unioninfo","_type":"unioninfo","_id":"ofIsD1YLw3q_1v4d2NgX9GrS3ZEM","found":false}')
+2019-07-02 04:13:49,731 - checkUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"unioninfo","_type":"unioninfo","_id":"ofIsD1YLw3q_1v4d2NgX9GrS3ZEM","found":false}')
+2019-07-02 04:23:31,482 - checkUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"unioninfo","_type":"unioninfo","_id":"ofIsD1YLw3q_1v4d2NgX9GrS3ZEM","found":false}')
+2019-07-02 04:44:41,074 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64gwNs1oGJOJVjQwdxeAGq2Q","found":false}')
+2019-07-02 05:16:00,298 - checkUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1YLw3q_1v4d2NgX9GrS3ZEM","found":false}')
+2019-07-02 05:16:01,223 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1YLw3q_1v4d2NgX9GrS3ZEM","found":false}')
+2019-07-02 05:23:52,421 - checkUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1YLw3q_1v4d2NgX9GrS3ZEM","found":false}')
+2019-07-02 05:23:53,121 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1YLw3q_1v4d2NgX9GrS3ZEM","found":false}')
+2019-07-02 05:24:16,664 - checkOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64liSPmlzHped8ATXf23jqyI","found":false}')
+2019-07-02 05:24:17,338 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64liSPmlzHped8ATXf23jqyI","found":false}')
+2019-07-02 05:27:16,564 - paynotify - __main__ - ERROR - NotFoundError(404, '{"_index":"userzhifu","_type":"userzhifu","_id":"oz7z64liSPmlzHped8ATXf23jqyI","found":false}')
+2019-07-02 05:27:44,313 - checkUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1YLw3q_1v4d2NgX9GrS3ZEM","found":false}')
+2019-07-02 05:27:45,027 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1YLw3q_1v4d2NgX9GrS3ZEM","found":false}')
+2019-07-02 05:28:26,296 - checkOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64liSPmlzHped8ATXf23jqyI","found":false}')
+2019-07-02 05:28:27,059 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64liSPmlzHped8ATXf23jqyI","found":false}')
+2019-07-02 05:28:43,142 - paynotify - __main__ - ERROR - NotFoundError(404, '{"_index":"userzhifu","_type":"userzhifu","_id":"oz7z64liSPmlzHped8ATXf23jqyI","found":false}')
+2019-07-02 05:36:01,479 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64rYcMiYJ9pCRleZDGArgBKc","found":false}')
+2019-07-02 05:37:14,808 - checkUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1YLw3q_1v4d2NgX9GrS3ZEM","found":false}')
+2019-07-02 05:37:15,647 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1YLw3q_1v4d2NgX9GrS3ZEM","found":false}')
+2019-07-02 05:38:10,467 - checkUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1YLw3q_1v4d2NgX9GrS3ZEM","found":false}')
+2019-07-02 05:38:11,240 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1YLw3q_1v4d2NgX9GrS3ZEM","found":false}')
+2019-07-02 05:42:56,672 - checkUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1YLw3q_1v4d2NgX9GrS3ZEM","found":false}')
+2019-07-02 05:42:57,393 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1YLw3q_1v4d2NgX9GrS3ZEM","found":false}')
+2019-07-02 05:45:08,768 - checkUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1YLw3q_1v4d2NgX9GrS3ZEM","found":false}')
+2019-07-02 05:45:09,542 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1YLw3q_1v4d2NgX9GrS3ZEM","found":false}')
+2019-07-02 05:47:10,596 - checkUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1YLw3q_1v4d2NgX9GrS3ZEM","found":false}')
+2019-07-02 05:47:11,443 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1YLw3q_1v4d2NgX9GrS3ZEM","found":false}')
+2019-07-02 06:28:11,379 - checkUnionid - __main__ - ERROR - 'unionid'
+2019-07-02 06:28:12,010 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TnzmxGWNn_5cA7YoHtqBH0","found":false}')
+2019-07-02 06:30:32,704 - checkOpenid - __main__ - ERROR - 'openid'
+2019-07-02 06:30:33,224 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64gQqCDvS-BMlH7GEbsIuxyE","found":false}')
+2019-07-02 06:34:35,877 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64qSukUKCKzb77Ufswrrlodw","found":false}')
+2019-07-02 06:34:44,960 - checkUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1YLw3q_1v4d2NgX9GrS3ZEM","found":false}')
+2019-07-02 06:34:45,655 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1YLw3q_1v4d2NgX9GrS3ZEM","found":false}')
+2019-07-02 06:56:42,064 - checkOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64liSPmlzHped8ATXf23jqyI","found":false}')
+2019-07-02 06:56:42,870 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64liSPmlzHped8ATXf23jqyI","found":false}')
+2019-07-02 07:01:22,721 - checkUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1YLw3q_1v4d2NgX9GrS3ZEM","found":false}')
+2019-07-02 07:01:23,569 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1YLw3q_1v4d2NgX9GrS3ZEM","found":false}')
+2019-07-02 07:06:28,716 - checkOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64liSPmlzHped8ATXf23jqyI","found":false}')
+2019-07-02 07:06:29,487 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64liSPmlzHped8ATXf23jqyI","found":false}')
+2019-07-02 07:06:44,937 - paynotify - __main__ - ERROR - NotFoundError(404, '{"_index":"userzhifu","_type":"userzhifu","_id":"oz7z64liSPmlzHped8ATXf23jqyI","found":false}')
+2019-07-02 07:06:59,767 - checkUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1YLw3q_1v4d2NgX9GrS3ZEM","found":false}')
+2019-07-02 07:07:00,593 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1YLw3q_1v4d2NgX9GrS3ZEM","found":false}')
+2019-07-02 07:07:50,301 - checkOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64liSPmlzHped8ATXf23jqyI","found":false}')
+2019-07-02 07:07:51,145 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64liSPmlzHped8ATXf23jqyI","found":false}')
+2019-07-02 07:09:38,607 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64qD3_BtOHvvtAKQn32pzN4Q","found":false}')
+2019-07-02 07:11:23,644 - checkUnionid - __main__ - ERROR - 'unionid'
+2019-07-02 07:11:24,976 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1bOCsN15ObtzZFpmooEn-xQ","found":false}')
+2019-07-02 07:17:00,611 - paynotify - __main__ - ERROR - NotFoundError(404, '{"_index":"userzhifu","_type":"userzhifu","_id":"oz7z64liSPmlzHped8ATXf23jqyI","found":false}')
+2019-07-02 07:20:50,976 - checkUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1YLw3q_1v4d2NgX9GrS3ZEM","found":false}')
+2019-07-02 07:20:51,903 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1YLw3q_1v4d2NgX9GrS3ZEM","found":false}')
+2019-07-02 07:21:12,310 - checkOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64liSPmlzHped8ATXf23jqyI","found":false}')
+2019-07-02 07:21:13,001 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64liSPmlzHped8ATXf23jqyI","found":false}')
+2019-07-02 07:44:11,412 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64nospSbeKQMN-pBcjZZ8xY0","found":false}')
+2019-07-02 08:00:51,564 - checkUnionid - __main__ - ERROR - 'unionid'
+2019-07-02 08:04:07,348 - checkOpenid - __main__ - ERROR - 'openid'
+2019-07-02 08:04:08,234 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64liSPmlzHped8ATXf23jqyI","found":false}')
+2019-07-02 08:05:42,483 - kechengpaynotify - __main__ - ERROR - NotFoundError(404, '{"_index":"userzhifu","_type":"userzhifu","_id":"oz7z64liSPmlzHped8ATXf23jqyI","found":false}')
+2019-07-02 08:08:48,548 - checkUnionid - __main__ - ERROR - 'unionid'
+2019-07-02 08:08:49,281 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1YLw3q_1v4d2NgX9GrS3ZEM","found":false}')
+2019-07-02 08:09:20,303 - checkOpenid - __main__ - ERROR - 'openid'
+2019-07-02 08:09:31,660 - checkUnionid - __main__ - ERROR - 'unionid'
+2019-07-02 08:09:32,434 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1YLw3q_1v4d2NgX9GrS3ZEM","found":false}')
+2019-07-02 08:12:30,359 - checkUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1YLw3q_1v4d2NgX9GrS3ZEM","found":false}')
+2019-07-02 08:12:31,144 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1YLw3q_1v4d2NgX9GrS3ZEM","found":false}')
+2019-07-02 08:18:02,291 - getOpenid - __main__ - ERROR - 'code'
+2019-07-02 08:28:32,910 - checkOpenid - __main__ - ERROR - 'openid'
+2019-07-02 08:30:37,871 - checkUnionid - __main__ - ERROR - 'unionid'
+2019-07-02 09:37:11,319 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64mZqvYylaOKlQnhRmF-07-M","found":false}')
+2019-07-02 10:28:49,582 - checkUnionid - __main__ - ERROR - 'unionid'
+2019-07-02 10:28:51,570 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1eQd-BlNZ5S0ftjwarnCUVk","found":false}')
+2019-07-02 10:32:10,102 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64qypKF6kbnTFTG4HDKgy--M","found":false}')
+2019-07-02 10:57:50,928 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64tnCqQnyKKhUXZv-enb1_eM","found":false}')
+2019-07-02 11:57:01,108 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64nJjcaDIL1uvRT2rMfD_tfM","found":false}')
+2019-07-02 12:17:50,519 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64qu2tPR_Ptj9kusg1AnCepU","found":false}')
+2019-07-02 12:54:39,794 - checkOpenid - __main__ - ERROR - 'openid'
+2019-07-02 12:55:21,293 - checkUnionid - __main__ - ERROR - 'unionid'
+2019-07-02 13:48:08,799 - checkUnionid - __main__ - ERROR - 'unionid'
+2019-07-02 13:49:21,509 - checkUnionid - __main__ - ERROR - 'unionid'
+2019-07-02 13:49:26,496 - checkUnionid - __main__ - ERROR - 'unionid'
+2019-07-02 13:49:46,733 - checkUnionid - __main__ - ERROR - 'unionid'
+2019-07-02 13:49:48,422 - checkUnionid - __main__ - ERROR - 'unionid'
+2019-07-02 13:50:00,158 - checkUnionid - __main__ - ERROR - 'unionid'
+2019-07-02 13:50:04,023 - checkUnionid - __main__ - ERROR - 'unionid'
+2019-07-02 13:50:12,613 - checkUnionid - __main__ - ERROR - 'unionid'
+2019-07-02 13:50:24,745 - checkUnionid - __main__ - ERROR - 'unionid'
+2019-07-02 13:50:27,243 - checkUnionid - __main__ - ERROR - 'unionid'
+2019-07-02 13:50:38,538 - checkUnionid - __main__ - ERROR - 'unionid'
+2019-07-02 13:50:40,827 - checkUnionid - __main__ - ERROR - 'unionid'
+2019-07-02 13:50:54,685 - checkUnionid - __main__ - ERROR - 'unionid'
+2019-07-02 13:50:56,587 - checkUnionid - __main__ - ERROR - 'unionid'
+2019-07-02 13:51:09,520 - checkUnionid - __main__ - ERROR - 'unionid'
+2019-07-02 13:51:11,407 - checkUnionid - __main__ - ERROR - 'unionid'
+2019-07-02 13:51:24,109 - checkUnionid - __main__ - ERROR - 'unionid'
+2019-07-02 13:51:26,482 - checkUnionid - __main__ - ERROR - 'unionid'
+2019-07-02 13:51:40,665 - checkUnionid - __main__ - ERROR - 'unionid'
+2019-07-02 13:51:42,205 - checkUnionid - __main__ - ERROR - 'unionid'
+2019-07-02 13:51:52,661 - checkUnionid - __main__ - ERROR - 'unionid'
+2019-07-02 13:51:55,069 - checkUnionid - __main__ - ERROR - 'unionid'
+2019-07-02 13:52:09,476 - checkUnionid - __main__ - ERROR - 'unionid'
+2019-07-02 13:52:12,055 - checkUnionid - __main__ - ERROR - 'unionid'
+2019-07-02 13:52:21,305 - checkUnionid - __main__ - ERROR - 'unionid'
+2019-07-02 13:52:23,346 - checkUnionid - __main__ - ERROR - 'unionid'
+2019-07-02 13:52:33,320 - checkUnionid - __main__ - ERROR - 'unionid'
+2019-07-02 13:52:35,122 - checkUnionid - __main__ - ERROR - 'unionid'
+2019-07-02 13:52:45,237 - checkUnionid - __main__ - ERROR - 'unionid'
+2019-07-02 13:52:47,544 - checkUnionid - __main__ - ERROR - 'unionid'
+2019-07-02 13:53:01,867 - checkUnionid - __main__ - ERROR - 'unionid'
+2019-07-02 13:53:04,381 - checkUnionid - __main__ - ERROR - 'unionid'
+2019-07-02 13:53:14,581 - checkUnionid - __main__ - ERROR - 'unionid'
+2019-07-02 13:53:16,954 - checkUnionid - __main__ - ERROR - 'unionid'
+2019-07-02 13:53:27,572 - checkUnionid - __main__ - ERROR - 'unionid'
+2019-07-02 13:53:29,931 - checkUnionid - __main__ - ERROR - 'unionid'
+2019-07-02 13:53:41,903 - checkUnionid - __main__ - ERROR - 'unionid'
+2019-07-02 13:53:43,772 - checkUnionid - __main__ - ERROR - 'unionid'
+2019-07-02 13:53:57,288 - checkUnionid - __main__ - ERROR - 'unionid'
+2019-07-02 13:53:58,959 - checkUnionid - __main__ - ERROR - 'unionid'
+2019-07-02 13:54:07,001 - checkUnionid - __main__ - ERROR - 'unionid'
+2019-07-02 13:54:08,544 - checkUnionid - __main__ - ERROR - 'unionid'
+2019-07-02 13:54:16,478 - checkUnionid - __main__ - ERROR - 'unionid'
+2019-07-02 13:54:18,086 - checkUnionid - __main__ - ERROR - 'unionid'
+2019-07-02 13:54:27,559 - checkUnionid - __main__ - ERROR - 'unionid'
+2019-07-02 13:54:30,040 - checkUnionid - __main__ - ERROR - 'unionid'
+2019-07-02 13:54:40,177 - checkUnionid - __main__ - ERROR - 'unionid'
+2019-07-02 13:54:42,769 - checkUnionid - __main__ - ERROR - 'unionid'
+2019-07-02 13:54:55,805 - checkUnionid - __main__ - ERROR - 'unionid'
+2019-07-02 13:54:57,600 - checkUnionid - __main__ - ERROR - 'unionid'
+2019-07-02 13:55:10,988 - checkUnionid - __main__ - ERROR - 'unionid'
+2019-07-02 13:55:12,518 - checkUnionid - __main__ - ERROR - 'unionid'
+2019-07-02 13:55:23,908 - checkUnionid - __main__ - ERROR - 'unionid'
+2019-07-02 13:55:25,689 - checkUnionid - __main__ - ERROR - 'unionid'
+2019-07-02 13:55:37,840 - checkUnionid - __main__ - ERROR - 'unionid'
+2019-07-02 13:55:39,462 - checkUnionid - __main__ - ERROR - 'unionid'
+2019-07-02 13:55:48,618 - checkUnionid - __main__ - ERROR - 'unionid'
+2019-07-02 13:55:51,059 - checkUnionid - __main__ - ERROR - 'unionid'
+2019-07-02 13:56:00,278 - checkUnionid - __main__ - ERROR - 'unionid'
+2019-07-02 13:56:02,498 - checkUnionid - __main__ - ERROR - 'unionid'
+2019-07-02 13:56:12,301 - checkUnionid - __main__ - ERROR - 'unionid'
+2019-07-02 13:56:13,943 - checkUnionid - __main__ - ERROR - 'unionid'
+2019-07-02 13:56:26,228 - checkUnionid - __main__ - ERROR - 'unionid'
+2019-07-02 13:56:27,957 - checkUnionid - __main__ - ERROR - 'unionid'
+2019-07-02 13:56:37,347 - checkUnionid - __main__ - ERROR - 'unionid'
+2019-07-02 13:56:39,973 - checkUnionid - __main__ - ERROR - 'unionid'
+2019-07-02 13:56:54,081 - checkUnionid - __main__ - ERROR - 'unionid'
+2019-07-02 13:56:56,039 - checkUnionid - __main__ - ERROR - 'unionid'
+2019-07-02 13:57:11,322 - checkUnionid - __main__ - ERROR - 'unionid'
+2019-07-02 13:57:14,435 - checkUnionid - __main__ - ERROR - 'unionid'
+2019-07-02 13:57:30,672 - checkUnionid - __main__ - ERROR - 'unionid'
+2019-07-02 13:57:33,256 - checkUnionid - __main__ - ERROR - 'unionid'
+2019-07-02 13:57:44,112 - checkUnionid - __main__ - ERROR - 'unionid'
+2019-07-02 13:57:46,202 - checkUnionid - __main__ - ERROR - 'unionid'
+2019-07-02 13:57:56,342 - checkUnionid - __main__ - ERROR - 'unionid'
+2019-07-02 13:57:57,985 - checkUnionid - __main__ - ERROR - 'unionid'
+2019-07-02 13:58:07,128 - checkUnionid - __main__ - ERROR - 'unionid'
+2019-07-02 13:58:09,456 - checkUnionid - __main__ - ERROR - 'unionid'
+2019-07-02 13:58:19,892 - checkUnionid - __main__ - ERROR - 'unionid'
+2019-07-02 13:58:21,870 - checkUnionid - __main__ - ERROR - 'unionid'
+2019-07-02 13:58:31,760 - checkUnionid - __main__ - ERROR - 'unionid'
+2019-07-02 13:58:33,287 - checkUnionid - __main__ - ERROR - 'unionid'
+2019-07-02 13:58:42,625 - checkUnionid - __main__ - ERROR - 'unionid'
+2019-07-02 13:58:44,259 - checkUnionid - __main__ - ERROR - 'unionid'
+2019-07-02 13:58:54,942 - checkUnionid - __main__ - ERROR - 'unionid'
+2019-07-02 13:58:56,575 - checkUnionid - __main__ - ERROR - 'unionid'
+2019-07-02 13:59:05,442 - checkUnionid - __main__ - ERROR - 'unionid'
+2019-07-02 13:59:07,575 - checkUnionid - __main__ - ERROR - 'unionid'
+2019-07-02 13:59:22,606 - checkUnionid - __main__ - ERROR - 'unionid'
+2019-07-02 13:59:25,233 - checkUnionid - __main__ - ERROR - 'unionid'
+2019-07-02 14:19:25,141 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64qbI8IquLa4CXhLXb4wCXtc","found":false}')
+2019-07-02 16:26:59,730 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64i0O-UrHa8Sr0qvLFdsKYVk","found":false}')
+2019-07-02 17:50:49,972 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64pG6KUGyMToz7i8WcL3fLPA","found":false}')
+2019-07-02 18:18:03,041 - checkOpenid - __main__ - ERROR - 'openid'
+2019-07-02 18:20:44,048 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64i5K7gyFfnDVtUlMVarhowA","found":false}')
+2019-07-02 20:49:18,586 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64oWEZ9Us6F-i4njt_90NMTE","found":false}')
+2019-07-02 20:54:15,212 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64kak1y7eBO3zsOpONxNcrsQ","found":false}')
+2019-07-02 20:55:51,948 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64kL81U4d-tEGbFZvmo_svCI","found":false}')
+2019-07-02 20:56:02,178 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64t3CQVOk45hPHwNTa1DCzN0","found":false}')
+2019-07-02 20:56:03,727 - setDianzanshoucangshu - __main__ - ERROR - 'dianzanshu'
+2019-07-02 20:57:01,221 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64o2Rfyw-hDu3I8QpU270-bo","found":false}')
+2019-07-02 20:57:02,733 - setDianzanshoucangshu - __main__ - ERROR - 'dianzanshu'
+2019-07-02 20:57:09,261 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64gLwgpRCLUFkayjfJpQ79Hc","found":false}')
+2019-07-02 20:57:15,098 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64vkjEBdvT2Z58s2X19q9bn8","found":false}')
+2019-07-02 20:57:16,637 - setDianzanshoucangshu - __main__ - ERROR - 'dianzanshu'
+2019-07-02 20:57:30,230 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64uMk3kPSnu8OuA5v64PqCOo","found":false}')
+2019-07-02 20:57:36,448 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64uo3nk95w006eaLsU2hH6Co","found":false}')
+2019-07-02 20:58:06,837 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64oASQJUDgXpm-IOyHwC6lF0","found":false}')
+2019-07-02 20:58:11,331 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64ua66JY8yxbVwMgjhvLLo6k","found":false}')
+2019-07-02 20:58:12,884 - setDianzanshoucangshu - __main__ - ERROR - 'dianzanshu'
+2019-07-02 20:58:24,053 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64lu-H840PBj0AXBvdt8bLNk","found":false}')
+2019-07-02 20:58:33,379 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64j4VX9iOgOKNosU2SaW3EkA","found":false}')
+2019-07-02 20:58:40,142 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64lS4oMWJxno8YJplNDFl_hM","found":false}')
+2019-07-02 20:59:27,170 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64rb-aWqhzHmM-gPdmh2U55U","found":false}')
+2019-07-02 20:59:45,721 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64ixx6SwAt4T6q63bCHBcUcQ","found":false}')
+2019-07-02 20:59:53,033 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64pkqVhn66SW2JqnwrAs8XRI","found":false}')
+2019-07-02 21:00:11,503 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64jb2Ugz6V1TQXtnjc25pi3Q","found":false}')
+2019-07-02 21:00:27,156 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64okPXvTuVfbOCio95rVSNSQ","found":false}')
+2019-07-02 21:00:36,647 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64qXiH5ZrMC1J0eOALPwjJjc","found":false}')
+2019-07-02 21:00:39,095 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64g4WfTsUGH0lBjqg2qKNDqk","found":false}')
+2019-07-02 21:01:32,555 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64lPLsC2UDvbMMmce8XBRiw0","found":false}')
+2019-07-02 21:01:34,101 - setDianzanshoucangshu - __main__ - ERROR - 'dianzanshu'
+2019-07-02 21:01:39,166 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64vAMs5Jyw0SMjV8Mck9sCBE","found":false}')
+2019-07-02 21:01:55,434 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64iU9eHkjhBJr1exZZ29naMY","found":false}')
+2019-07-02 21:01:58,515 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64tCqs5F5enR3sTZ6NtZNm2s","found":false}')
+2019-07-02 21:02:25,411 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64gWHXFfkB9tbLWkBPX5O2yc","found":false}')
+2019-07-02 21:03:05,251 - checkOpenid - __main__ - ERROR - 'openid'
+2019-07-02 21:03:36,729 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64oNZ2a8BCRCELJ_hJp5KoPo","found":false}')
+2019-07-02 21:04:18,697 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64oWeaaQR9D1eOpkxkxPQX8I","found":false}')
+2019-07-02 21:06:07,202 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64ro9hGTVPaPyzNW1V9fPoX8","found":false}')
+2019-07-02 21:06:44,032 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64gG2r3nv8jm78Wm_h5ypQxQ","found":false}')
+2019-07-02 21:07:04,574 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64uLL1FwiCPWKe46cOQQshZg","found":false}')
+2019-07-02 21:08:00,003 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64mBu6GnGfQKWSxAhS_RYhP0","found":false}')
+2019-07-02 21:09:55,595 - getXingxiangjiansheList - __main__ - ERROR - 'openid'
+2019-07-02 21:10:25,184 - getXingxiangjiansheList - __main__ - ERROR - 'openid'
+2019-07-02 21:10:25,329 - getXingxiangjiansheList - __main__ - ERROR - 'openid'
+2019-07-02 21:14:59,032 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64k86jxfl3gXXqursMBVa96c","found":false}')
+2019-07-02 21:17:14,721 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64lSIvE9XFFTg7uUms5T8zIw","found":false}')
+2019-07-02 21:17:46,291 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64nF6q9ExBYoKJy4DzAY9RSU","found":false}')
+2019-07-02 21:17:47,827 - setDianzanshoucangshu - __main__ - ERROR - 'dianzanshu'
+2019-07-02 21:19:28,350 - checkOpenid - __main__ - ERROR - 'openid'
+2019-07-02 21:22:33,856 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64iVXjOUH4DpeDTnhA2vXrkY","found":false}')
+2019-07-02 21:22:52,752 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64tKf0JpiwDIgOjnsEypx5Wk","found":false}')
+2019-07-02 21:23:57,654 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64iIe8YkHNlQ_0stZxlps0EI","found":false}')
+2019-07-02 21:24:08,695 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64uSxE7k39RbECPWCW4hKRO4","found":false}')
+2019-07-02 21:24:13,124 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64gssB_aSbAAicW_Na_hMbT0","found":false}')
+2019-07-02 21:24:24,560 - getLiaomeishizhanList - __main__ - ERROR - 'openid'
+2019-07-02 21:25:25,083 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64gtkU23EaOkfm3uH9cPFOIQ","found":false}')
+2019-07-02 21:26:32,225 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64ifwS-UIes6i2BwUkwiT9Lo","found":false}')
+2019-07-02 21:30:29,146 - getLiaomeishizhanList - __main__ - ERROR - 'openid'
+2019-07-02 21:30:29,380 - getLiaomeishizhanList - __main__ - ERROR - 'openid'
+2019-07-02 21:33:27,035 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64uXsndLeyahFPTcqJy1sZzY","found":false}')
+2019-07-02 22:03:49,490 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64oU5H1RZzv3yRLnzP-T1gRo","found":false}')
+2019-07-02 22:03:51,250 - setDianzanshoucangshu - __main__ - ERROR - 'dianzanshu'
+2019-07-02 22:04:20,994 - checkOpenid - __main__ - ERROR - 'openid'
+2019-07-02 23:39:24,605 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64p3LbbQ9GJ2HwpesYgm_qjI","found":false}')
+2019-07-02 23:44:29,847 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64j9vYhiHs9u0GE5uGNhDDYU","found":false}')
+2019-07-03 00:09:45,650 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64lO0ljNb9dN6K38qMM0Fs1Y","found":false}')
+2019-07-03 00:09:47,201 - setDianzanshoucangshu - __main__ - ERROR - 'dianzanshu'
+2019-07-03 00:12:42,898 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64kSstAGs0QH5fB-sMfD8oTw","found":false}')
+2019-07-03 00:17:36,092 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64v4NIh_bWiDR1gzYuZKh8-U","found":false}')
+2019-07-03 00:17:37,664 - setDianzanshoucangshu - __main__ - ERROR - 'dianzanshu'
+2019-07-03 00:19:47,807 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64jNKbPExKweYxCCx4q-2Pd4","found":false}')
+2019-07-03 00:58:15,198 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64n9Z9TEbt02zObMEQksIOZA","found":false}')
