@@ -89,6 +89,7 @@ actions = []
 # ret_data = es.indices.create(index='search', body=lianaizhuli_index, ignore=400)
 # print(ret_data)
 
+
 # with open('biaoqing.json', 'r') as f:
 #     for line in f:
 #         item = json.loads(line.strip())

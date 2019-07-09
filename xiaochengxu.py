@@ -31,7 +31,6 @@ app = Flask(__name__)
 app.debug = True
 CORS(app, supports_credentials=True)
 es = Elasticsearch([{"host": "182.254.227.188", "port": 9218}])
-escopy = Elasticsearch([{"host": "119.29.67.239", "port": 9218}])
 logger = logging.getLogger(__name__)
 logger.setLevel(level=logging.INFO)
 handler = logging.FileHandler("log/log.txt")
@@ -134,7 +133,7 @@ def getShouyeman():
         goumaidoc['data'] = {}
     for u, doc in enumerate(Docs):
         doc = doc['_source']
-        doc['newimage'] = wangzhi + 'shouye/images/kecheng' + str(u + 1) + '.png';
+        doc['newimage'] = wangzhi + 'shouye/images/kecheng' + str(u + 1) + '.png'
         if doc['id'] in goumaidoc['data']:
             doc['yigoumai'] = 1
         else:
@@ -143,27 +142,29 @@ def getShouyeman():
     Docs = es.search(index='xingxiangjianshe', doc_type='xingxiangjianshe', body=search, size=4)['hits']['hits']
     for u, doc in enumerate(Docs):
         doc = doc['_source']
-        doc['newimage'] = wangzhi + 'shouye/images/xingxiangjianshe' + str(u + 1) + '.png';
+        doc['newimage'] = wangzhi + 'shouye/images/xingxiangjianshe' + str(u + 1) + '.png'
         xingxiangjianshe['data'].append(doc)
     Docs = es.search(index='baikelist', doc_type='baikelist', body=search, size=3)['hits']['hits']
     for u, doc in enumerate(Docs):
         doc = doc['_source']
-        doc['newimage'] = wangzhi + 'shouye/images/qingganbaike' + str(u + 1) + '.png';
+        doc['newimage'] = doc['image']
+        # doc['newimage'] = wangzhi + 'shouye/images/qingganbaike' + str(u + 1) + '.png'
         qingganbaike['data'].append(doc)
     Docs = es.search(index='liaomeishizhanlist', doc_type='liaomeishizhanlist', body=search, size=4)['hits']['hits']
     for u, doc in enumerate(Docs):
         doc = doc['_source']
-        doc['newimage'] = wangzhi + 'shouye/images/liaomeishizhan' + str(u + 1) + '.png';
+        doc['newimage'] = doc['image']
+        # doc['newimage'] = wangzhi + 'shouye/images/liaomeishizhan' + str(u + 1) + '.png'
         liaomeishizhan['data'].append(doc)
     Docs = es.search(index='sijiao', doc_type='sijiao', body=search, size=3)['hits']['hits']
     for u, doc in enumerate(Docs):
         doc = doc['_source']
-        doc['newimage'] = wangzhi + 'shouye/images/sijiao' + str(u + 1) + '.png';
+        doc['newimage'] = wangzhi + 'shouye/images/sijiao' + str(u + 1) + '.png'
         sijiao['data'].append(doc)
     Docs = es.search(index='xinliceshilist', doc_type='xinliceshilist', body=search, size=4)['hits']['hits']
     for u, doc in enumerate(Docs):
         doc = doc['_source']
-        doc['newimage'] = wangzhi + 'shouye/images/xinliceshi' + str(u + 1) + '.png';
+        doc['newimage'] = wangzhi + 'shouye/images/xinliceshi' + str(u + 1) + '.png'
         xinliceshi['data'].append(doc)
     return encrypt(json.dumps({'MSG': 'OK',
                                'gengduotext': '更多',
@@ -232,10 +233,6 @@ def check_user(openid):
     elif doc['vipdengji'] > 0:
         doc['vipdengji'] = 0
         es.index(index='userinfo', doc_type='userinfo', id=openid, body=doc)
-        try:
-            escopy.index(index='userinfo', doc_type='userinfo', id=openid, body=doc, timeout="1s")
-        except Exception as e:
-            logger.error(e)
     return 0
 
 
@@ -298,12 +295,9 @@ def getOpenid():
     try:
         doc = es.get(index='userinfo', doc_type='userinfo', id=response['openid'])
         newdoc = doc['_source']
+        print(doc)
         newdoc.update(userInfo)
         es.index(index='userinfo', doc_type='userinfo', id=userInfo['openid'], body=newdoc)
-        try:
-            escopy.index(index='userinfo', doc_type='userinfo', id=userInfo['openid'], body=newdoc, timeout="1s")
-        except Exception as e:
-            logger.error(e)
     except Exception as e:
         logger.error(e)
         userInfo['addtime'] = getTime()
@@ -314,10 +308,6 @@ def getOpenid():
         userInfo['xiaofeizonge'] = 0
         userInfo['options'] = json.loads(options)
         es.index(index='userinfo', doc_type='userinfo', id=userInfo['openid'], body=userInfo)
-        try:
-            escopy.index(index='userinfo', doc_type='userinfo', id=userInfo['openid'], body=userInfo, timeout="1s")
-        except Exception as e:
-            logger.error(e)
     # print(decryptweixin(params['encryptedData'], response['session_key'], params['iv'])['unionId'])
     adduserhis(
         {'openid': response['openid'], 'time': getTime(), 'event': 'getOpenid', 'detail': 'getOpenid', 'type': '0'})
@@ -340,10 +330,6 @@ def checkOpenid():
         newdoc.update(userInfo)
         newdoc['system'] = system
         es.index(index='userinfo', doc_type='userinfo', id=openid, body=newdoc)
-        try:
-            escopy.index(index='userinfo', doc_type='userinfo', id=openid, body=newdoc, timeout="1s")
-        except Exception as e:
-            logger.error(e)
         return encrypt(json.dumps({'MSG': 'YES'}))
     except Exception as e:
         logger.error(e)
@@ -953,10 +939,6 @@ def getPhoneNumber():
     doc = es.get(index='userinfo', doc_type='userinfo', id=openid)
     userphone.update(doc['_source'])
     es.index(index='userinfo', doc_type='userinfo', id=openid, body=userphone)
-    try:
-        escopy.index(index='userinfo', doc_type='userinfo', id=openid, body=userphone, timeout="1s")
-    except Exception as e:
-        logger.error(e)
     adduserhis({'openid': openid, 'time': getTime(), 'event': 'getPhoneNumber', 'detail': 'getPhoneNumber',
                 'type': '0'})
     return encrypt(json.dumps({'MSG': 'OK', 'data': {'openid': response['openid']}}))
@@ -1041,12 +1023,6 @@ def paynotify():
         es.index(index='userzhifu', doc_type='userzhifu', id=zhifures['openid'],
                  body={'openid': zhifures['openid'], 'zhifudata': zhifudata, 'updatatime': zhifures['time_end']})
         try:
-            escopy.index(index='userzhifu', doc_type='userzhifu', id=zhifures['openid'],
-                         body={'openid': zhifures['openid'], 'zhifudata': zhifudata,
-                               'updatatime': zhifures['time_end']}, timeout="1s")
-        except Exception as e:
-            logger.error(e)
-        try:
             zhifutype = int(json.loads(zhifures['attach'])['zhifutype'])
             doc = es.get(index='userinfo', doc_type='userinfo', id=zhifures['openid'])
             newdoc = doc['_source']
@@ -1063,10 +1039,6 @@ def paynotify():
             newdoc['xiaofeicishu'] += 1
             newdoc['xiaofeizonge'] += int(zhifures['total_fee'])
             es.index(index='userinfo', doc_type='userinfo', id=zhifures['openid'], body=newdoc)
-            try:
-                escopy.index(index='userinfo', doc_type='userinfo', id=zhifures['openid'], body=newdoc, timeout="1s")
-            except Exception as e:
-                logger.error(e)
         except Exception as e:
             logger.error(e)
     return dict_to_xml({'return_code': 'SUCCESS', 'return_msg': 'OK'})
@@ -1275,11 +1247,6 @@ def getQingganbaikeList():
     return encrypt(json.dumps({'MSG': 'OK', 'data': retdata, 'scroll': scroll}))
 
 
-def changstr(matched):
-    return '<img style="max-width:100%;height:auto;" ' + str(
-        re.search('src=\\".*?"', str(matched.group(0))).group(0)) + '/>'
-
-
 @app.route("/api/getBaike", methods=["POST"])
 def getBaike():
     try:
@@ -1292,12 +1259,6 @@ def getBaike():
     adduserhis({'openid': openid, 'time': getTime(), 'event': 'getBaike', 'detail': baikeid,
                 'type': '0'})
     doc = es.get(index='baike', doc_type='baike', id=baikeid)['_source']
-    try:
-        content = doc['content']
-        new_content = re.sub(r'<img.*?>', changstr, content, count=0)
-        doc['content'] = new_content
-    except:
-        None
     listdoc = es.get(index='baikelist', doc_type='baikelist', id=baikeid)['_source']
     listdoc['count'] += 1
     es.index(index='baikelist', doc_type='baikelist', id=baikeid, body=listdoc)
@@ -1649,12 +1610,6 @@ def kechengpaynotify():
         es.index(index='userzhifu', doc_type='userzhifu', id=zhifures['openid'],
                  body={'openid': zhifures['openid'], 'zhifudata': zhifudata, 'updatatime': zhifures['time_end']})
         try:
-            escopy.index(index='userzhifu', doc_type='userzhifu', id=zhifures['openid'],
-                         body={'openid': zhifures['openid'], 'zhifudata': zhifudata,
-                               'updatatime': zhifures['time_end']}, timeout="1s")
-        except Exception as e:
-            logger.error(e)
-        try:
             kechengid = json.loads(zhifures['attach'])['kechengid']
             try:
                 goumaidoc = es.get(index='kechenggoumai', doc_type='kechenggoumai', id=zhifures['openid'])['_source']
@@ -1667,20 +1622,11 @@ def kechengpaynotify():
                 goumaidoc['data'][kechengid] = 1
             goumaidoc['data'] = json.dumps(goumaidoc['data'])
             es.index(index='kechenggoumai', doc_type='kechenggoumai', id=zhifures['openid'], body=goumaidoc)
-            try:
-                escopy.index(index='kechenggoumai', doc_type='kechenggoumai', id=zhifures['openid'], body=goumaidoc,
-                             timeout="1s")
-            except Exception as e:
-                logger.error(e)
             doc = es.get(index='userinfo', doc_type='userinfo', id=zhifures['openid'])
             newdoc = doc['_source']
             newdoc['xiaofeicishu'] += 1
             newdoc['xiaofeizonge'] += int(zhifures['total_fee'])
             es.index(index='userinfo', doc_type='userinfo', id=zhifures['openid'], body=newdoc)
-            try:
-                escopy.index(index='userinfo', doc_type='userinfo', id=zhifures['openid'], body=newdoc, timeout="1s")
-            except Exception as e:
-                logger.error(e)
         except Exception as e:
             logger.error(e)
     return dict_to_xml({'return_code': 'SUCCESS', 'return_msg': 'OK'})

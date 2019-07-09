@@ -31,7 +31,6 @@ app = Flask(__name__)
 app.debug = True
 CORS(app, supports_credentials=True)
 es = Elasticsearch([{"host": "182.254.227.188", "port": 9218}])
-escopy = Elasticsearch([{"host": "119.29.67.239", "port": 9218}])
 logger = logging.getLogger(__name__)
 logger.setLevel(level=logging.INFO)
 handler = logging.FileHandler("log/log.txt")
@@ -132,7 +131,7 @@ def getShouyeman():
         goumaidoc['data'] = {}
     for u, doc in enumerate(Docs):
         doc = doc['_source']
-        doc['newimage'] = wangzhi + 'shouye/images/kecheng' + str(u + 1) + '.png';
+        doc['newimage'] = wangzhi + 'shouye/images/kecheng' + str(u + 1) + '.png'
         if doc['id'] in goumaidoc['data']:
             doc['yigoumai'] = 1
         else:
@@ -141,27 +140,29 @@ def getShouyeman():
     Docs = es.search(index='xingxiangjianshe', doc_type='xingxiangjianshe', body=search, size=4)['hits']['hits']
     for u, doc in enumerate(Docs):
         doc = doc['_source']
-        doc['newimage'] = wangzhi + 'shouye/images/xingxiangjianshe' + str(u + 1) + '.png';
+        doc['newimage'] = wangzhi + 'shouye/images/xingxiangjianshe' + str(u + 1) + '.png'
         xingxiangjianshe['data'].append(doc)
     Docs = es.search(index='baikelist', doc_type='baikelist', body=search, size=3)['hits']['hits']
     for u, doc in enumerate(Docs):
         doc = doc['_source']
-        doc['newimage'] = wangzhi + 'shouye/images/qingganbaike' + str(u + 1) + '.png';
+        doc['newimage'] = doc['image']
+        # doc['newimage'] = wangzhi + 'shouye/images/qingganbaike' + str(u + 1) + '.png'
         qingganbaike['data'].append(doc)
     Docs = es.search(index='liaomeishizhanlist', doc_type='liaomeishizhanlist', body=search, size=4)['hits']['hits']
     for u, doc in enumerate(Docs):
         doc = doc['_source']
-        doc['newimage'] = wangzhi + 'shouye/images/liaomeishizhan' + str(u + 1) + '.png';
+        doc['newimage'] = doc['image']
+        # doc['newimage'] = wangzhi + 'shouye/images/liaomeishizhan' + str(u + 1) + '.png'
         liaomeishizhan['data'].append(doc)
     Docs = es.search(index='sijiao', doc_type='sijiao', body=search, size=3)['hits']['hits']
     for u, doc in enumerate(Docs):
         doc = doc['_source']
-        doc['newimage'] = wangzhi + 'shouye/images/sijiao' + str(u + 1) + '.png';
+        doc['newimage'] = wangzhi + 'shouye/images/sijiao' + str(u + 1) + '.png'
         sijiao['data'].append(doc)
     Docs = es.search(index='xinliceshilist', doc_type='xinliceshilist', body=search, size=4)['hits']['hits']
     for u, doc in enumerate(Docs):
         doc = doc['_source']
-        doc['newimage'] = wangzhi + 'shouye/images/xinliceshi' + str(u + 1) + '.png';
+        doc['newimage'] = wangzhi + 'shouye/images/xinliceshi' + str(u + 1) + '.png'
         xinliceshi['data'].append(doc)
     return encrypt(json.dumps({'MSG': 'OK',
                                'gengduotext': '更多',
@@ -230,10 +231,6 @@ def check_user(unionid):
     elif doc['vipdengji'] > 0:
         doc['vipdengji'] = 0
         es.index(index='userinfo', doc_type='userinfo', id=unionid, body=doc)
-        try:
-            escopy.index(index='userinfo', doc_type='userinfo', id=unionid, body=doc, timeout="1s")
-        except Exception as e:
-            logger.error(e)
     return 0
 
 
@@ -292,10 +289,14 @@ def getUnionid():
     url = 'https://api.weixin.qq.com/sns/jscode2session?appid=' + appid + '&secret=' + secret + '&js_code=' + js_code + '&grant_type=authorization_code'
     response = requests.get(url)
     response = response.json()
-    unionid = response['unionid']
     openid = response['openid']
-    userinfo['unionid'] = unionid
+    userinfo['openid'] = openid
     userinfo['system'] = system
+    if 'unionid' in response:
+        unionid = response['unionid']
+        userinfo['unionid'] = unionid
+    else:
+        unionid = openid
     try:
         uniondoc = es.get(index='userinfo', doc_type='userinfo', id=unionid)['_source']
         uniondoc.update(userinfo)
@@ -308,17 +309,12 @@ def getUnionid():
                 try:
                     copydoc = es.get(index='userzhifu', doc_type='userzhifu', id=openid)['_source']
                     try:
-                        nowdoc=es.get(index='userzhifu', doc_type='userzhifu', id=unionid)['_source']
-                        nowdoc['zhifudata']+=copydoc['zhifudata']
-                        copydoc=nowdoc
+                        nowdoc = es.get(index='userzhifu', doc_type='userzhifu', id=unionid)['_source']
+                        nowdoc['zhifudata'] += copydoc['zhifudata']
+                        copydoc = nowdoc
                     except:
                         None
                     es.index(index='userzhifu', doc_type='userzhifu', id=unionid, body=copydoc)
-                    try:
-                        escopy.index(index='userzhifu', doc_type='userzhifu', id=unionid,
-                                     body=copydoc, timeout="1s")
-                    except Exception as e:
-                        logger.error(e)
                     # es.delete(index='userzhifu',doc_type='userzhifu',id=openid)
                 except:
                     None
@@ -331,17 +327,12 @@ def getUnionid():
                 try:
                     copydoc = es.get(index='kechenggoumai', doc_type='kechenggoumai', id=openid)['_source']
                     try:
-                        nowdoc=es.get(index='kechenggoumai', doc_type='kechenggoumai', id=unionid)['_source']
-                        nowdoc['zhifudata']+=copydoc['zhifudata']
-                        copydoc=nowdoc
+                        nowdoc = es.get(index='kechenggoumai', doc_type='kechenggoumai', id=unionid)['_source']
+                        nowdoc['zhifudata'] += copydoc['zhifudata']
+                        copydoc = nowdoc
                     except:
                         None
                     es.index(index='kechenggoumai', doc_type='kechenggoumai', id=unionid, body=copydoc)
-                    try:
-                        escopy.index(index='kechenggoumai', doc_type='kechenggoumai', id=unionid,
-                                     body=copydoc, timeout="1s")
-                    except Exception as e:
-                        logger.error(e)
                     # es.delete(index='kechenggoumai',doc_type='kechenggoumai',id=openid)
                 except:
                     None
@@ -357,11 +348,6 @@ def getUnionid():
             try:
                 copydoc = es.get(index='userzhifu', doc_type='userzhifu', id=openid)['_source']
                 es.index(index='userzhifu', doc_type='userzhifu', id=unionid, body=copydoc)
-                try:
-                    escopy.index(index='userzhifu', doc_type='userzhifu', id=unionid,
-                                 body=copydoc, timeout="1s")
-                except Exception as e:
-                    logger.error(e)
                 # es.delete(index='userzhifu',doc_type='userzhifu',id=openid)
             except:
                 None
@@ -374,11 +360,6 @@ def getUnionid():
             try:
                 copydoc = es.get(index='kechenggoumai', doc_type='kechenggoumai', id=openid)['_source']
                 es.index(index='kechenggoumai', doc_type='kechenggoumai', id=unionid, body=copydoc)
-                try:
-                    escopy.index(index='kechenggoumai', doc_type='kechenggoumai', id=unionid,
-                                 body=copydoc, timeout="1s")
-                except Exception as e:
-                    logger.error(e)
                 # es.delete(index='kechenggoumai',doc_type='kechenggoumai',id=openid)
             except:
                 None
@@ -394,12 +375,7 @@ def getUnionid():
     if 'options' not in userinfo:
         userinfo['options'] = json.loads(options)
     es.index(index='userinfo', doc_type='userinfo', id=unionid, body=userinfo)
-    try:
-        escopy.index(index='userinfo', doc_type='userinfo', id=unionid, body=userinfo, timeout="1s")
-    except Exception as e:
-        logger.error(e)
-    adduserhis(
-        {'unionid': unionid, 'time': getTime(), 'event': 'getUnionid', 'detail': 'getUnionid', 'type': '0'})
+    adduserhis({'unionid': unionid, 'time': getTime(), 'event': 'getUnionid', 'detail': 'getUnionid', 'type': '0'})
     return encrypt(json.dumps({'MSG': 'OK', 'data': {'unionid': unionid}}))
 
 
@@ -419,11 +395,10 @@ def checkUnionid():
         newdoc.update(userinfo)
         newdoc['system'] = system
         es.index(index='userinfo', doc_type='userinfo', id=unionid, body=newdoc)
-        try:
-            escopy.index(index='userinfo', doc_type='userinfo', id=unionid, body=newdoc, timeout="1s")
-        except Exception as e:
-            logger.error(e)
-        return encrypt(json.dumps({'MSG': 'YES'}))
+        if 'unionid' in newdoc:
+            return encrypt(json.dumps({'MSG': 'YES'}))
+        else:
+            return encrypt(json.dumps({'MSG': 'NO'}))
     except Exception as e:
         logger.error(e)
         return encrypt(json.dumps({'MSG': 'NO'}))
@@ -753,14 +728,26 @@ def getKecheng():
     try:
         params = json.loads(decrypt(request.stream.read()))
         unionid = params['unionid']
+        kechengid = params['kechengid']
         neirongid = params['neirongid']
+        kefenxiang = params['kefenxiang']
     except Exception as e:
         logger.error(e)
         return json.dumps({'MSG': '警告！非法入侵！！！'})
     adduserhis({'unionid': unionid, 'time': getTime(), 'event': 'getKecheng', 'detail': neirongid,
                 'type': '0'})
-    doc = es.get(index='kecheng', doc_type='kecheng', id=neirongid)['_source']
-    return encrypt(json.dumps({'MSG': 'OK', 'data': doc}))
+    if kefenxiang == '0':
+        try:
+            goumaidoc = es.get(index='kechenggoumai', doc_type='kechenggoumai', id=unionid)['_source']
+            goumaidoc['data'] = json.loads(goumaidoc['data'])
+            if kechengid in goumaidoc['data']:
+                kefenxiang = '1'
+        except:
+            None
+    if kefenxiang == '1':
+        doc = es.get(index='kecheng', doc_type='kecheng', id=neirongid)['_source']
+        return encrypt(json.dumps({'MSG': 'YES', 'data': doc}))
+    return encrypt(json.dumps({'MSG': 'NO'}))
 
 
 @app.route("/xcx/searchWenzhangList", methods=["POST"])
@@ -879,10 +866,6 @@ def getPhoneNumber():
     doc = es.get(index='userinfo', doc_type='userinfo', id=unionid)
     userphone.update(doc['_source'])
     es.index(index='userinfo', doc_type='userinfo', id=unionid, body=userphone)
-    try:
-        escopy.index(index='userinfo', doc_type='userinfo', id=unionid, body=userphone, timeout="1s")
-    except Exception as e:
-        logger.error(e)
     adduserhis({'unionid': unionid, 'time': getTime(), 'event': 'getPhoneNumber', 'detail': 'getPhoneNumber',
                 'type': '0'})
     return encrypt(json.dumps({'MSG': 'OK', 'data': {'unionid': response['unionid']}}))
@@ -969,12 +952,6 @@ def paynotify():
         es.index(index='userzhifu', doc_type='userzhifu', id=unionid,
                  body={'unionid': unionid, 'zhifudata': zhifudata, 'updatatime': zhifures['time_end']})
         try:
-            escopy.index(index='userzhifu', doc_type='userzhifu', id=unionid,
-                         body={'unionid': unionid, 'zhifudata': zhifudata,
-                               'updatatime': zhifures['time_end']}, timeout="1s")
-        except Exception as e:
-            logger.error(e)
-        try:
             zhifutype = int(json.loads(zhifures['attach'])['zhifutype'])
             doc = es.get(index='userinfo', doc_type='userinfo', id=unionid)
             newdoc = doc['_source']
@@ -991,10 +968,6 @@ def paynotify():
             newdoc['xiaofeicishu'] += 1
             newdoc['xiaofeizonge'] += int(zhifures['total_fee'])
             es.index(index='userinfo', doc_type='userinfo', id=unionid, body=newdoc)
-            try:
-                escopy.index(index='userinfo', doc_type='userinfo', id=unionid, body=newdoc, timeout="1s")
-            except Exception as e:
-                logger.error(e)
         except Exception as e:
             logger.error(e)
     return dict_to_xml({'return_code': 'SUCCESS', 'return_msg': 'OK'})
@@ -1068,21 +1041,28 @@ def getIslianmeng():
     try:
         params = json.loads(decrypt(request.stream.read()))
         unionid = params['unionid']
+        system = params['system']
     except Exception as e:
         logger.error(e)
         return json.dumps({'MSG': '警告！非法入侵！！！'})
     adduserhis({'unionid': unionid, 'time': getTime(), 'event': 'getIslianmeng', 'detail': 'getIslianmeng',
                 'type': '0'})
-    doc = es.get(index='userinfo', doc_type='userinfo', id=unionid)
-    doc = doc['_source']
-    if doc['system'][:3].lower() == 'ios':
-        if doc['viptime'] > int(time.time()) and doc['vipdengji'] > 1:
-            return encrypt(json.dumps({'MSG': 'OK', 'issystem': issystem, 'islianmeng': 1}))
+    try:
+        doc = es.get(index='userinfo', doc_type='userinfo', id=unionid)
+        doc = doc['_source']
+        if doc['system'][:3].lower() == 'ios':
+            if doc['viptime'] > int(time.time()) and doc['vipdengji'] > 1:
+                return encrypt(json.dumps({'MSG': 'OK', 'issystem': issystem, 'islianmeng': 1}))
+            else:
+                return encrypt(json.dumps({'MSG': 'OK', 'issystem': issystem, 'islianmeng': islianmeng}))
         else:
+            if doc['viptime'] > int(time.time()) and doc['vipdengji'] > 1:
+                return encrypt(json.dumps({'MSG': 'OK', 'issystem': 1, 'islianmeng': 1}))
+            else:
+                return encrypt(json.dumps({'MSG': 'OK', 'issystem': 1, 'islianmeng': islianmeng}))
+    except:
+        if system.lower() == 'ios':
             return encrypt(json.dumps({'MSG': 'OK', 'issystem': issystem, 'islianmeng': islianmeng}))
-    else:
-        if doc['viptime'] > int(time.time()) and doc['vipdengji'] > 1:
-            return encrypt(json.dumps({'MSG': 'OK', 'issystem': 1, 'islianmeng': 1}))
         else:
             return encrypt(json.dumps({'MSG': 'OK', 'issystem': 1, 'islianmeng': islianmeng}))
 
@@ -1207,11 +1187,6 @@ def getQingganbaikeList():
     return encrypt(json.dumps({'MSG': 'OK', 'data': retdata, 'scroll': scroll}))
 
 
-def changstr(matched):
-    return '<img style="max-width:100%;height:auto;" ' + str(
-        re.search('src=\\".*?"', str(matched.group(0))).group(0)) + '/>'
-
-
 @app.route("/xcx/getBaike", methods=["POST"])
 def getBaike():
     try:
@@ -1224,12 +1199,6 @@ def getBaike():
     adduserhis({'unionid': unionid, 'time': getTime(), 'event': 'getBaike', 'detail': baikeid,
                 'type': '0'})
     doc = es.get(index='baike', doc_type='baike', id=baikeid)['_source']
-    try:
-        content = doc['content']
-        new_content = re.sub(r'<img.*?>', changstr, content, count=0)
-        doc['content'] = new_content
-    except:
-        None
     listdoc = es.get(index='baikelist', doc_type='baikelist', id=baikeid)['_source']
     listdoc['count'] += 1
     es.index(index='baikelist', doc_type='baikelist', id=baikeid, body=listdoc)
@@ -1583,12 +1552,6 @@ def kechengpaynotify():
         es.index(index='userzhifu', doc_type='userzhifu', id=unionid,
                  body={'unionid': unionid, 'zhifudata': zhifudata, 'updatatime': zhifures['time_end']})
         try:
-            escopy.index(index='userzhifu', doc_type='userzhifu', id=unionid,
-                         body={'unionid': unionid, 'zhifudata': zhifudata,
-                               'updatatime': zhifures['time_end']}, timeout="1s")
-        except Exception as e:
-            logger.error(e)
-        try:
             kechengid = json.loads(zhifures['attach'])['kechengid']
             try:
                 goumaidoc = es.get(index='kechenggoumai', doc_type='kechenggoumai', id=unionid)['_source']
@@ -1601,20 +1564,11 @@ def kechengpaynotify():
                 goumaidoc['data'][kechengid] = 1
             goumaidoc['data'] = json.dumps(goumaidoc['data'])
             es.index(index='kechenggoumai', doc_type='kechenggoumai', id=unionid, body=goumaidoc)
-            try:
-                escopy.index(index='kechenggoumai', doc_type='kechenggoumai', id=unionid, body=goumaidoc,
-                             timeout="1s")
-            except Exception as e:
-                logger.error(e)
             doc = es.get(index='userinfo', doc_type='userinfo', id=unionid)
             newdoc = doc['_source']
             newdoc['xiaofeicishu'] += 1
             newdoc['xiaofeizonge'] += int(zhifures['total_fee'])
             es.index(index='userinfo', doc_type='userinfo', id=unionid, body=newdoc)
-            try:
-                escopy.index(index='userinfo', doc_type='userinfo', id=unionid, body=newdoc, timeout="1s")
-            except Exception as e:
-                logger.error(e)
         except Exception as e:
             logger.error(e)
     return dict_to_xml({'return_code': 'SUCCESS', 'return_msg': 'OK'})
@@ -1644,6 +1598,17 @@ def getAdList():
         # {'title': '迷男方法第三步', 'adurl': 'https://www.lianaizhuli.com/shouye/disanbu.jpg',
         #  'type': 'html', 'url': 'https://mp.weixin.qq.com/s/qnYR4DiOtmvcLcbfAVmuUA'},
     ]}))
+
+
+@app.route("/xcx/getIoswenan", methods=["POST"])
+def getIoswenan():
+    try:
+        params = json.loads(decrypt(request.stream.read()))
+        unionid = params['unionid']
+    except Exception as e:
+        logger.error(e)
+        return json.dumps({'MSG': '警告！非法入侵！！！'})
+    return encrypt(json.dumps({'MSG': 'OK', 'data': '由于相关规范，iOS功能暂不可用。'}))
 
 
 if __name__ == "__main__":
