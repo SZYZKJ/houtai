@@ -365,6 +365,7 @@ def getUnionid():
                 opendoc = es.get(index='userinfo', doc_type='userinfo', id=openid)['_source']
                 opendoc.update(userinfo)
                 userinfo = opendoc
+                es.delete(index='userinfo', doc_type='userinfo', id=openid)
                 try:
                     copydoc = es.get(index='userzhifu', doc_type='userzhifu', id=openid)['_source']
                     try:
@@ -374,13 +375,13 @@ def getUnionid():
                     except:
                         None
                     es.index(index='userzhifu', doc_type='userzhifu', id=unionid, body=copydoc)
-                    # es.delete(index='userzhifu',doc_type='userzhifu',id=openid)
+                    es.delete(index='userzhifu',doc_type='userzhifu',id=openid)
                 except:
                     None
                 try:
                     copydoc = es.get(index='dianzanshoucang', doc_type='dianzanshoucang', id=openid)['_source']
                     es.index(index='dianzanshoucang', doc_type='dianzanshoucang', id=unionid, body=copydoc)
-                    # es.delete(index='dianzanshoucang',doc_type='dianzanshoucang',id=openid)
+                    es.delete(index='dianzanshoucang',doc_type='dianzanshoucang',id=openid)
                 except:
                     None
                 try:
@@ -392,7 +393,7 @@ def getUnionid():
                     except:
                         None
                     es.index(index='kechenggoumai', doc_type='kechenggoumai', id=unionid, body=copydoc)
-                    # es.delete(index='kechenggoumai',doc_type='kechenggoumai',id=openid)
+                    es.delete(index='kechenggoumai',doc_type='kechenggoumai',id=openid)
                 except:
                     None
             except:
@@ -403,23 +404,23 @@ def getUnionid():
             opendoc = es.get(index='userinfo', doc_type='userinfo', id=openid)['_source']
             opendoc.update(userinfo)
             userinfo = opendoc
-            # es.delete(index='userinfo', doc_type='userinfo', id=openid)
+            es.delete(index='userinfo', doc_type='userinfo', id=openid)
             try:
                 copydoc = es.get(index='userzhifu', doc_type='userzhifu', id=openid)['_source']
                 es.index(index='userzhifu', doc_type='userzhifu', id=unionid, body=copydoc)
-                # es.delete(index='userzhifu',doc_type='userzhifu',id=openid)
+                es.delete(index='userzhifu',doc_type='userzhifu',id=openid)
             except:
                 None
             try:
                 copydoc = es.get(index='dianzanshoucang', doc_type='dianzanshoucang', id=openid)['_source']
                 es.index(index='dianzanshoucang', doc_type='dianzanshoucang', id=unionid, body=copydoc)
-                # es.delete(index='dianzanshoucang',doc_type='dianzanshoucang',id=openid)
+                es.delete(index='dianzanshoucang',doc_type='dianzanshoucang',id=openid)
             except:
                 None
             try:
                 copydoc = es.get(index='kechenggoumai', doc_type='kechenggoumai', id=openid)['_source']
                 es.index(index='kechenggoumai', doc_type='kechenggoumai', id=unionid, body=copydoc)
-                # es.delete(index='kechenggoumai',doc_type='kechenggoumai',id=openid)
+                es.delete(index='kechenggoumai',doc_type='kechenggoumai',id=openid)
             except:
                 None
         except:
