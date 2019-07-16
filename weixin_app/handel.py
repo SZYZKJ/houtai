@@ -10,24 +10,16 @@ datapath = '/home/ubuntu/data/lianailianmeng/data'
 os.chdir(datapath)
 
 reply_sentens = {
-    'use_limit': '您今天的使用次数已经达到上限30次，欢迎明天再来使用，祝您生活愉快～',
-    'no_search_result': '这个问题太高深了，撩妹助理现在也不知道怎么回答[Facepalm]\n',
-    'image_msg': '撩妹助理暂时还没有学会识别图片消息，我们还是先用文字交流吧[Smart]\n'
-                 '当然语音也可以[Smirk]',
-    'subscribe': '海量撩妹话术、精选惯例、迷你情话和恋爱策略可供搜索，并支持语音搜索，您的智能撩妹恋爱助理/:8-)\n'
-                 '使用方法：首先把女神的话复制到下面的对话框（支持语音），'
-                 '然后我会用叼炸天的人工智能算法帮你挑选几个候选情话，你只需双击文本然后选择复制满意的回复即可🎉🎁💪\n'
-                 '助你撩妹成功/:,@f/:handclap/:love',
-    'others': '功能正在建设中，敬请期待/:,@f\n'
-              '意见或者建议反馈请联系\n'
-              '手机/微信号：15622146998\n'
-              '邮箱：421542148@qq.com\n'
-              '您的支持与反馈是我们前进的不竭动力，非常感谢~'
+    '胖版动物圣诞版': '点击复制网盘链接进去下载即可：https://pan.baidu.com/s/1SYdMyFLRXS7GjKzxSXDrAw，非常高清而又好玩的胖版动物视频供你分享哦',
+    '谜男方法': '点击以下百度网盘链接：https://pan.baidu.com/s/1eEHI2VwwOhBZaH3oZCyApg，复制网址进入浏览器下载即可，感谢支持\n《迷男方法》书籍可能大家之前看过，也可能没看过，但是无论看过还是没看过，我们建议大家再次回去认真学习，里面提供的方法，远远比市场上面的聊天教程，速推教程（恋爱联盟不提倡不尊敬女性的行为）要好！我们再次推送，希望对你有帮助，再次感谢大家的支持',
+    '人工智能': '《人工智能时代：未来已来》链接: https://pan.baidu.com/s/1mr9rA4ZOv146yvUaiQk3cQ 提取码: 2a68，愚人节彩蛋，希望大家喜欢。人工智能撩妹将作为我们战略性版本更新方向，敬请期待',
+    '从行动开始': '链接: https://pan.baidu.com/s/1s89bKVS09E5uheUklU2M5Q 提取码: yqxh 《从行动开始》这是一本关于自我管理，从行动出发，切切实实的一步一步去做，这样才会靠自己创造出一个未来！一起加油，一起成长',
+    '思维导图': '链接: https://pan.baidu.com/s/1T71bItHrZvTeppvW0kCpKw 提取码: 6e8q 《谜男方法》思维导图，让你快速了解全局M3模型',
+    'image_msg': '撩妹助理暂时还没有学会识别图片消息，我们还是先用文字交流吧[Smart]\n',
+    'subscribe': '感谢您关注恋爱联盟，这是一款智能回复妹纸的撩妹聊天神器，点击公众号菜单栏中间的小程序，复制女生聊天的话在小程序里搜索，轻轻一点即可复制回复女生。海量幽默、推拉话术、套路可供搜索使用，海量形象展示、撩妹实战、土味情话、情感百科、心理测试免费供你使用。恋爱联盟竭诚为您服务，祝您赢取女神欢心！/:rose/:rose/:rose',
 }
 es = Elasticsearch([{"host": "182.254.227.188", "port": 9218, "timeout": 3600}])
 
-
-# userhiss = []
 
 def getTime():
     return time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
@@ -35,79 +27,13 @@ def getTime():
 
 def adduserhis(userhis):
     es.index(index='userhis', doc_type='userhis', body=userhis)
-    # global userhiss
-    # action = {
-    #     "_index": "userhis",
-    #     "_type": "userhis",
-    #     "_source": userhis
-    # }
-    # userhiss.append(action)
-    # if len(userhis) >= 500:
-    #     helpers.bulk(es, userhiss)
-    #     userhiss = []
     return None
 
 
 class Handel:
-    usercache = {}
-    userdata = {}
-    whitelist = {}
-    laes = Lianailianmeng_ES()
 
     def __init__(self):
-        self.whitelist['oswSD0qc_PK8GpQpv8_sM10Ktar8'] = 0
-        self.whitelist['oswSD0mJaa5BYZD81cMOpLA1Nd-I'] = 0
-        self.whitelist['opU7s58jcbrJsJkD_DB4nCgsUF2s'] = 0
-        self.whitelist['oswSD0gZN78kpZfASDOkwgvPGyD8'] = 0
-        self.whitelist['oswSD0jXQ27ZZq7fDCzGweLTjbvc'] = 0
-
-    def check_user(self, userid):
-        if userid in self.whitelist:
-            return 1
-        if len(userid) != 28: return 0
-        timelist = time.asctime().split()
-        strtime = timelist[1] + timelist[2] + timelist[4]
-        if userid not in self.userdata:
-            self.userdata[userid] = {'num': 29, 'time': strtime}
-            return 1
-        if self.userdata[userid]['time'] != strtime:
-            self.userdata[userid] = {'num': 29, 'time': strtime}
-            return 1
-        if self.userdata[userid]['num'] > 0:
-            self.userdata[userid]['num'] -= 1
-            return 1
-        return 0
-
-    def reply_format(self, response, userid):
-        try:
-            self.usercache[userid] = {}
-            self.usercache[userid]['response'] = response
-            if len(response) > 6:
-                reply_content = "回复对应编号可快速复制回复\n如第3条c项则回复3c\n回复0代表下一页\n"
-            elif len(response) > 1:
-                reply_content = "回复对应编号可快速复制回复\n如第3条c项则回复3c\n"
-            else:
-                reply_content = ""
-            for index, item in enumerate(response[:6]):
-                if 'title' in item:
-                    temp = item['title'] + '\n\n' + item['content']
-                else:
-                    temp = str(index + 1) + '\n' + '美女: ' + item['MM'] + '\n' + '型男：'
-                    if len(item['GG']) == 1:
-                        temp += item['GG'][0] + '\n'
-                        self.usercache[userid][str(index + 1)] = item['GG'][0]
-                    else:
-                        for u, v in enumerate(item['GG']):
-                            temp += chr(ord('a') + u) + '、' + v + '\n'
-                            self.usercache[userid][str(index + 1) + chr(ord('a') + u)] = v
-                reply_content += temp
-            lenresponse = len(self.usercache[userid]['response'])
-            for i in range(min(6, lenresponse)):
-                self.usercache[userid]['response'].pop(0)
-        except Exception as e:
-            print(e)
-            reply_content = reply_sentens['no_search_result']
-        return reply_content
+        None
 
     def handel_msg(self, recMsg):
         # 发送与接收时的主体和客体是相反的
@@ -116,67 +42,41 @@ class Handel:
         createTime = recMsg.CreateTime
         msgType = recMsg.MsgType
         reply_content = ''
-        if self.check_user(userid) == 0:
-            reply_content = reply_sentens['use_limit']
-        else:
-            payload = {
-                'query': '',
-                'open_id': userid,
-                'create_time': createTime,
-                'msg_type': msgType,
-            }
-            if msgType == 'text' or msgType == 'voice':
-                # 处理文本消息
-                if msgType == 'text':
-                    receive_content = str(recMsg.Content, encoding='utf8')
-                else:
-                    receive_content = recMsg.Recognition
-                receive_content = receive_content.lower()
-                receive_content = receive_content.strip()
-                if len(receive_content) > 0 and receive_content[-1] == '。':
-                    receive_content = receive_content[:-1]
-                if userid in self.usercache and receive_content in self.usercache[userid]:
-                    reply_content = self.usercache[userid][receive_content]
-                elif (receive_content == '0' or receive_content == '零'):
-                    if userid in self.usercache and len(self.usercache[userid]['response']) > 0:
-                        reply_content = self.reply_format(self.usercache[userid]['response'], userid)
-                    else:
-                        reply_content = '下一页没有内容了~'
-                else:
-                    payload['query'] = receive_content
-                    response = self.laes.search(params=payload)
-                    if response['msg_type'] == 'text':
-                        reply_content = self.reply_format(response['data'], userid)
-                    else:
-                        repMsg = reply.ImageMsg(userid, gongzhonghaoid, response['data'])
-                        return repMsg
-            elif msgType == 'image':
-                picUrl = recMsg.PicUrl
-                msgId = recMsg.MsgId
-                mediaId = recMsg.MediaId
-                reply_content = reply_sentens['image_msg']
-            elif msgType == 'event':
-                eventKey = recMsg.EventKey
-                adduserhis(
-                    {'openid': userid, 'time': getTime(), 'event': recMsg.Event, 'detail': eventKey,
-                     'type': '1'})
-                # 处理关注或则会取消关注事件
-                if recMsg.Event == 'subscribe':
-                    reply_content = reply_sentens['subscribe']
-                elif recMsg.Event == 'CLICK':
-                    # 第三个菜单栏【联系我们】，点击事件处理
-                    if eventKey == "lianaizhuli_v1_business":
-                        # 【联系我们】商务合作
-                        repMsg = reply.ImageMsg(userid, gongzhonghaoid,
-                                                mediaId="yYuh_32i1qVXDlPAcwH8RUsstY4vWf3wb19pxwcZKvA")
-                        return repMsg
-                    elif eventKey == "lianaizhuli_v1_jiaweixinqun":
-                        # 【联系我们】加微信群
-                        repMsg = reply.ImageMsg(userid, gongzhonghaoid,
-                                                mediaId="yYuh_32i1qVXDlPAcwH8RVJpGqSNB_19W28gfuJmafc")
-                        return repMsg
-                    else:
-                        reply_content = reply_sentens['others']
+        if msgType == 'text' or msgType == 'voice':
+            # 处理文本消息
+            if msgType == 'text':
+                receive_content = str(recMsg.Content, encoding='utf8')
+            else:
+                receive_content = recMsg.Recognition
+            if receive_content in reply_sentens:
+                reply_content = reply_sentens[receive_content]
+            else:
+                reply_content = reply_sentens['subscribe']
+        elif msgType == 'image':
+            picUrl = recMsg.PicUrl
+            msgId = recMsg.MsgId
+            mediaId = recMsg.MediaId
+            reply_content = reply_sentens['image_msg']
+        elif msgType == 'event':
+            eventKey = recMsg.EventKey
+            adduserhis(
+                {'openid': userid, 'time': getTime(), 'event': recMsg.Event, 'detail': eventKey,
+                 'type': '1'})
+            # 处理关注或则会取消关注事件
+            if recMsg.Event == 'subscribe':
+                reply_content = reply_sentens['subscribe']
+            elif recMsg.Event == 'CLICK':
+                # 第三个菜单栏【联系我们】，点击事件处理
+                if eventKey == "lianaizhuli_v1_business":
+                    # 【联系我们】商务合作
+                    repMsg = reply.ImageMsg(userid, gongzhonghaoid,
+                                            mediaId="yYuh_32i1qVXDlPAcwH8RUsstY4vWf3wb19pxwcZKvA")
+                    return repMsg
+                elif eventKey == "lianaizhuli_v1_jiaweixinqun":
+                    # 【联系我们】加微信群
+                    repMsg = reply.ImageMsg(userid, gongzhonghaoid,
+                                            mediaId="yYuh_32i1qVXDlPAcwH8RVJpGqSNB_19W28gfuJmafc")
+                    return repMsg
         if len(reply_content) == 0:
             reply_content = reply_sentens['subscribe']
         repMsg = reply.TextMsg(userid, gongzhonghaoid, reply_content)

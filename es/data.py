@@ -53,6 +53,7 @@ actions = []
 # es.indices.delete(index='xinliceshi')
 # es.indices.delete(index='xinliceshiret')
 # es.indices.delete(index='search')
+es.indices.delete(index='fenxiao')
 
 # ret_data = es.indices.create(index='liaomeihuashu', body=lianaizhuli_index, ignore=400)
 # print(ret_data)
@@ -88,6 +89,8 @@ actions = []
 # print(ret_data)
 # ret_data = es.indices.create(index='search', body=lianaizhuli_index, ignore=400)
 # print(ret_data)
+ret_data = es.indices.create(index='fenxiao', body=lianaizhuli_index, ignore=400)
+print(ret_data)
 
 
 # with open('biaoqing.json', 'r') as f:

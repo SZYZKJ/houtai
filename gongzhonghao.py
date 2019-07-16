@@ -23,6 +23,7 @@ import string
 import hashlib
 import xml.etree.ElementTree as ET
 import logging
+from basic import Basic
 from weixin_app import handel
 from weixin_app import receive
 from weixin_app import reply
@@ -50,7 +51,7 @@ total_fees = [0, 2900, 19900, 49900, 99900, 299900, 499900]
 # sijiaotime = [0, 60, 60, 60, 60, 60, 60]
 # total_fees = [0, 1, 2, 3, 4, 5, 6]
 dingyuehaoappid = 'wxc1deae6a065dffa9'
-dingyuehaoencodingAESKey = "UmBlx5gtFv7zravWwE9tCLjC99qPxRZQDPDdfeFCBfg"
+encodingAESKey = "UmBlx5gtFv7zravWwE9tCLjC99qPxRZQDPDdfeFCBfg"
 token = 'lianailianmeng'
 os.chdir('/home/ubuntu/data/lianailianmeng/data')
 HD = handel.Handel()
@@ -64,7 +65,22 @@ mch_id = '1519367291'
 merchant_key = 'shenzhenyuzikejiyouxiangongsi888'
 key = "pangyuming920318"
 iv = "abcdefabcdefabcd"
+access_tokentime=[]
 
+
+def getaccess_token():
+    access_token = ''
+    if len(access_tokentime) == 0 or access_tokentime[1] < int(time.time()):
+        url = 'https://api.weixin.qq.com/sns/oauth2/access_token?appid=' + fuwuhaoappid + '&secret=' + fuwuhaoAppSecret + '&code=' + code + '&grant_type=authorization_code'
+        response = requests.get(url)
+        response = response.json()
+        access_token = response['access_token']
+        access_tokentime = []
+        access_tokentime.append(access_token)
+        access_tokentime.append(int(time.time() + 3600))
+    else:
+        access_token = access_tokentime[0]
+    return access_token
 
 def openid_unionid(openid, access_token):
     unionidurl = 'https://api.weixin.qq.com/sns/userinfo?access_token=' + access_token + '&openid=' + openid + '&lang=zh_CN'
@@ -235,9 +251,30 @@ def lianailianmeng():
                 timestamp = request.values.get('timestamp')
                 nonce = request.values.get('nonce')
                 msg_signature = request.values.get('msg_signature')
-                encrypt_decrypt = WXBizMsgCrypt(token, encodingAESKey, appid)
+                encrypt_decrypt = WXBizMsgCrypt(token, encodingAESKey, dingyuehaoappid)
                 (ret, decrypt_xml) = encrypt_decrypt.DecryptMsg(rec_xml, msg_signature, timestamp, nonce)
                 recMsg = receive.parse_xml(decrypt_xml)
+                gzhid=recMsg.FromUserName
+                accessToken = Basic().get_access_token('gzh')
+                unionidurl='https://api.weixin.qq.com/cgi-bin/user/info?access_token='+accessToken+'&openid='+gzhid+'&lang=zh_CN'
+                response = requests.get(unionidurl)
+                gzhuserinfo=response.json()
+                gzhuserinfo['gzhid']=gzhid
+                gzhuserinfo.pop('openid')
+                unionid=gzhuserinfo['unionid']
+                resdata=gzhuserinfo
+                try:
+                    userinfodoc = es.get(index='userinfo', doc_type='userinfo', id=unionid)['_source']
+                    userinfodoc.update(gzhuserinfo)
+                    resdata = userinfodoc
+                except:
+                    resdata['addtime'] = getTime()
+                    resdata['vipdengji'] = 0
+                    resdata['viptime'] = int(time.time()) + viptime[0]
+                    resdata['sijiaotime'] = 0
+                    resdata['xiaofeicishu'] = 0
+                    resdata['xiaofeizonge'] = 0
+                es.index(index='userinfo', doc_type='userinfo', id=unionid, body=resdata)
                 repMsg = HD.handel_msg(recMsg)
                 xml = repMsg.send()
                 (ret, encrypt_xml) = encrypt_decrypt.EncryptMsg(xml, nonce)
@@ -272,7 +309,7 @@ def yuzikeji():
                 timestamp = request.values.get('timestamp')
                 nonce = request.values.get('nonce')
                 msg_signature = request.values.get('msg_signature')
-                encrypt_decrypt = WXBizMsgCrypt(token, encodingAESKey, appid)
+                encrypt_decrypt = WXBizMsgCrypt(token, encodingAESKey, fuwuhaoappid)
                 (ret, decrypt_xml) = encrypt_decrypt.DecryptMsg(rec_xml, msg_signature, timestamp, nonce)
                 recMsg = receive.parse_xml(decrypt_xml)
                 repMsg = HD.handel_msg(recMsg)
@@ -352,14 +389,10 @@ def getUnionid():
     except Exception as e:
         logger.error(e)
         return json.dumps({'MSG': '警告！非法入侵！！！'})
-    url = 'https://api.weixin.qq.com/sns/oauth2/access_token?appid=' + fuwuhaoappid + '&secret=' + fuwuhaoAppSecret + '&code=' + code + '&grant_type=authorization_code'
-    response = requests.get(url)
-    response = response.json()
-    print(response)
-    resdata = openid_unionid(response['openid'], response['access_token'])
-    print(resdata)
+    access_token=getaccess_token()
+    resdata = openid_unionid(response['openid'], access_token)
     unionid = resdata['unionid']
-    resdata['gzhid'] = resdata['openid']
+    resdata['fwhid'] = resdata['openid']
     resdata.pop('openid')
     try:
         userinfodoc = es.get(index='userinfo', doc_type='userinfo', id=unionid)['_source']
@@ -386,7 +419,7 @@ def get_prepay_id():
     except Exception as e:
         logger.error(e)
         return json.dumps({'MSG': '警告！非法入侵！！！'})
-    openid = es.get(index='userinfo', doc_type='userinfo', id=unionid)['_source']['gzhid']
+    openid = es.get(index='userinfo', doc_type='userinfo', id=unionid)['_source']['fwhid']
     url = 'https://api.mch.weixin.qq.com/pay/unifiedorder'
     prepaydata = {
         'appid': fuwuhaoappid,
@@ -409,7 +442,6 @@ def get_prepay_id():
                                  headers={'Content-Type': 'application/xml'})
     result = urllib.request.urlopen(req, timeout=10).read().decode('utf8')
     result = xml_to_dict(result)
-    print(result)
     prepay_id = result['prepay_id']
     paySign_data = {
         'appId': fuwuhaoappid,
@@ -452,25 +484,76 @@ def paynotify():
     if isnew or (isnew == 0 and flag == 1):
         es.index(index='userzhifu', doc_type='userzhifu', id=unionid,
                  body={'unionid': unionid, 'zhifudata': zhifudata, 'updatatime': zhifures['time_end']})
+        doc = es.get(index='userinfo', doc_type='userinfo', id=unionid)
+        userdoc = doc['_source']
+        zhifures['total_fee'] = int(zhifures['total_fee'])
         try:
             zhifutype = int(json.loads(zhifures['attach'])['zhifutype'])
-            doc = es.get(index='userinfo', doc_type='userinfo', id=unionid)
-            newdoc = doc['_source']
-            if newdoc['vipdengji'] < zhifutype:
-                newdoc['vipdengji'] = zhifutype
-            if newdoc['viptime'] < int(time.time()):
-                newdoc['viptime'] = int(time.time()) + viptime[zhifutype]
+            if userdoc['vipdengji'] < zhifutype:
+                userdoc['vipdengji'] = zhifutype
+            if userdoc['viptime'] < int(time.time()):
+                userdoc['viptime'] = int(time.time()) + viptime[zhifutype]
             else:
-                newdoc['viptime'] += viptime[zhifutype]
-            if newdoc['sijiaotime'] < int(time.time()):
-                newdoc['sijiaotime'] = int(time.time()) + sijiaotime[zhifutype]
+                userdoc['viptime'] += viptime[zhifutype]
+            if userdoc['sijiaotime'] < int(time.time()):
+                userdoc['sijiaotime'] = int(time.time()) + sijiaotime[zhifutype]
             else:
-                newdoc['sijiaotime'] += sijiaotime[zhifutype]
-            newdoc['xiaofeicishu'] += 1
-            newdoc['xiaofeizonge'] += int(zhifures['total_fee'])
-            es.index(index='userinfo', doc_type='userinfo', id=unionid, body=newdoc)
+                userdoc['sijiaotime'] += sijiaotime[zhifutype]
+            userdoc['xiaofeicishu'] += 1
+            userdoc['xiaofeizonge'] += zhifures['total_fee']
+            es.index(index='userinfo', doc_type='userinfo', id=unionid, body=userdoc)
         except Exception as e:
             logger.error(e)
+        try:
+            newdoc = es.get(index='fenxiao', doc_type='fenxiao', id=unionid)['_source']
+            shangji = newdoc['shangji']
+            shangshangji = newdoc['shangshangji']
+            if shangji != '':
+                try:
+                    fenxiao = es.get(index='fenxiao', doc_type='fenxiao', id=shangji)['_source']
+                    yijibili = 0.1
+                    if len(fenxiao['yijiyonghu']) >= 30:
+                        yijibili = 0.4
+                    elif len(fenxiao['yijiyonghu']) >= 10:
+                        yijibili = 0.3
+                    elif len(fenxiao['yijiyonghu']) >= 3:
+                        yijibili = 0.2
+                    newzhifu = {}
+                    newzhifu['yonghuming'] = userdoc['nickName']
+                    newzhifu['shangpinming'] = json.loads(zhifures['attach'])['detail']
+                    newzhifu['time'] = getTime()
+                    newzhifu['total_fee'] = zhifures['total_fee'] * 0.01
+                    newzhifu['shouyi'] = zhifures['total_fee'] * 0.00994 * yijibili
+                    fenxiao['dingdan'].insert(0, newzhifu)
+                    fenxiao['zongshouyi'] += zhifures['total_fee'] * 0.00994 * yijibili
+                    fenxiao['ketixian'] += zhifures['total_fee'] * 0.00994 * yijibili
+                    es.index(index='fenxiao', doc_type='fenxiao', id=shangji, body=fenxiao)
+                except:
+                    None
+            if shangshangji != '':
+                try:
+                    fenxiao = es.get(index='fenxiao', doc_type='fenxiao', id=shangshangji)['_source']
+                    yijibili = 0.04
+                    if len(fenxiao['yijiyonghu']) >= 30:
+                        yijibili = 0.1
+                    elif len(fenxiao['yijiyonghu']) >= 10:
+                        yijibili = 0.08
+                    elif len(fenxiao['yijiyonghu']) >= 3:
+                        yijibili = 0.06
+                    newzhifu = {}
+                    newzhifu['yonghuming'] = userdoc['nickName']
+                    newzhifu['shangpinming'] = json.loads(zhifures['attach'])['detail']
+                    newzhifu['time'] = getTime()
+                    newzhifu['total_fee'] = zhifures['total_fee'] * 0.01
+                    newzhifu['shouyi'] = zhifures['total_fee'] * 0.00994 * yijibili
+                    fenxiao['dingdan'].insert(0, newzhifu)
+                    fenxiao['zongshouyi'] += zhifures['total_fee'] * 0.00994 * yijibili
+                    fenxiao['ketixian'] += zhifures['total_fee'] * 0.00994 * yijibili
+                    es.index(index='fenxiao', doc_type='fenxiao', id=shangshangji, body=fenxiao)
+                except:
+                    None
+        except:
+            None
     return dict_to_xml({'return_code': 'SUCCESS', 'return_msg': 'OK'})
 
 
@@ -484,9 +567,9 @@ def get_kechengprepay_id():
     except Exception as e:
         logger.error(e)
         return json.dumps({'MSG': '警告！非法入侵！！！'})
-    openid = es.get(index='userinfo', doc_type='userinfo', id=unionid)['_source']['gzhid']
+    openid = es.get(index='userinfo', doc_type='userinfo', id=unionid)['_source']['fwhid']
     kechengjiage = int(es.get(index='kechenglist', doc_type='kechenglist', id=kechengid)['_source']['jiage'] * 100)
-    # kechengjiage = 1
+    # kechengjiage = 10
     url = 'https://api.mch.weixin.qq.com/pay/unifiedorder'
     prepaydata = {
         'appid': fuwuhaoappid,
@@ -509,7 +592,6 @@ def get_kechengprepay_id():
                                  headers={'Content-Type': 'application/xml'})
     result = urllib.request.urlopen(req, timeout=10).read().decode('utf8')
     result = xml_to_dict(result)
-    print(result)
     prepay_id = result['prepay_id']
     paySign_data = {
         'appId': fuwuhaoappid,
@@ -552,6 +634,12 @@ def kechengpaynotify():
     if isnew or (isnew == 0 and flag == 1):
         es.index(index='userzhifu', doc_type='userzhifu', id=unionid,
                  body={'unionid': unionid, 'zhifudata': zhifudata, 'updatatime': zhifures['time_end']})
+        zhifures['total_fee'] = int(zhifures['total_fee'])
+        doc = es.get(index='userinfo', doc_type='userinfo', id=unionid)
+        userdoc = doc['_source']
+        userdoc['xiaofeicishu'] += 1
+        userdoc['xiaofeizonge'] += zhifures['total_fee']
+        es.index(index='userinfo', doc_type='userinfo', id=unionid, body=userdoc)
         try:
             kechengid = json.loads(zhifures['attach'])['kechengid']
             try:
@@ -565,13 +653,58 @@ def kechengpaynotify():
                 goumaidoc['data'][kechengid] = 1
             goumaidoc['data'] = json.dumps(goumaidoc['data'])
             es.index(index='kechenggoumai', doc_type='kechenggoumai', id=unionid, body=goumaidoc)
-            doc = es.get(index='userinfo', doc_type='userinfo', id=unionid)
-            newdoc = doc['_source']
-            newdoc['xiaofeicishu'] += 1
-            newdoc['xiaofeizonge'] += int(zhifures['total_fee'])
-            es.index(index='userinfo', doc_type='userinfo', id=unionid, body=newdoc)
         except Exception as e:
             logger.error(e)
+        try:
+            newdoc = es.get(index='fenxiao', doc_type='fenxiao', id=unionid)['_source']
+            shangji = newdoc['shangji']
+            shangshangji = newdoc['shangshangji']
+            if shangji != '':
+                try:
+                    fenxiao = es.get(index='fenxiao', doc_type='fenxiao', id=shangji)['_source']
+                    yijibili = 0.1
+                    if len(fenxiao['yijiyonghu']) >= 30:
+                        yijibili = 0.4
+                    elif len(fenxiao['yijiyonghu']) >= 10:
+                        yijibili = 0.3
+                    elif len(fenxiao['yijiyonghu']) >= 3:
+                        yijibili = 0.2
+                    newzhifu = {}
+                    newzhifu['yonghuming'] = userdoc['nickName']
+                    newzhifu['shangpinming'] = json.loads(zhifures['attach'])['detail']
+                    newzhifu['time'] = getTime()
+                    newzhifu['total_fee'] = zhifures['total_fee'] * 0.01
+                    newzhifu['shouyi'] = zhifures['total_fee'] * 0.00994 * yijibili
+                    fenxiao['dingdan'].insert(0, newzhifu)
+                    fenxiao['zongshouyi'] += zhifures['total_fee'] * 0.00994 * yijibili
+                    fenxiao['ketixian'] += zhifures['total_fee'] * 0.00994 * yijibili
+                    es.index(index='fenxiao', doc_type='fenxiao', id=shangji, body=fenxiao)
+                except:
+                    None
+            if shangshangji != '':
+                try:
+                    fenxiao = es.get(index='fenxiao', doc_type='fenxiao', id=shangshangji)['_source']
+                    yijibili = 0.04
+                    if len(fenxiao['yijiyonghu']) >= 30:
+                        yijibili = 0.1
+                    elif len(fenxiao['yijiyonghu']) >= 10:
+                        yijibili = 0.08
+                    elif len(fenxiao['yijiyonghu']) >= 3:
+                        yijibili = 0.06
+                    newzhifu = {}
+                    newzhifu['yonghuming'] = userdoc['nickName']
+                    newzhifu['shangpinming'] = json.loads(zhifures['attach'])['detail']
+                    newzhifu['time'] = getTime()
+                    newzhifu['total_fee'] = zhifures['total_fee'] * 0.01
+                    newzhifu['shouyi'] = zhifures['total_fee'] * 0.00994 * yijibili
+                    fenxiao['dingdan'].insert(0, newzhifu)
+                    fenxiao['zongshouyi'] += zhifures['total_fee'] * 0.00994 * yijibili
+                    fenxiao['ketixian'] += zhifures['total_fee'] * 0.00994 * yijibili
+                    es.index(index='fenxiao', doc_type='fenxiao', id=shangshangji, body=fenxiao)
+                except:
+                    None
+        except:
+            None
     return dict_to_xml({'return_code': 'SUCCESS', 'return_msg': 'OK'})
 
 

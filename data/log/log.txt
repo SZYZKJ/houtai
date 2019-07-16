@@ -1312,3 +1312,770 @@
 2019-07-09 18:58:44,894 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64uET6CHT4CfsBfHMrl0wyc0","found":false}')
 2019-07-09 18:58:46,816 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64uET6CHT4CfsBfHMrl0wyc0","found":false}')
 2019-07-09 18:58:58,799 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64uET6CHT4CfsBfHMrl0wyc0","found":false}')
+2019-07-09 19:25:35,200 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64sVfsYSX6dTsYFiNxSnBVP8","found":false}')
+2019-07-09 20:12:51,677 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64k3ztrFNgByRJw3jMBFiZy4","found":false}')
+2019-07-09 21:36:33,562 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64h1MM2F8ki0HXjAk1WHEmQ8","found":false}')
+2019-07-09 21:36:33,564 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64h1MM2F8ki0HXjAk1WHEmQ8","found":false}')
+2019-07-09 21:36:33,566 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64h1MM2F8ki0HXjAk1WHEmQ8","found":false}')
+2019-07-09 23:25:40,277 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64pGFQN-NqXSpQjmJIOZBH3E","found":false}')
+2019-07-10 00:17:43,203 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64uwwTIteTMuREwNTkFR6FQ0","found":false}')
+2019-07-10 07:19:11,632 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64pHycM-ghCEIEQCVoA6Ut08","found":false}')
+2019-07-10 08:07:32,071 - checkOpenid - __main__ - ERROR - 'openid'
+2019-07-10 09:39:25,892 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64tnZD2ZdzDZsadaxaEniXo4","found":false}')
+2019-07-10 11:28:08,265 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64uMFMyz_tpN8ARhTMyA0M7E","found":false}')
+2019-07-10 16:43:07,732 - checkOpenid - __main__ - ERROR - 'openid'
+2019-07-10 16:44:02,605 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64t8mVj87pmMzNCQYfoNCr-Y","found":false}')
+2019-07-10 16:52:21,137 - checkOpenid - __main__ - ERROR - 'openid'
+2019-07-10 16:54:08,872 - checkOpenid - __main__ - ERROR - 'openid'
+2019-07-10 17:59:31,531 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64gPDkNgYpLcNWSMLYFvmA7U","found":false}')
+2019-07-10 18:19:53,592 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64tIvv4p97PK6-w0h_o7muig","found":false}')
+2019-07-10 19:07:27,906 - checkOpenid - __main__ - ERROR - 'openid'
+2019-07-10 19:11:00,575 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64u_YCT3df72fwxHmcLfn9JI","found":false}')
+2019-07-10 19:11:48,499 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64ux4d6UDyH6HJHD0mJW0woY","found":false}')
+2019-07-10 19:13:03,672 - checkOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64nxJ3AlkiinPxGHeJ9LerBA","found":false}')
+2019-07-10 19:13:04,462 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64nxJ3AlkiinPxGHeJ9LerBA","found":false}')
+2019-07-10 19:13:17,536 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64lXTQ89w5HlnpsdRbNdiD8U","found":false}')
+2019-07-10 19:14:51,560 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64vIIjM3ip9B-StF7e6k_2MA","found":false}')
+2019-07-10 19:16:50,971 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64ho5qYox-4ah2Gpi0fmux6Y","found":false}')
+2019-07-10 19:17:53,625 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64q-06qxCyS3FMIcZqiycRAc","found":false}')
+2019-07-10 19:17:53,626 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64q-06qxCyS3FMIcZqiycRAc","found":false}')
+2019-07-10 19:17:53,627 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64q-06qxCyS3FMIcZqiycRAc","found":false}')
+2019-07-10 19:17:58,617 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64t2R2DZASnzXqaZ1IT0oQsA","found":false}')
+2019-07-10 19:19:03,863 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64kVyugs_4c4U8xG44X-WrU0","found":false}')
+2019-07-10 19:19:03,963 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64ipGLPXwztRmyJ6FRf0xPCI","found":false}')
+2019-07-10 19:19:17,090 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64i8gEnuvWSI2ipT3g2WS7Wc","found":false}')
+2019-07-10 19:19:27,304 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64nASm1ilKmf41ssLqjkkS9U","found":false}')
+2019-07-10 19:20:36,829 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64lLGfapV7c87AQl7DbhQiro","found":false}')
+2019-07-10 19:20:54,011 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64pdYZuXkbEoSMcrGg74c8JI","found":false}')
+2019-07-10 19:21:25,919 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64gST5ZMEePzluIe9LB7ujxk","found":false}')
+2019-07-10 19:21:30,958 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64pxnTYFXDdR--LqVIWnZtRk","found":false}')
+2019-07-10 19:22:11,205 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64lyZIPHCm88U8QCzLn_a6CE","found":false}')
+2019-07-10 19:22:29,320 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64r3sDKT48b3L84ECdGEJMAs","found":false}')
+2019-07-10 19:22:29,356 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64hFzgWpvdMwCSLmMmF1DozU","found":false}')
+2019-07-10 19:22:39,808 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64vm9sI-eht4V7zvT5R9iC2I","found":false}')
+2019-07-10 19:22:41,147 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64hJv34_Tr98Jg_DYYc5wiqA","found":false}')
+2019-07-10 19:23:08,526 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64tZeQcFv-XvmiPhGDLpgS5M","found":false}')
+2019-07-10 19:23:32,091 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64pI5oWD3rseFthZtS2A18M8","found":false}')
+2019-07-10 19:23:32,694 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64iZIlMRnBrzOsOWPWfknoKc","found":false}')
+2019-07-10 19:24:23,127 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64p4reCRWZfgInJsfU2FX7xI","found":false}')
+2019-07-10 19:26:26,247 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64mhET6ooZrm5qkyz99CVwU8","found":false}')
+2019-07-10 19:27:33,187 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64qeSayPctmb6syfgjS7yWVk","found":false}')
+2019-07-10 19:27:54,872 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64i1CJ8R0_jn_6kb-7xZTKwY","found":false}')
+2019-07-10 19:28:57,675 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64n99eTgf5KzBA5jLSfLF3zw","found":false}')
+2019-07-10 19:29:00,295 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64g5c9bG6kt7AZJbbKT2opFo","found":false}')
+2019-07-10 19:31:27,867 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64vS2LsUWNZU2GOGjHkRRTyo","found":false}')
+2019-07-10 19:37:16,648 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64iiuqKGIUnNjop5IJ318OwI","found":false}')
+2019-07-10 19:38:02,297 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64o7l2j2z4IkWpHW57uxMiWI","found":false}')
+2019-07-10 19:39:05,272 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64jlaBVG0eDhr5voptP4lAhQ","found":false}')
+2019-07-10 19:46:03,225 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64rrutpOcBYjzt-IPL-IKfs4","found":false}')
+2019-07-10 19:53:40,017 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64pe6zxEULGQyJJBml19L49s","found":false}')
+2019-07-10 20:53:41,123 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-10 20:53:52,420 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-10 20:57:26,391 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64oBKnMBmtaBFzQ9LdqOOsY8","found":false}')
+2019-07-10 20:59:16,344 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64jxn_XIOpQ9hHha7KORKPIg","found":false}')
+2019-07-10 21:01:16,320 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64oYaw32ea0gaW0_Y1tg9xAA","found":false}')
+2019-07-10 21:11:39,390 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64uV2RlJJMTFhCUiTbWJHiHQ","found":false}')
+2019-07-10 21:54:21,216 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64u80LYuvckfbqk5_bsa8Eo0","found":false}')
+2019-07-10 22:15:12,771 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64uET6CHT4CfsBfHMrl0wyc0","found":false}')
+2019-07-10 22:32:54,372 - checkOpenid - __main__ - ERROR - 'openid'
+2019-07-10 23:38:39,957 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64sGWi056OpSqwZ3V4r2cva8","found":false}')
+2019-07-11 00:12:54,381 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64tbc6aQkm4CssLK4vAMDxss","found":false}')
+2019-07-11 00:29:53,228 - setJilu - __main__ - ERROR - 'jilucontent'
+2019-07-11 03:14:07,239 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64p67kC8Q-7Is6lYlbVfJz8o","found":false}')
+2019-07-11 05:30:21,215 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:30:21,998 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:30:22,462 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:30:23,473 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:30:23,533 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:30:24,039 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:30:24,091 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:30:26,083 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:30:26,143 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:30:26,639 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:30:26,748 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:30:36,932 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:30:36,987 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:30:37,466 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:30:37,482 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:30:38,398 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:30:38,464 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:30:38,902 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:30:39,034 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:30:45,050 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:30:45,104 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:30:45,586 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:30:45,588 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:30:47,571 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:30:47,577 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:30:48,129 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:30:48,169 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:30:53,168 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:30:53,242 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:30:53,698 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:30:53,770 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:30:54,671 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:30:54,738 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:30:55,219 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:30:55,331 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:31:02,862 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:31:02,925 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:31:03,412 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:31:03,435 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:31:04,377 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:31:04,453 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:31:04,979 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:31:05,063 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:31:11,019 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:31:11,025 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:31:11,528 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:31:11,556 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:31:12,476 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:31:12,545 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:31:13,048 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:31:13,049 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:31:19,105 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:31:19,163 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:31:19,635 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:31:19,668 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:31:20,566 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:31:20,631 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:31:21,153 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:31:21,183 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:31:27,240 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:31:27,634 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:31:27,786 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:31:28,695 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:31:28,703 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:31:29,277 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:31:29,287 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:31:35,355 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:31:35,409 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:31:35,913 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:31:35,915 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:31:36,797 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:31:36,886 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:31:37,425 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:31:37,453 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:31:43,508 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:31:43,562 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:31:44,067 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:31:44,138 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:31:44,950 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:31:45,011 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:31:45,516 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:31:45,634 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:31:51,776 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:31:51,836 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:31:52,335 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:31:52,391 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:31:53,224 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:31:53,292 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:31:53,858 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:31:53,870 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:32:00,060 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:32:00,114 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:32:00,654 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:32:00,661 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:32:01,509 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:32:01,579 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:32:02,138 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:32:02,154 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:32:08,245 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:32:08,377 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:32:08,784 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:32:08,893 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:32:09,707 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:32:09,788 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:32:10,343 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:32:10,344 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:32:16,484 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:32:16,490 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:32:17,130 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:32:17,153 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:32:17,923 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:32:18,024 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:32:18,552 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:32:18,585 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:32:24,754 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:32:24,809 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:32:25,370 - getUnionid - __main__ - ERROR - 'utf-8' codec can't decode byte 0xd9 in position 4: invalid continuation byte
+2019-07-11 05:32:25,387 - getUnionid - __main__ - ERROR - 'utf-8' codec can't decode byte 0xdc in position 0: invalid continuation byte
+2019-07-11 05:32:26,241 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:32:26,327 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:32:26,878 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:32:26,936 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:32:33,013 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:32:33,066 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:32:33,639 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:32:33,678 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:32:34,470 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:32:34,534 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:32:35,072 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:32:35,154 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:32:41,229 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:32:41,283 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:32:41,798 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:32:41,859 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:32:42,681 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:32:42,786 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:32:43,365 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:32:43,397 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:32:49,435 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:32:49,500 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:32:50,037 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:32:50,115 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:32:50,883 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:32:50,972 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:32:51,561 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:32:51,593 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:32:57,652 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:32:57,711 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:32:58,257 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:32:58,283 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:32:59,098 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:32:59,212 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:32:59,758 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:32:59,849 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:33:05,999 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:33:06,058 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:33:06,630 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:33:06,671 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:33:07,448 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:33:07,518 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:33:08,133 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:33:08,170 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:33:14,267 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:33:14,270 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:33:14,879 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:33:14,936 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:33:15,726 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:33:15,731 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:33:16,384 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:33:16,443 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:33:22,484 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:33:22,539 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:33:23,160 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:33:23,162 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:33:23,944 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:33:24,044 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:33:24,582 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:33:24,716 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:33:30,777 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:33:30,787 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:33:31,465 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:33:32,109 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:33:32,175 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:33:32,796 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:33:32,809 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:33:38,802 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:33:38,807 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:33:39,444 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:33:39,462 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:33:40,259 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:33:40,354 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:33:40,936 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:33:41,018 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:33:46,994 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:33:47,049 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:33:47,670 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:33:47,710 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:33:48,464 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:33:48,520 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:33:49,106 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:33:49,220 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:33:55,300 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:33:55,305 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:33:55,975 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:33:56,012 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:33:56,767 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:33:56,853 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:33:57,488 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:33:57,570 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:34:03,545 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:34:03,605 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:34:04,192 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:34:04,906 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:34:04,966 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:34:05,624 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:34:05,658 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:34:11,788 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:34:11,841 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:34:12,494 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:34:13,171 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:34:13,234 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:34:13,972 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:34:14,036 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:34:19,939 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:34:19,945 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:34:20,605 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:34:20,696 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:34:21,413 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:34:21,478 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:34:22,140 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:34:22,160 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:34:28,234 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:34:28,307 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:34:28,948 - getUnionid - __main__ - ERROR - 'utf-8' codec can't decode byte 0xc5 in position 3: invalid continuation byte
+2019-07-11 05:34:28,960 - getUnionid - __main__ - ERROR - 'utf-8' codec can't decode byte 0xab in position 2: invalid start byte
+2019-07-11 05:34:29,706 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:34:29,765 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:34:30,420 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:34:30,512 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:34:36,521 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:34:36,524 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:34:37,254 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:34:37,261 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:34:38,074 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:34:38,153 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:34:38,834 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:34:38,859 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:34:44,919 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:34:44,999 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:34:45,660 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:34:45,669 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:34:46,454 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:34:46,521 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:34:47,186 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:34:47,391 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:34:53,370 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:34:53,373 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:34:54,100 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:34:54,124 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:34:54,860 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:34:54,932 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:34:55,658 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:34:55,672 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:35:01,757 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:35:01,820 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:35:02,443 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:35:02,608 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:35:03,245 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:35:03,340 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:35:04,046 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:35:04,189 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:35:10,166 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:35:10,227 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:35:10,825 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:35:10,993 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:35:11,672 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:35:11,680 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:35:12,422 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:35:12,588 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:35:18,620 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:35:18,700 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:35:19,404 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:35:19,486 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:35:20,138 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:35:20,200 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:35:20,963 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:35:21,034 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:35:27,147 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:35:27,226 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:35:27,949 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:35:28,040 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:35:28,710 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:35:28,785 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:35:29,371 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:35:29,707 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:35:35,770 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:35:35,850 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:35:36,587 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:35:36,675 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:35:37,303 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:35:37,376 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:35:38,122 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:35:38,350 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:35:44,276 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:35:44,335 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:35:44,994 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:35:45,111 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:35:45,793 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:35:45,868 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:35:46,762 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:35:46,802 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:35:52,771 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:35:52,778 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:35:53,561 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:35:53,602 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:35:54,382 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:35:54,445 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:35:55,108 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:35:55,336 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:36:01,411 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:36:01,465 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:36:02,228 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:36:02,320 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:36:03,031 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:36:03,111 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:36:03,748 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:36:04,017 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:36:10,022 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:36:10,086 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:36:10,741 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:36:10,889 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:36:11,600 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:36:11,606 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:36:12,273 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:36:12,639 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:36:18,695 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:36:18,699 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:36:19,546 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:36:19,548 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:36:20,264 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:36:20,329 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 05:36:21,120 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 05:36:21,172 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1TLWkbhcGR5XhECMNKXT7C0","found":false}')
+2019-07-11 08:39:41,898 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64oPOPTi5pGpdZE75EglaYk0","found":false}')
+2019-07-11 09:55:09,481 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64sUiZWJlahmNI8k6mKZvxEY","found":false}')
+2019-07-11 10:36:55,088 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64mKCMBBmQWT5EJkSk9LX2bM","found":false}')
+2019-07-11 11:47:34,048 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64vJZyUATb7WO6u7lIO5pYWk","found":false}')
+2019-07-11 12:29:15,249 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64gtHfCF86gRr0KkUNI7A2WM","found":false}')
+2019-07-11 13:44:26,532 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64h70RoC1UyTMu6JVja1LjqA","found":false}')
+2019-07-11 14:23:12,699 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64tbfeVBiAnzpaIpjsJmfsx8","found":false}')
+2019-07-11 16:10:45,705 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64r5_bRnZvL2k0T9MIAxj-1k","found":false}')
+2019-07-11 16:41:48,767 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64q3R06pMBX9pPA_wcTIeuqU","found":false}')
+2019-07-11 16:59:49,010 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64oHNdssU157DIY0_yIiDIbs","found":false}')
+2019-07-11 18:14:02,215 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1frbzXlHy5iukSjDAzx4OcY","found":false}')
+2019-07-11 18:14:12,388 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1frbzXlHy5iukSjDAzx4OcY","found":false}')
+2019-07-11 18:14:14,845 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1frbzXlHy5iukSjDAzx4OcY","found":false}')
+2019-07-11 18:15:06,402 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 18:15:06,644 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 18:15:07,191 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1frbzXlHy5iukSjDAzx4OcY","found":false}')
+2019-07-11 18:15:07,391 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1frbzXlHy5iukSjDAzx4OcY","found":false}')
+2019-07-11 18:15:18,623 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1frbzXlHy5iukSjDAzx4OcY","found":false}')
+2019-07-11 18:15:21,610 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1frbzXlHy5iukSjDAzx4OcY","found":false}')
+2019-07-11 18:15:25,226 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-11 18:15:25,904 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1frbzXlHy5iukSjDAzx4OcY","found":false}')
+2019-07-11 18:44:10,798 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64sMcBCL56TbA0vtwdTOwlEo","found":false}')
+2019-07-11 18:45:29,141 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64kBYwxAk2rQ4gv2EmTmfguw","found":false}')
+2019-07-11 18:51:56,775 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64kMSLc19SIsKmEJX7sKD_-w","found":false}')
+2019-07-11 19:00:29,495 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64pI0YKqzs646ezDgnaSawPg","found":false}')
+2019-07-11 19:05:29,543 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64jzz4Q3-7g95Z5R4FvDIA5Q","found":false}')
+2019-07-11 19:11:38,852 - checkOpenid - __main__ - ERROR - 'openid'
+2019-07-11 19:29:19,090 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64iV5jgu6idRnY4_IqxKSGjg","found":false}')
+2019-07-11 22:54:46,996 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64lsVpCURrXRdGPCduEzPXmA","found":false}')
+2019-07-11 22:55:41,607 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64vh3bHqbhYX9iPbwwzVwnEQ","found":false}')
+2019-07-12 00:25:27,485 - checkOpenid - __main__ - ERROR - 'openid'
+2019-07-12 04:03:53,949 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64mOnzn_wXcP1QDUEI4ht6i8","found":false}')
+2019-07-12 04:04:19,387 - checkOpenid - __main__ - ERROR - 'openid'
+2019-07-12 04:04:39,007 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64kN3pP8rB1fdmOK3cr06-Zg","found":false}')
+2019-07-12 04:19:23,558 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64gqkqGLv4vmPBtKoYRpqZ9w","found":false}')
+2019-07-12 04:24:52,478 - checkOpenid - __main__ - ERROR - 'openid'
+2019-07-12 05:01:34,398 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64tB7MVlxvu430ZJEBJyYacM","found":false}')
+2019-07-12 07:09:17,057 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64nU3sqYCN0xrg4qSTtjRmlY","found":false}')
+2019-07-12 11:31:50,266 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64h0w6LLecqgfVim4MqKA-aI","found":false}')
+2019-07-12 12:25:14,084 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64o-3ZN9qS7Xf-DMZxxjZzZA","found":false}')
+2019-07-12 12:56:07,771 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64stpZHweNmfDWz9tWqSWZQA","found":false}')
+2019-07-12 13:04:06,850 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64szotzhEbjsF9MYbzt1dtW8","found":false}')
+2019-07-12 13:04:35,328 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64qDAIwtGkwmxFBNlwMqnqvE","found":false}')
+2019-07-12 14:06:48,560 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64uKC_mc1esoqXrLITUE0PKo","found":false}')
+2019-07-12 14:51:53,256 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64m-p831xYvhdmlwoB9SDsFg","found":false}')
+2019-07-12 16:19:30,465 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1eyfz1Ch3auRIqNi3n_Zqm8","found":false}')
+2019-07-12 16:19:33,186 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1eyfz1Ch3auRIqNi3n_Zqm8","found":false}')
+2019-07-12 16:19:37,051 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-12 16:19:38,353 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1eyfz1Ch3auRIqNi3n_Zqm8","found":false}')
+2019-07-12 16:19:44,493 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1eyfz1Ch3auRIqNi3n_Zqm8","found":false}')
+2019-07-12 16:20:22,041 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-12 16:20:22,100 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-12 16:20:24,033 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1XmV4rhUVaAZG_XnuiyLBX4","found":false}')
+2019-07-12 16:20:25,316 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1XmV4rhUVaAZG_XnuiyLBX4","found":false}')
+2019-07-12 16:20:29,190 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1XmV4rhUVaAZG_XnuiyLBX4","found":false}')
+2019-07-12 16:20:32,510 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1XmV4rhUVaAZG_XnuiyLBX4","found":false}')
+2019-07-12 16:20:46,246 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-12 16:20:46,501 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-12 16:20:47,543 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1XmV4rhUVaAZG_XnuiyLBX4","found":false}')
+2019-07-12 16:20:47,763 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1XmV4rhUVaAZG_XnuiyLBX4","found":false}')
+2019-07-12 16:20:50,731 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1XmV4rhUVaAZG_XnuiyLBX4","found":false}')
+2019-07-12 16:20:59,808 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1eyfz1Ch3auRIqNi3n_Zqm8","found":false}')
+2019-07-12 18:51:12,203 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64nUMCao20rjDHlcHwBgaFKs","found":false}')
+2019-07-12 18:52:04,824 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64ihXGRvc7vz3oe5GpcfpuP0","found":false}')
+2019-07-12 18:56:02,289 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64vmeixp5Jam3jbgeQt-E3kA","found":false}')
+2019-07-12 18:56:19,077 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64qvMQ0M8KvpzVe7xZvb9DLk","found":false}')
+2019-07-12 18:56:30,705 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64u3RoDPWEB8Pax3oUwz74kE","found":false}')
+2019-07-12 18:57:13,626 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64tt057iIs8x7hou7uSxhspg","found":false}')
+2019-07-12 18:57:30,014 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64gYd_ubING8GZz-RSFIH3bU","found":false}')
+2019-07-12 18:57:54,941 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64swVzvEou9p41RgUAFPRQ4U","found":false}')
+2019-07-12 18:59:13,334 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64p0Q_ASb_XrUjCf4v0NY_8s","found":false}')
+2019-07-12 19:01:32,881 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64o1JxPfrnyTjQS8K_ga5SbE","found":false}')
+2019-07-12 19:04:00,039 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64kRJn8PuTpGyVNncHMLozEY","found":false}')
+2019-07-12 19:04:01,324 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64kPp0upTVgPYO5yX2YrOJXY","found":false}')
+2019-07-12 19:04:10,486 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64smbIwQEV8Q38nlNwd1K9kg","found":false}')
+2019-07-12 19:05:14,756 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64ipHNlt7IkIsrx5ZLESyAus","found":false}')
+2019-07-12 19:09:26,851 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64oV8YAAeJTBRcZwramVu45M","found":false}')
+2019-07-12 19:10:56,665 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64rvAyK0K-x8C-Mq6DfXViug","found":false}')
+2019-07-12 19:18:43,230 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64i9X0F-85yI0nHObkKVmnPg","found":false}')
+2019-07-12 19:21:33,115 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64ifYzlH_RIN-G39CBVRPw0k","found":false}')
+2019-07-12 19:21:47,082 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64mB2VPI7mySdnHT5BewVuns","found":false}')
+2019-07-12 19:23:36,560 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64kQ2kSPSCGmKSg4-c2NDQrA","found":false}')
+2019-07-12 19:26:29,804 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64nXs8k-Jr9FhCCKIcZk6clo","found":false}')
+2019-07-12 19:27:27,421 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64oDLEu1EU3CN_cpIkussgxo","found":false}')
+2019-07-12 19:32:17,875 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64ux3G7RnGR4898KS46YU76g","found":false}')
+2019-07-12 19:34:09,291 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64oY6J2MU7I4zUHnYNwuE4GM","found":false}')
+2019-07-12 19:36:15,112 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64tP8bPBcEI1COQzX6zwkzNE","found":false}')
+2019-07-12 19:37:23,242 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64mStXEbODcR6daBz5IGJPKw","found":false}')
+2019-07-12 19:39:02,787 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64uCx37xXYhQjr1ztVwu845Q","found":false}')
+2019-07-12 19:40:07,422 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64ik_OAWZNIfRpyuwP_6LcxI","found":false}')
+2019-07-12 19:42:12,408 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64sDRxxXtNxbxAkLg3GKSFj4","found":false}')
+2019-07-12 19:43:15,333 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64rDVx1fagZsfB-hSo0FX0Wk","found":false}')
+2019-07-12 19:45:00,366 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64i6nkPoSBv6iVQueJxYGi7s","found":false}')
+2019-07-12 19:47:25,789 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64uBluUWfH2oV5s9TV_F4kLs","found":false}')
+2019-07-12 19:47:28,984 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64uKhnGlbBWgYP7M4I3N7l34","found":false}')
+2019-07-12 19:50:01,762 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64kYrNJ350AhOJCgB3Bkutak","found":false}')
+2019-07-12 19:50:17,142 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64lBy8DAJWciODRB0EmgZ_eE","found":false}')
+2019-07-12 19:50:21,796 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64uvkNJLmTbU45vQ4xzdSGWE","found":false}')
+2019-07-12 19:52:21,498 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64tNX7lqGvQCl_I316m_Yjrc","found":false}')
+2019-07-12 19:52:47,791 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64vxv-Fip16ED4fWBCbdWyJ4","found":false}')
+2019-07-12 19:55:39,841 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64vk-KI_llLhO9JPUCimoGao","found":false}')
+2019-07-12 19:59:26,455 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64usVNjoI9EJRxfMx7qtxkvI","found":false}')
+2019-07-12 20:00:58,826 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64mquLhEN7k-DNW7DDlPFsQo","found":false}')
+2019-07-12 20:08:15,423 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64is_2UKtzVbLLogKbMht_3A","found":false}')
+2019-07-12 21:11:54,554 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64vgV4Hq3sVCFVBn1ox_VCDs","found":false}')
+2019-07-12 23:01:20,549 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64nUXwjbPPyp9udmxkemZwuE","found":false}')
+2019-07-13 10:03:21,183 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64n5Ba1jSRim2eFA42DXpGJU","found":false}')
+2019-07-13 14:22:19,933 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64vm2oJ7j6MC0NgYBa2rrrWw","found":false}')
+2019-07-13 18:30:52,600 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64p0RFpe_mRANvWDKMpjV3V0","found":false}')
+2019-07-13 18:32:40,976 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64n2hXYuSUEkabp0Wge2sRIo","found":false}')
+2019-07-13 18:34:16,813 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64hEO5MrwrEDtelUTcCmS_Uo","found":false}')
+2019-07-13 18:35:40,236 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64nCehB67MRpiZHu9jrHdfR0","found":false}')
+2019-07-13 18:35:53,848 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64upjus8CNH9WVZHwa2HbFHY","found":false}')
+2019-07-13 18:36:08,961 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64nop3b8Ka--Yk7yCa324OAk","found":false}')
+2019-07-13 18:36:42,076 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64nxUiL5BCCYn1BSTjJp4vy8","found":false}')
+2019-07-13 18:37:13,803 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64gw-hldS48191TxVRg-BcdU","found":false}')
+2019-07-13 18:39:59,676 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64vIyvO89aN6U9t0D-YQpHbM","found":false}')
+2019-07-13 18:46:11,803 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64kTudlJCjlmah6QrcfP-W6c","found":false}')
+2019-07-13 18:48:25,074 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64ugdZa4BrIMZeyLS1tP-abc","found":false}')
+2019-07-13 18:52:32,057 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64iWvleRULgVlZbKfaTStkXc","found":false}')
+2019-07-13 19:06:43,317 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64q_vdNfRFroRLkzML2nhLA8","found":false}')
+2019-07-13 22:13:32,721 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64me2MsmuXBcxB38KrvgsUUA","found":false}')
+2019-07-13 22:19:59,502 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64tGUjn86oeB_duei9mN_tqU","found":false}')
+2019-07-13 22:20:10,153 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64k_crIcAJKq2nL1WsV-6SPA","found":false}')
+2019-07-13 22:20:56,472 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64vTjJ_dEgyfuSH7MviDTUtA","found":false}')
+2019-07-13 22:21:45,630 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64hm52NvnF5pkIhte1MWL5M0","found":false}')
+2019-07-13 22:23:11,726 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64gfedZ9aey2jgH6DeC6mZJs","found":false}')
+2019-07-13 22:23:48,903 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64qdSXbA2Jk6tiecqB4QMu3o","found":false}')
+2019-07-13 22:25:35,532 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64slatNUVg99BV_Q-ojiSjY8","found":false}')
+2019-07-13 22:26:07,261 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64szNtFSaLd_M4fPEqQ_aXBg","found":false}')
+2019-07-13 22:26:12,060 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64u3JV7SnkwYiASm88OEH02o","found":false}')
+2019-07-13 22:26:20,828 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64vmL-g4Iflby5sWozG564OU","found":false}')
+2019-07-13 22:27:58,071 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64u_v6mVIr5BVRowR0wQ42II","found":false}')
+2019-07-13 22:28:09,642 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64hz3iBIz_p7hOaxR636sOTk","found":false}')
+2019-07-13 22:29:13,826 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64tvvdiIVg-IrVJqfpgVztwA","found":false}')
+2019-07-13 22:29:38,190 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64reufFdm0TlCfIxU8nyf5co","found":false}')
+2019-07-13 22:29:51,199 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64tAsCuxmwjImJxhvEiQ-Uug","found":false}')
+2019-07-13 22:31:25,394 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64lTWJSZtaE_B9b5w72nIO98","found":false}')
+2019-07-13 22:31:56,459 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64kiwPw69VOTRLytnErtffDI","found":false}')
+2019-07-13 22:36:53,009 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64nYO3XWusnvApddoHjFZylE","found":false}')
+2019-07-13 22:40:04,653 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64oL2zxa2ehrXgnBzWG4Ve2w","found":false}')
+2019-07-13 23:48:08,590 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64sxJjKQCRSGIxLxkTktViPk","found":false}')
+2019-07-14 01:51:00,637 - checkOpenid - __main__ - ERROR - 'openid'
+2019-07-14 04:25:54,982 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64h65uNkSYzu9kZZQVJKdvBg","found":false}')
+2019-07-14 04:39:07,904 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64sKsRp6KvOG0Znvq7RoTSHc","found":false}')
+2019-07-14 04:39:08,246 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64ptc2CJrwyhxS0cU-swf4D8","found":false}')
+2019-07-14 04:40:11,251 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64mDBvDOYE0i6wZr-1371eAk","found":false}')
+2019-07-14 04:40:39,417 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64pXaYa_htoNIjNnkOPyhecc","found":false}')
+2019-07-14 04:40:42,311 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64iC_Dh5Gk--32fXB_PS3rCE","found":false}')
+2019-07-14 04:41:09,543 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64tS7_3IGfr4yrXE0eU8vIYQ","found":false}')
+2019-07-14 04:41:45,936 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64rsvqN-gJkhzIW9Du4XWu38","found":false}')
+2019-07-14 04:42:21,078 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64nDf69iUaOOUvY9z1JAJy7I","found":false}')
+2019-07-14 04:42:43,525 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64idoNJy2LDuEnJSbJ86caIE","found":false}')
+2019-07-14 04:42:50,693 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64swIlcFwAG3OSYW8SvNMT0I","found":false}')
+2019-07-14 04:43:24,420 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64rw_LSxFPqfDf8YdG1cjE9s","found":false}')
+2019-07-14 04:43:44,565 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64h45J-XWFPDC9ZI3zpObjyk","found":false}')
+2019-07-14 04:43:52,169 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64gfP7q8zZD6aYMHysZxYuCo","found":false}')
+2019-07-14 04:44:20,337 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64ugcG6ewUnpNdRcxIEs1IDA","found":false}')
+2019-07-14 04:44:51,019 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64tn3EK8SOl2FPSalOT70ygk","found":false}')
+2019-07-14 04:46:10,847 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64l3LwEtMTw5_uF95ZoE9_ps","found":false}')
+2019-07-14 04:46:26,125 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64qVwhcFgVBzqIZDRKy9EnAk","found":false}')
+2019-07-14 04:46:41,212 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64mVEHtHzik1Sq8rnN5fpsKo","found":false}')
+2019-07-14 04:46:56,328 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64iTxw_aYdQBHBRT1stwj9qE","found":false}')
+2019-07-14 04:47:44,515 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64ndD9ngvkIoQlH5M8PfpdvM","found":false}')
+2019-07-14 04:48:27,886 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64o-qj8XrHmuHiYJ8u39-_ZU","found":false}')
+2019-07-14 04:48:47,754 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64o40QWU-EIT8DLS7HBcS-Pg","found":false}')
+2019-07-14 04:49:31,035 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64qTmbHa-le_YR-fJeTNxL_Q","found":false}')
+2019-07-14 04:49:49,291 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64iZtAUR534aJgD36dpjba0o","found":false}')
+2019-07-14 04:52:03,208 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64uCofZHwBbZOZx7sVLoBJCA","found":false}')
+2019-07-14 04:52:10,969 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64usPAihFrplYStbY_X3xGDU","found":false}')
+2019-07-14 04:53:08,499 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64oFFkW1CtBcCzIeqYGzjcqs","found":false}')
+2019-07-14 04:53:16,234 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64lqcHP2HR49KIFA2Km5mbXo","found":false}')
+2019-07-14 04:54:16,255 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64hQNafud-ATBCjH5CzEL1hA","found":false}')
+2019-07-14 04:54:47,702 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64uKoQcIgTCby3n0O6Nz7Dm8","found":false}')
+2019-07-14 04:54:53,778 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64uEhBlhedNxegd90tT30jAM","found":false}')
+2019-07-14 04:55:25,711 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64t9G5f7NGrTZ__n7MYrBRyQ","found":false}')
+2019-07-14 04:55:52,975 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64hZ8Sy8SkRlacfIXHCXB49c","found":false}')
+2019-07-14 04:56:00,884 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64gr-VbvxHKfmHEcHAKUJ_VE","found":false}')
+2019-07-14 04:56:23,873 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64iVq-gbHvXlSmUaH1RSEBpQ","found":false}')
+2019-07-14 04:56:32,380 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64tvGsF-HueZ_Q8tJE13N_ME","found":false}')
+2019-07-14 04:56:53,676 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64u8t3xMUmRk-emN6IDp-yM8","found":false}')
+2019-07-14 04:57:02,628 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64qPwxw6vEl4A2WHBlw8BKgE","found":false}')
+2019-07-14 04:57:35,428 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64tks-1MmT-dIKgj6KKhtWmc","found":false}')
+2019-07-14 04:58:06,962 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64hBvSMn0EHE34jzCaqZ_iHk","found":false}')
+2019-07-14 04:58:31,332 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64h49nCL1-lDkhSzLBCpt_nE","found":false}')
+2019-07-14 04:59:03,113 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64usqtlRSPu-3WMbfLj4N60c","found":false}')
+2019-07-14 04:59:36,046 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64m5bnf8FwSrYfX4nxixbLv4","found":false}')
+2019-07-14 04:59:55,294 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64mTafYaCoV0wxPYEHZlEP_k","found":false}')
+2019-07-14 05:00:18,681 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64oTI_pth-yJ1fEcxNd3DSqI","found":false}')
+2019-07-14 05:01:07,516 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64k0GVBdQf8Mh9YiHOyJTAdU","found":false}')
+2019-07-14 05:02:01,190 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64mgDnFh-eRpHT8yBTsWVmoM","found":false}')
+2019-07-14 05:02:39,171 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64kK1iDyPUo0xEZwAOL4aac4","found":false}')
+2019-07-14 05:03:01,604 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64hMiez3Px_8S2LAN8IXVjDQ","found":false}')
+2019-07-14 05:04:13,375 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64hkqB8O-87S3VFbuCHcbj0g","found":false}')
+2019-07-14 05:04:43,806 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64ngGtEyRvsD2nfvq_QirgRo","found":false}')
+2019-07-14 05:05:35,158 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64iXumKIe3gGPCDrOk5CXytk","found":false}')
+2019-07-14 05:05:49,793 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64pqLc_Gg818ZfjTwNA6ta7g","found":false}')
+2019-07-14 05:06:05,903 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64r4XXg1fNUuHHXnue_49NjY","found":false}')
+2019-07-14 05:07:09,693 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64reifkmMgxtpywPwAE6ba7c","found":false}')
+2019-07-14 05:07:40,371 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64hkSxQZ51H_WWzrMJVC7-f8","found":false}')
+2019-07-14 05:08:13,311 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64pQUifeE7eq1RLUtp4DjiXs","found":false}')
+2019-07-14 05:08:45,369 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64vYBEAlHYNGlduTucVP1b6Q","found":false}')
+2019-07-14 05:08:53,989 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64r8VEyXA--RNzxLuibWpSW8","found":false}')
+2019-07-14 05:09:06,234 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64qY5gk0PM5CLbayMDPqjeJg","found":false}')
+2019-07-14 05:09:25,706 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64loLAwXvyeAItjoKldxC1J4","found":false}')
+2019-07-14 05:10:11,444 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64q7Bxc1ST08647sao-NJ90g","found":false}')
+2019-07-14 05:10:42,186 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64iS0MRQUkk9Ki8NeP7pyER8","found":false}')
+2019-07-14 05:11:42,982 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64uf_vMfqNmHsIfC4-t94Gvg","found":false}')
+2019-07-14 05:12:12,387 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64sCzoYcV8BtzzNxuJVF2qDU","found":false}')
+2019-07-14 05:13:19,468 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64v32bj_WGgPA9reuKkzB7vk","found":false}')
+2019-07-14 05:14:20,357 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64rvIpLwMHQ7eWsBU6RWDQWc","found":false}')
+2019-07-14 05:14:53,923 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64u_f0tO2WqCN05NJ11MV0XY","found":false}')
+2019-07-14 05:14:57,020 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64t7iGvqxq6-lslZuE6TQLtc","found":false}')
+2019-07-14 05:15:56,840 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64nTrlUIphCkEEjr3VDusAJc","found":false}')
+2019-07-14 05:17:27,532 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64oF_9293cd1tCojCzbQag8s","found":false}')
+2019-07-14 05:18:28,389 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64sjfz0OS3JA2g54JJbLISaU","found":false}')
+2019-07-14 05:19:15,115 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64oJKHajTNJIamfzaqQAxXfA","found":false}')
+2019-07-14 05:19:45,349 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64t7tAPnI4c8kqj2aisS0SDU","found":false}')
+2019-07-14 05:21:03,838 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64iJ6tV1xdmfdDU8EZsRU3M8","found":false}')
+2019-07-14 05:21:52,261 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64mV4Ve8QsEOeW58L1VUTs9U","found":false}')
+2019-07-14 05:23:00,240 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64gj-TOu5LejknrjWTa8IuY0","found":false}')
+2019-07-14 05:24:09,507 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64s4y7xrCiLAaFVH8HbaM-SU","found":false}')
+2019-07-14 05:25:24,373 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64kA1Urybu64Bq9wCZNNJ-Zc","found":false}')
+2019-07-14 05:26:06,628 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64hM0upp7JXjdy9pEMmi5dnM","found":false}')
+2019-07-14 05:26:18,334 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64k9xprTDr_6OjjN-_nLTA18","found":false}')
+2019-07-14 05:28:12,492 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64mAbjHnh6ZVssrWJrkQI3No","found":false}')
+2019-07-14 05:29:45,475 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64tKqp9gca7WXWjOEHhpTqvI","found":false}')
+2019-07-14 05:30:17,206 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64sctSvYB2xaAdAd0fl67hYA","found":false}')
+2019-07-14 05:30:49,808 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64loFzywCClGf8_4x7hEA988","found":false}')
+2019-07-14 05:31:13,949 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-14 05:31:18,160 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64itrKVGvlOqfbCu72OGjrg8","found":false}')
+2019-07-14 05:31:20,586 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64m-I_LLe2LTvAKTlNq9EtgY","found":false}')
+2019-07-14 05:31:48,284 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64oVGjf_jhe0OEN8xc7wNdY4","found":false}')
+2019-07-14 05:33:55,422 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64jH0tEjPACGlg2QtZa-S2Oc","found":false}')
+2019-07-14 05:35:14,399 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-14 05:35:15,654 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-14 05:35:16,260 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1U2cf6OeL3entaAJCwf7Tg8","found":false}')
+2019-07-14 05:37:20,659 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64jwQtZXoLEij-Mnv5h5LRRU","found":false}')
+2019-07-14 05:38:33,266 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64irzXhPdpyXkHkgJX0hZZbs","found":false}')
+2019-07-14 05:40:38,119 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64kf-kEpnccJ74xvbXAXr4ro","found":false}')
+2019-07-14 05:41:51,155 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64kNhrZBNW3RVy217qM8HSwM","found":false}')
+2019-07-14 05:42:04,715 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64rWh9LzRzwJpAu58KYR8tkA","found":false}')
+2019-07-14 05:43:12,888 - setJilu - __main__ - ERROR - 'jilucontent'
+2019-07-14 05:43:34,178 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64n_jD0b-Uz7vzNyafKnzMME","found":false}')
+2019-07-14 05:43:38,440 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64jnPSXNTQNISmeyX5CBGuLg","found":false}')
+2019-07-14 05:44:10,555 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64sn_qbcZxKE-Vc6roGorrxU","found":false}')
+2019-07-14 05:44:24,470 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64lXX8MV5unA4cToybJorCsI","found":false}')
+2019-07-14 05:46:06,752 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64oryjEd0LccAAtWvELqPO5s","found":false}')
+2019-07-14 05:46:38,277 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64p63oMBd6ihw4p7YRk-8paU","found":false}')
+2019-07-14 05:46:44,445 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64kBhQHuVhqnJeNI8aOsinME","found":false}')
+2019-07-14 05:47:15,388 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64kWeEK9Zg5E10iD_fYTFbQw","found":false}')
+2019-07-14 05:49:20,417 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64m1l5aU-A4rHwIUvzP0Qkgk","found":false}')
+2019-07-14 05:51:25,588 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64oXKF_bUIVf3hpa-w4i7sWk","found":false}')
+2019-07-14 05:54:01,135 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64nvWTcAB2hI7_WoFEtmN9Nw","found":false}')
+2019-07-14 05:55:07,987 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64g01NO9mCRvTNLmgXIQVcqg","found":false}')
+2019-07-14 05:55:31,193 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64rXBHuUSisgBimz_uHMU7JY","found":false}')
+2019-07-14 06:00:54,693 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64hFv2EWjUxij6fmHlG4iVe8","found":false}')
+2019-07-14 06:01:58,056 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64jObdHqbSaYcNxKNT3V0msc","found":false}')
+2019-07-14 06:08:45,915 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64o6GJus1-FSyTnISHPUiTTI","found":false}')
+2019-07-14 06:09:05,351 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64raRhweRCn8h3U4UXhku1N0","found":false}')
+2019-07-14 06:14:09,338 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64q1STVms45FvgmqVfnLYr1A","found":false}')
+2019-07-14 06:18:24,045 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64pth2ZxtORx8-P__UV9JFtw","found":false}')
+2019-07-14 06:19:03,748 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-14 06:20:07,341 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64hGAfX-AqF8ejNl8Rq1BfMo","found":false}')
+2019-07-14 06:24:27,625 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64lTePPzkhpUUjWejH3OSWeQ","found":false}')
+2019-07-14 06:26:47,686 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64vmEL1EJu7ZdlJ8T1TdZvLY","found":false}')
+2019-07-14 06:32:33,990 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64nFF7XYyEs9MjrqBU77HBjw","found":false}')
+2019-07-14 06:39:41,598 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64tZ2Ax4nj2ZQ-mqLgMQHJlo","found":false}')
+2019-07-14 06:41:38,307 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64jvFhbnVQELNZ2nYzuX0aec","found":false}')
+2019-07-14 06:44:04,771 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64sqbqY-MINL4Vn-2nipv2Wc","found":false}')
+2019-07-14 06:49:38,201 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64hLntj8OZpMPs_LzgSJnWwg","found":false}')
+2019-07-14 06:55:11,141 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64sq0A9cvFmxohkEwCovMBg8","found":false}')
+2019-07-14 06:55:49,695 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64rE0wJwwZdPmtqC_arUtYNQ","found":false}')
+2019-07-14 07:08:54,436 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64jgY8AAfBbSZweOY4XPcgK4","found":false}')
+2019-07-14 07:11:43,574 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64mp0j-JH3vyBRz23sNEkSTI","found":false}')
+2019-07-14 07:14:55,775 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64iK6zn7-FVONkrG3aKnihqc","found":false}')
+2019-07-14 07:51:22,978 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64sKBa_aoO-YV1mtWQqs1i6Y","found":false}')
+2019-07-14 08:11:22,634 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64gbJZ_FInG0q_Z-sN0Y7UME","found":false}')
+2019-07-14 08:58:37,192 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64hadMCnbD73Z0jq_CxxqNpU","found":false}')
+2019-07-14 09:18:14,892 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64g81Gy0ul3P29vKUP7PMA5E","found":false}')
+2019-07-14 10:09:17,857 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64mEahfPOsPR5oCn93ZDj7XA","found":false}')
+2019-07-14 11:42:12,157 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64vvDZVmk516i4SfpcNa-fAE","found":false}')
+2019-07-14 13:45:06,439 - checkOpenid - __main__ - ERROR - 'openid'
+2019-07-14 13:52:47,685 - checkOpenid - __main__ - ERROR - 'openid'
+2019-07-14 14:21:57,460 - checkOpenid - __main__ - ERROR - 'openid'
+2019-07-14 15:20:09,055 - checkOpenid - __main__ - ERROR - 'openid'
+2019-07-14 17:17:36,090 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64gzRfif-JxGEIGhVcX8jv-k","found":false}')
+2019-07-14 19:52:47,819 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64h8fceUXuvCAtxeqJA_Ya1o","found":false}')
+2019-07-15 04:38:52,558 - checkOpenid - __main__ - ERROR - 'openid'
+2019-07-15 04:46:50,031 - getXinliceshi - __main__ - ERROR - 'ceshiid'
+2019-07-15 04:46:51,256 - getXinliceshi - __main__ - ERROR - 'ceshiid'
+2019-07-15 04:46:52,546 - getXinliceshi - __main__ - ERROR - 'ceshiid'
+2019-07-15 04:46:53,730 - getXinliceshi - __main__ - ERROR - 'ceshiid'
+2019-07-15 04:46:54,844 - getXinliceshi - __main__ - ERROR - 'ceshiid'
+2019-07-15 04:46:55,953 - getXinliceshi - __main__ - ERROR - 'ceshiid'
+2019-07-15 04:46:57,093 - getXinliceshi - __main__ - ERROR - 'ceshiid'
+2019-07-15 04:46:58,187 - getXinliceshi - __main__ - ERROR - 'ceshiid'
+2019-07-15 04:46:59,304 - getXinliceshi - __main__ - ERROR - 'ceshiid'
+2019-07-15 04:47:00,414 - getXinliceshi - __main__ - ERROR - 'ceshiid'
+2019-07-15 04:47:01,515 - getXinliceshi - __main__ - ERROR - 'ceshiid'
+2019-07-15 04:47:30,733 - checkOpenid - __main__ - ERROR - 'openid'
+2019-07-15 04:57:45,857 - getXinliceshi - __main__ - ERROR - 'ceshiid'
+2019-07-15 05:02:25,866 - checkOpenid - __main__ - ERROR - 'openid'
+2019-07-15 07:07:58,822 - checkOpenid - __main__ - ERROR - 'openid'
+2019-07-15 11:01:10,002 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64n8ai7_DxVQJFjFCPjd0UfA","found":false}')
+2019-07-15 11:05:21,232 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64g0qvhLq_PJQAj1NC7dX6v0","found":false}')
+2019-07-15 12:07:09,542 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64l6Va_Jv_x-Ki98O6dHxM28","found":false}')
+2019-07-15 14:06:25,921 - checkOpenid - __main__ - ERROR - 'openid'
+2019-07-15 15:48:06,428 - checkOpenid - __main__ - ERROR - 'openid'
+2019-07-15 17:35:21,502 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-15 17:35:22,650 - getUnionid - __main__ - ERROR - 'utf-8' codec can't decode byte 0x83 in position 2: invalid start byte
+2019-07-15 17:35:38,293 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1b2sHx5GiB1LrXcmWL4v3gk","found":false}')
+2019-07-15 21:21:25,648 - checkOpenid - __main__ - ERROR - 'openid'
+2019-07-15 22:16:28,310 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-15 22:16:29,371 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1T87U3XmGr7yr-9P6pv8GUo","found":false}')
+2019-07-15 22:36:29,356 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1T87U3XmGr7yr-9P6pv8GUo","found":false}')
+2019-07-15 22:39:42,751 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-15 22:39:43,904 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1Xa9EqFkDLahXdiGZWH7sUo","found":false}')
+2019-07-15 22:42:49,978 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-15 22:58:40,596 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-15 22:59:28,021 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-15 23:23:49,915 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-16 00:05:44,121 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64n_op0SFXGLt4T9QnXKNGvM","found":false}')
+2019-07-16 00:05:44,123 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64n_op0SFXGLt4T9QnXKNGvM","found":false}')
+2019-07-16 02:47:22,114 - checkOpenid - __main__ - ERROR - 'openid'
+2019-07-16 11:10:19,847 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64sn-eE-s18523AAbe-qWqIA","found":false}')
+2019-07-16 11:10:26,390 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64ugD2xHKwXdDnce4jm_vLHs","found":false}')
+2019-07-16 11:16:16,308 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64tePbPYgPlM9P7P1_mhorSA","found":false}')
+2019-07-16 11:20:57,772 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64qkWU2pok6v_ySdHyIIA2m0","found":false}')
+2019-07-16 11:22:23,603 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64iObGFWLeYXgY_SGbBSdBzI","found":false}')
+2019-07-16 11:23:11,168 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64qzdd5lSXHOWd2aRNUtU2OI","found":false}')
+2019-07-16 11:24:52,222 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64kmzAwgwVO6jZNNgjkkM2Ow","found":false}')
+2019-07-16 12:14:04,717 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64vV_QjMDF6kpzD5fZ8l8wyE","found":false}')
+2019-07-16 12:14:33,028 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64rQ1TDFMgeC5wASXHNmLOYs","found":false}')
+2019-07-16 12:20:07,107 - checkOpenid - __main__ - ERROR - 'openid'
+2019-07-16 12:45:49,678 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64nLFiYYKyKHp_MkKzK7w87M","found":false}')
+2019-07-16 13:28:31,234 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64qTwZacnkiYXQd9zWbBMaKA","found":false}')
+2019-07-16 13:51:49,097 - checkOpenid - __main__ - ERROR - 'openid'
+2019-07-16 13:52:30,012 - checkOpenid - __main__ - ERROR - 'openid'
+2019-07-16 14:42:32,462 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64txv135XbEhheX9ovP0Z7Og","found":false}')
+2019-07-16 15:52:27,208 - checkOpenid - __main__ - ERROR - 'openid'
+2019-07-16 16:15:51,940 - checkOpenid - __main__ - ERROR - 'openid'
+2019-07-16 16:55:37,449 - checkOpenid - __main__ - ERROR - 'openid'
+2019-07-16 16:55:38,002 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64la2Y8cocFBZ9t-rX9D5bks","found":false}')
+2019-07-16 18:01:44,789 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-16 18:01:45,651 - getUnionid - __main__ - ERROR - 'utf-8' codec can't decode byte 0xbe in position 0: invalid start byte
+2019-07-16 18:01:57,496 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1bTbB71veoYIlnlR0zg2yHE","found":false}')
+2019-07-16 18:59:29,514 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64gYEyPvGzG4fgQe07NmX_XM","found":false}')
+2019-07-16 20:26:09,852 - getOpenid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"oz7z64meiapmJmwYDyEsMGN7fn60","found":false}')
+2019-07-16 23:22:51,239 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-16 23:22:51,870 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1ZRO-OP2key0zOGN6grS9ZY","found":false}')
+2019-07-16 23:29:17,497 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
+2019-07-16 23:29:18,263 - getUnionid - __main__ - ERROR - NotFoundError(404, '{"_index":"userinfo","_type":"userinfo","_id":"ofIsD1a4I2uHc2vinnNiuUmSnROU","found":false}')
+2019-07-17 00:22:27,215 - checkUnionid - __main__ - ERROR - Empty value passed for a required argument.
