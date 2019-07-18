@@ -69,9 +69,10 @@ access_tokentime=[]
 
 
 def getaccess_token():
+    global access_tokentime
     access_token = ''
     if len(access_tokentime) == 0 or access_tokentime[1] < int(time.time()):
-        url = 'https://api.weixin.qq.com/sns/oauth2/access_token?appid=' + fuwuhaoappid + '&secret=' + fuwuhaoAppSecret + '&code=' + code + '&grant_type=authorization_code'
+        url='https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid='+fuwuhaoappid+'&secret='+fuwuhaoAppSecret
         response = requests.get(url)
         response = response.json()
         access_token = response['access_token']
@@ -81,6 +82,12 @@ def getaccess_token():
     else:
         access_token = access_tokentime[0]
     return access_token
+
+def getopenid_and_access_token(code):
+    url='https://api.weixin.qq.com/sns/oauth2/access_token?appid='+fuwuhaoappid+'&secret='+fuwuhaoAppSecret+'&code='+code+'&grant_type=authorization_code'
+    response = requests.get(url)
+    response = response.json()
+    return response
 
 def openid_unionid(openid, access_token):
     unionidurl = 'https://api.weixin.qq.com/sns/userinfo?access_token=' + access_token + '&openid=' + openid + '&lang=zh_CN'
@@ -389,8 +396,8 @@ def getUnionid():
     except Exception as e:
         logger.error(e)
         return json.dumps({'MSG': '警告！非法入侵！！！'})
-    access_token=getaccess_token()
-    resdata = openid_unionid(response['openid'], access_token)
+    response=getopenid_and_access_token(code)
+    resdata = openid_unionid(response['openid'], response['access_token'])
     unionid = resdata['unionid']
     resdata['fwhid'] = resdata['openid']
     resdata.pop('openid')
@@ -569,7 +576,6 @@ def get_kechengprepay_id():
         return json.dumps({'MSG': '警告！非法入侵！！！'})
     openid = es.get(index='userinfo', doc_type='userinfo', id=unionid)['_source']['fwhid']
     kechengjiage = int(es.get(index='kechenglist', doc_type='kechenglist', id=kechengid)['_source']['jiage'] * 100)
-    # kechengjiage = 10
     url = 'https://api.mch.weixin.qq.com/pay/unifiedorder'
     prepaydata = {
         'appid': fuwuhaoappid,

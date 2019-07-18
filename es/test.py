@@ -16,18 +16,13 @@ es = Elasticsearch([{"host": "182.254.227.188", "port": 9218}])
 
 
 # openid='oz7z64liSPmlzHped8ATXf23jqyI'#
-unionid='ofIsD1YLw3q_1v4d2NgX9GrS3ZEM'#庞宇明
+# unionid='ofIsD1YLw3q_1v4d2NgX9GrS3ZEM'#庞宇明
 # unionid='ofIsD1eQd-BlNZ5S0ftjwarnCUVk'#罗尼
 # unionid='ofIsD1T87U3XmGr7yr-9P6pv8GUo'#周先生
 # unionid='ofIsD1Xa9EqFkDLahXdiGZWH7sUo'#唔哩周周
 # openid='oz7z64isIQQZ3oLczZ3hcl978dco'
 # unionid='ofIsD1Xa9EqFkDLahXdiGZWH7sUo'
-# es.delete(index='userinfo',doc_type='userinfo',id='ofIsD1T87U3XmGr7yr-9P6pv8GUo')
-# es.delete(index='userinfo',doc_type='userinfo',id='ofIsD1Xa9EqFkDLahXdiGZWH7sUo')
 
-
-doc=es.get(index='userinfo',doc_type='userinfo',id=unionid)['_source']
-print(doc)
 
 # def getaccess_token(apptype):
 #     gzhappId = "wxc1deae6a065dffa9"  # 公众号
@@ -53,13 +48,18 @@ print(doc)
 #     else:
 #         print(line)
 # print(len(gzhuserinfo))
-#
-# search = {"query": {"match_all": {}}}
-# Docs=es.search(index='kechenggoumai',doc_type='kechenggoumai',body=search,size=10000)['hits']['hits']
-# for doc in Docs:
-#     openid =doc['_id']
-#     doc=es.get(index='userinfo',doc_type='userinfo',id=openid)['_source']
-#     if doc['avatarUrl'] in gzhuserinfo:
-#         print('aaaaaaaaaaaaaaaaaaaaaaaa')
-#     else:
-#         print(doc['nickName'])
+
+# unionid='ofIsD1f3U4rS8_NsIdBJZ1zlvoMA'
+# openid='oz7z64pL9XTkJ3F_NDHQuXc0TbDs'
+
+
+
+search = {"query": {"match_all": {}}}
+Docs=es.search(index='userinfo',doc_type='userinfo',body=search,size=10000)['hits']['hits']
+
+xiaofeizonge=0
+for doc in Docs:
+    docid=doc['_id']
+    doc=doc['_source']
+    xiaofeizonge+=doc['xiaofeizonge']
+print(xiaofeizonge)

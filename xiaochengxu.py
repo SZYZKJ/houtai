@@ -66,7 +66,7 @@ tuweiqinghua = []
 for line in open('tuweiqinghua.json'):
     line = json.loads(line)
     tuweiqinghua.append(line['chatId'])
-islianmeng = 1
+islianmeng = 0
 issystem = 0
 
 
@@ -355,9 +355,9 @@ def getUnionid():
             es.index(index='fenxiao', doc_type='fenxiao', id=unionid, body=fenxiao)
     try:
         uniondoc = es.get(index='userinfo', doc_type='userinfo', id=unionid)['_source']
-        flag=1
+        flag = 1
         if 'openid' in uniondoc:
-            flag=0
+            flag = 0
         uniondoc.update(userinfo)
         userinfo = uniondoc
         if flag:
@@ -366,36 +366,6 @@ def getUnionid():
                 opendoc.update(userinfo)
                 userinfo = opendoc
                 es.delete(index='userinfo', doc_type='userinfo', id=openid)
-                try:
-                    copydoc = es.get(index='userzhifu', doc_type='userzhifu', id=openid)['_source']
-                    try:
-                        nowdoc = es.get(index='userzhifu', doc_type='userzhifu', id=unionid)['_source']
-                        nowdoc['zhifudata'] += copydoc['zhifudata']
-                        copydoc = nowdoc
-                    except:
-                        None
-                    es.index(index='userzhifu', doc_type='userzhifu', id=unionid, body=copydoc)
-                    es.delete(index='userzhifu',doc_type='userzhifu',id=openid)
-                except:
-                    None
-                try:
-                    copydoc = es.get(index='dianzanshoucang', doc_type='dianzanshoucang', id=openid)['_source']
-                    es.index(index='dianzanshoucang', doc_type='dianzanshoucang', id=unionid, body=copydoc)
-                    es.delete(index='dianzanshoucang',doc_type='dianzanshoucang',id=openid)
-                except:
-                    None
-                try:
-                    copydoc = es.get(index='kechenggoumai', doc_type='kechenggoumai', id=openid)['_source']
-                    try:
-                        nowdoc = es.get(index='kechenggoumai', doc_type='kechenggoumai', id=unionid)['_source']
-                        nowdoc['zhifudata'] += copydoc['zhifudata']
-                        copydoc = nowdoc
-                    except:
-                        None
-                    es.index(index='kechenggoumai', doc_type='kechenggoumai', id=unionid, body=copydoc)
-                    es.delete(index='kechenggoumai',doc_type='kechenggoumai',id=openid)
-                except:
-                    None
             except:
                 None
     except Exception as e:
@@ -405,24 +375,6 @@ def getUnionid():
             opendoc.update(userinfo)
             userinfo = opendoc
             es.delete(index='userinfo', doc_type='userinfo', id=openid)
-            try:
-                copydoc = es.get(index='userzhifu', doc_type='userzhifu', id=openid)['_source']
-                es.index(index='userzhifu', doc_type='userzhifu', id=unionid, body=copydoc)
-                es.delete(index='userzhifu',doc_type='userzhifu',id=openid)
-            except:
-                None
-            try:
-                copydoc = es.get(index='dianzanshoucang', doc_type='dianzanshoucang', id=openid)['_source']
-                es.index(index='dianzanshoucang', doc_type='dianzanshoucang', id=unionid, body=copydoc)
-                es.delete(index='dianzanshoucang',doc_type='dianzanshoucang',id=openid)
-            except:
-                None
-            try:
-                copydoc = es.get(index='kechenggoumai', doc_type='kechenggoumai', id=openid)['_source']
-                es.index(index='kechenggoumai', doc_type='kechenggoumai', id=unionid, body=copydoc)
-                es.delete(index='kechenggoumai',doc_type='kechenggoumai',id=openid)
-            except:
-                None
         except:
             None
     if 'addtime' not in userinfo:
@@ -768,6 +720,19 @@ def getKechengList():
     scroll = Docs['_scroll_id']
     Docs = Docs['hits']['hits']
     try:
+        try:
+            openid = es.get(index='userinfo', doc_type='userinfo', id=unionid)['_source']['openid']
+            copydoc = es.get(index='kechenggoumai', doc_type='kechenggoumai', id=openid)['_source']
+            try:
+                nowdoc = es.get(index='kechenggoumai', doc_type='kechenggoumai', id=unionid)['_source']
+                nowdoc['data'] = copydoc['data'] + nowdoc['data']
+                copydoc = nowdoc
+            except:
+                None
+            es.index(index='kechenggoumai', doc_type='kechenggoumai', id=unionid, body=copydoc)
+            es.delete(index='kechenggoumai', doc_type='kechenggoumai', id=openid)
+        except:
+            None
         goumaidoc = es.get(index='kechenggoumai', doc_type='kechenggoumai', id=unionid)['_source']
         goumaidoc['data'] = json.loads(goumaidoc['data'])
     except:
@@ -1129,6 +1094,19 @@ def getDingdan():
     adduserhis({'unionid': unionid, 'time': getTime(), 'event': 'getDingdan', 'detail': 'getDingdan',
                 'type': '0'})
     try:
+        try:
+            openid = es.get(index='userinfo', doc_type='userinfo', id=unionid)['_source']['openid']
+            copydoc = es.get(index='userzhifu', doc_type='userzhifu', id=openid)['_source']
+            try:
+                nowdoc = es.get(index='userzhifu', doc_type='userzhifu', id=unionid)['_source']
+                nowdoc['zhifudata'] += copydoc['zhifudata']
+                copydoc = nowdoc
+            except:
+                None
+            es.index(index='userzhifu', doc_type='userzhifu', id=unionid, body=copydoc)
+            es.delete(index='userzhifu', doc_type='userzhifu', id=openid)
+        except:
+            None
         doc = es.get(index='userzhifu', doc_type='userzhifu', id=unionid)
         retdata = doc['_source']['zhifudata']
         for i in range(len(retdata)):
@@ -1532,6 +1510,19 @@ def getDianzanshoucangList():
          'type': '0'})
     retdata = []
     try:
+        try:
+            openid = es.get(index='userinfo', doc_type='userinfo', id=unionid)['_source']['openid']
+            copydoc = es.get(index='dianzanshoucang', doc_type='dianzanshoucang', id=openid)['_source']
+            try:
+                nowdoc = es.get(index='dianzanshoucang', doc_type='dianzanshoucang', id=unionid)['_source']
+                nowdoc['data'] = copydoc['data'] + nowdoc['data']
+                copydoc = nowdoc
+            except:
+                None
+            es.index(index='dianzanshoucang', doc_type='dianzanshoucang', id=unionid, body=copydoc)
+            es.delete(index='dianzanshoucang', doc_type='dianzanshoucang', id=openid)
+        except:
+            None
         doc = es.get(index='dianzanshoucang', doc_type='dianzanshoucang', id=unionid)['_source']
         retdata = doc['data']
     except:
@@ -1591,8 +1582,7 @@ def get_kechengprepay_id():
     except Exception as e:
         logger.error(e)
         return json.dumps({'MSG': '警告！非法入侵！！！'})
-    # kechengjiage = int(es.get(index='kechenglist', doc_type='kechenglist', id=kechengid)['_source']['jiage'] * 100)
-    kechengjiage = 10
+    kechengjiage = int(es.get(index='kechenglist', doc_type='kechenglist', id=kechengid)['_source']['jiage'] * 100)
     openid = es.get(index='userinfo', doc_type='userinfo', id=unionid)['_source']['openid']
     url = 'https://api.mch.weixin.qq.com/pay/unifiedorder'
     prepaydata = {
@@ -1703,7 +1693,7 @@ def kechengpaynotify():
                     newzhifu['shangpinming'] = json.loads(zhifures['attach'])['detail']
                     newzhifu['time'] = getTime()
                     newzhifu['total_fee'] = zhifures['total_fee'] * 0.01
-                    newzhifu['shouyi'] = zhifures['total_fee'] * 0.0094 * yijibili
+                    newzhifu['shouyi'] = zhifures['total_fee'] * 0.00994 * yijibili
                     fenxiao['dingdan'].insert(0, newzhifu)
                     fenxiao['zongshouyi'] += zhifures['total_fee'] * 0.00994 * yijibili
                     fenxiao['ketixian'] += zhifures['total_fee'] * 0.00994 * yijibili
@@ -1793,9 +1783,10 @@ def getFenxiao():
         es.index(index='fenxiao', doc_type='fenxiao', id=unionid, body=fenxiao)
     jintian = time.strftime("%Y-%m-%d", time.localtime())
     fenxiao['banner'] = 'https://www.lianaizhuli.com/fenxiao/fenxiaobanner.png'
-    fenxiao['xiangqing'] = 'https://www.lianaizhuli.com/fenxiao/fenxiaoxiangqing.png'
+    fenxiao['xiangqing'] = 'https://www.lianaizhuli.com/fenxiao/fenxiaoguize.png'
     fenxiao['wenan'] = '①女生回了一句话 ②你恐惧回复不好 ③复制粘贴在这里试试？'
-    fenxiao['tixiantixing'] = '提现金额大于1.00元，不超过200.00元，将以微信红包形式发给你的微信，提现成功后请及时领取以免逾期，每天可提现10次。'
+    fenxiao['tixiantixing'] = '提现金额大于1.00元，不超过200.00元，将以微信红包形式发给你的微信，在深圳宇子科技公众号消息里面，提现成功后请及时领取以免逾期，每天可提现10次。'
+    fenxiao['haibaoming'] = ''
     if len(fenxiao['yijiyonghu']) >= 30:
         fenxiao['jibie'] = '超级推广员'
         fenxiao['yijibili'] = '40%'
@@ -2006,7 +1997,7 @@ def tiXian():
         fwhid = ''
         try:
             fwhid = userdoc['fwhid']
-        except:
+        except Exception as e:
             tixianunionid.pop(unionid)
             return encrypt(json.dumps({'MSG': 'NOFWHID'}))
         tixianurl = 'https://api.mch.weixin.qq.com/mmpaymkttransfers/sendredpack'
