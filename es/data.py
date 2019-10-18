@@ -34,8 +34,7 @@ lianaizhuli_index = {
 }
 es = Elasticsearch([{"host": "182.254.227.188", "port": 9218, "timeout": 3600}])
 actions = []
-# es.indices.delete(index='biaoqing')
-
+es.indices.delete(index='biaoqing')
 # es.indices.delete(index='liaomeihuashu')
 # es.indices.delete(index='liaomeitaolu')
 # es.indices.delete(index='tuweiqinghua')
@@ -53,8 +52,10 @@ actions = []
 # es.indices.delete(index='xinliceshi')
 # es.indices.delete(index='xinliceshiret')
 # es.indices.delete(index='search')
-es.indices.delete(index='fenxiao')
+# es.indices.delete(index='fenxiao')
 
+ret_data = es.indices.create(index='biaoqing', body=lianaizhuli_index, ignore=400)
+print(ret_data)
 # ret_data = es.indices.create(index='liaomeihuashu', body=lianaizhuli_index, ignore=400)
 # print(ret_data)
 # ret_data = es.indices.create(index='liaomeitaolu', body=lianaizhuli_index, ignore=400)
@@ -89,23 +90,23 @@ es.indices.delete(index='fenxiao')
 # print(ret_data)
 # ret_data = es.indices.create(index='search', body=lianaizhuli_index, ignore=400)
 # print(ret_data)
-ret_data = es.indices.create(index='fenxiao', body=lianaizhuli_index, ignore=400)
-print(ret_data)
+# ret_data = es.indices.create(index='fenxiao', body=lianaizhuli_index, ignore=400)
+# print(ret_data)
 
 
-# with open('biaoqing.json', 'r') as f:
-#     for line in f:
-#         item = json.loads(line.strip())
-#         action = {
-#             "_index": "biaoqing",
-#             "_type": "biaoqing",
-#             "_source": item
-#         }
-#         actions.append(action)
-# while len(actions):
-#     print(len(actions))
-#     helpers.bulk(es, actions[:blocklen])
-#     actions = actions[blocklen:]
+with open('biaoqing.json', 'r') as f:
+    for line in f:
+        item = json.loads(line.strip())
+        action = {
+            "_index": "biaoqing",
+            "_type": "biaoqing",
+            "_source": item
+        }
+        actions.append(action)
+while len(actions):
+    print(len(actions))
+    helpers.bulk(es, actions[:blocklen])
+    actions = actions[blocklen:]
 
 # with open('liaomeihuashu.json', 'r') as f:
 #     for line in f:

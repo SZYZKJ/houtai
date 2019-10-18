@@ -26,14 +26,17 @@ import logging
 from PIL import Image, ImageDraw, ImageFont
 from basic import Basic
 from io import BytesIO
+import pymongo
 
 datapath = '/home/ubuntu/data/lianailianmeng/data'
-wangzhi = 'https://www.lianaizhuli.com/'
+wangzhi = 'https://www.lianaizhuli.com'
 os.chdir(datapath)
 app = Flask(__name__)
 app.debug = True
 CORS(app, supports_credentials=True)
 es = Elasticsearch([{"host": "182.254.227.188", "port": 9218}])
+myclient = pymongo.MongoClient("mongodb://localhost:27017/")
+mydb = myclient["lianailianmeng"]
 logger = logging.getLogger(__name__)
 logger.setLevel(level=logging.INFO)
 handler = logging.FileHandler("log/log.txt")
@@ -43,6 +46,10 @@ handler.setFormatter(formatter)
 logger.addHandler(handler)
 appid = 'wxa9ef833cef143ce1'
 secret = '574ba86bc66b664ab42e4d60276afb7c'
+fuwuhaoappid = 'wx2cc1bc5a412d44d2'
+fuwuhaoAppSecret = '3290467fd91f3e4ae427fca28d0137c9'
+appappid = 'wx492758c5b72a2e3f'
+appsecret = '89be1eaaf1cc9b5fc744488f2e404491'
 mch_id = '1519367291'
 merchant_key = 'shenzhenyuzikejiyouxiangongsi888'
 userKeyWordHisList = {}
@@ -56,21 +63,70 @@ whitelist = {}
 tixianunionid = {}
 tixianunionid_time = {}
 vipdengji = [0, 1, 2, 3, 4, 5, 6]
-viptime = [259200, 2592000, 31536000, 31536000, 31536000, 3153600000, 3153600000]
-sijiaotime = [0, 0, 0, 2592000, 7776000, 31536000, 3153600000]
-total_fees = [0, 2900, 19900, 49900, 99900, 299900, 499900]
+viptime = [259200, 3153600000, 3153600000, 3153600000, 3153600000, 3153600000, 3153600000]
+sijiaotime = [0, 0, 2592000, 15552000, 7776000, 31536000, 3153600000]
+total_fees = [0, 19900, 199900, 49900, 99900, 299900, 499900]
 # viptime = [0, 60, 60, 60, 60, 60, 60]
 # sijiaotime = [0, 60, 60, 60, 60, 60, 60]
 # total_fees = [0, 1, 2, 3, 4, 5, 6]
+# ioswenan = '由于相关规范，小程序下IOS虚拟商品支付暂不可用。'
+ioswenan = '由于相关规范，小程序下IOS虚拟商品支付暂不可用。IOS用户请到《恋爱联盟》公众号开通会员或购买课程'
 tuweiqinghua = []
 for line in open('tuweiqinghua.json'):
     line = json.loads(line)
     tuweiqinghua.append(line['chatId'])
-islianmeng = 0
-issystem = 0
+baidushenhe = 1
+tengxunshenhe = 1
+huaweishenhe = 1
+weixinshenhe = 1
+appleshenhe = 0
+appstoreshenhe = 0
+istuiguang = 0
+nowversion = '1.0.0'
+apiqianzui = '/xcx/'
 
 
-@app.route("/xcx/getShouyekuai", methods=["POST"])
+def adduserhis(userhis):
+    es.index(index='userhis', doc_type='userhis', body=userhis)
+    # global userhiss:
+    # action = {
+    #     "_index": "userhis",
+    #     "_type": "userhis",
+    #     "_source": userhis
+    # }
+    # userhiss.append(action)
+    # if len(userhis) >= 500:
+    #     helpers.bulk(es, userhiss)
+    #     userhiss = []
+    return None
+
+
+@app.route(apiqianzui + "checkVersion", methods=["POST"])
+def checkVersion():
+    oldversion = request.form['version']
+    andoridupdatetype = 0
+    iosupdatetype = 0
+    if oldversion < nowversion:
+        andoridupdatetype = 1
+        iosupdatetype = 1
+    andoridxiaourl = 'https://www.xingnanzhuli.com/__UNI__29FA639.wgt'
+    andoriddaurl = 'http://www.lianaizhuli.com/'
+    andoridurl = 'https://www.xingnanzhuli.com/Love-Union.apk'
+    iosxiaourl = 'https://www.xingnanzhuli.com/__UNI__29FA639.wgt'
+    iosdaurl = 'http://www.lianaizhuli.com/'
+    androidmagtype = 0
+    androidmsg = ''
+    iosmsgtype = 0
+    isomsg = ''
+    return json.dumps({'MSG': 'YES',
+                       'data': {'andoridupdatetype': andoridupdatetype, 'andoridxiaourl': andoridxiaourl,
+                                'andoriddaurl': andoriddaurl, 'andoridurl': andoridurl, 'iosupdatetype': iosupdatetype,
+                                'iosxiaourl': iosxiaourl,
+                                'iosdaurl': iosdaurl, 'androidmagtype': androidmagtype, 'androidmsg': androidmsg,
+                                'iosmsgtype': iosmsgtype, 'isomsg': isomsg, 'version': nowversion}})
+
+
+@app.route(apiqianzui + "getShouyekuai", methods=["POST"])
 def getShouyekuai():
     try:
         params = json.loads(decrypt(request.stream.read()))
@@ -78,11 +134,21 @@ def getShouyekuai():
     except Exception as e:
         logger.error(e)
         return json.dumps({'MSG': '警告！非法入侵！！！'})
+    apptype = 'app'
+    if 'apptype' in params:
+        apptype = params['apptype']
     adduserhis({'unionid': unionid, 'time': getTime(), 'event': 'getShouye', 'detail': 'getShouye',
-                'type': '0'})
+                'apptype': apptype})
     return encrypt(json.dumps({'MSG': 'OK', 'lunbotu': [
-        {'title': '新用户', 'adurl': wangzhi + 'shouye/lunbotu/tuibian.png',
+        # {'title': '分销', 'adurl': wangzhi + '/fenxiao/fenxiaobanner.png',
+        #  'type': 'html', 'url': 'https://mp.weixin.qq.com/s/7tNvqTjx1TaS_LnK8JXEPg'},
+        {'title': '新用户', 'adurl': wangzhi + '/shouye/lunbotu/tuibian.png',
          'type': 'html', 'url': 'https://mp.weixin.qq.com/s/2-StlZoGKA-rpcQN-QrlUg'},
+        {'title': '分手挽回', 'adurl': wangzhi + '/shouye/lunbotu/fenshouwanhui.png',
+         'type': 'path', 'url': '/pages/sijiao',
+         'data': {"url": "https://www.lianaizhuli.com/sijiao/1999.png", "title": "恋爱联盟分手挽回私教(送小程序终身会员)",
+                  "id": "yusd3ntvgRLCNFpxKw", "image": "https://www.lianaizhuli.com/shouye/images/sijiao4.png",
+                  "count": 7532}},
         # {'title': '小程序使用介绍', 'adurl': 'https://www.lianaizhuli.com/shouye/shiyongjieshaobanner.jpg',
         #  'type': 'ganhuo', 'url': 'cloud://lianailianmeng-086596.6c69-lianailianmeng-086596/shouye/shiyongjieshao.mp4',
         #  'duration': '04:04', 'direction': '0'},
@@ -96,21 +162,21 @@ def getShouyekuai():
         # {'title': '迷男方法第三步', 'adurl': 'https://www.lianaizhuli.com/shouye/disanbu.jpg',
         #  'type': 'html', 'url': 'https://mp.weixin.qq.com/s/qnYR4DiOtmvcLcbfAVmuUA'},
     ],
-                               'tubiao': [{'title': '土味情话', 'image': wangzhi + 'shouye/tubiao/tuweiqinghua.png',
+                               'tubiao': [{'title': '土味情话', 'image': wangzhi + '/shouye/tubiao/tuweiqinghua.png',
                                            'page': 'tuweiqinghualist'},
-                                          {'title': '撩妹套路', 'image': wangzhi + 'shouye/tubiao/liaomeitaolu.png',
+                                          {'title': '幽默话题', 'image': wangzhi + '/shouye/tubiao/liaomeitaolu.png',
                                            'page': 'liaomeitaolulist'},
-                                          {'title': '情感百科', 'image': wangzhi + 'shouye/tubiao/qingganbaike.png',
+                                          {'title': '情感百科', 'image': wangzhi + '/shouye/tubiao/qingganbaike.png',
                                            'page': 'qingganbaike'},
-                                          {'title': '心理测试', 'image': wangzhi + 'shouye/tubiao/xinliceshi.png',
+                                          {'title': '心理测试', 'image': wangzhi + '/shouye/tubiao/xinliceshi.png',
                                            'page': 'xinliceshilist'}, ],
-                               'searchicon': wangzhi + 'shouye/search.png',
+                               'searchicon': wangzhi + '/shouye/search.png',
                                'miaoshu': '①女生回了一句话 ②你恐惧回复不好 ③复制粘贴在这里试试？',
-                               'tuijian': ['我有男朋友了', '你真自恋', '我去洗澡了', '表白', '哈哈'],
+                               'tuijian': ['我有男朋友了', '你真自恋', '我睡觉了', '表白', '哈哈'],
                                }))
 
 
-@app.route("/xcx/getShouyeman", methods=["POST"])
+@app.route(apiqianzui + "getShouyeman", methods=["POST"])
 def getShouyeman():
     try:
         params = json.loads(decrypt(request.stream.read()))
@@ -118,14 +184,17 @@ def getShouyeman():
     except Exception as e:
         logger.error(e)
         return json.dumps({'MSG': '警告！非法入侵！！！'})
+    apptype = 'app'
+    if 'apptype' in params:
+        apptype = params['apptype']
     adduserhis({'unionid': unionid, 'time': getTime(), 'event': 'getShouye', 'detail': 'getShouye',
-                'type': '0'})
-    kecheng = {'image': wangzhi + 'shouye/wenzi/kecheng.png', 'data': []}
-    xingxiangjianshe = {'image': wangzhi + 'shouye/wenzi/xingxiangjianshe.png', 'data': []}
-    qingganbaike = {'image': wangzhi + 'shouye/wenzi/qingganbaike.png', 'data': []}
-    liaomeishizhan = {'image': wangzhi + 'shouye/wenzi/liaomeishizhan.png', 'data': []}
-    sijiao = {'image': wangzhi + 'shouye/wenzi/sijiao.png', 'data': []}
-    xinliceshi = {'image': wangzhi + 'shouye/wenzi/xinliceshi.png', 'data': []}
+                'apptype': apptype})
+    kecheng = {'image': wangzhi + '/shouye/wenzi/kecheng.png', 'data': []}
+    xingxiangjianshe = {'image': wangzhi + '/shouye/wenzi/xingxiangjianshe.png', 'data': []}
+    qingganbaike = {'image': wangzhi + '/shouye/wenzi/qingganbaike.png', 'data': []}
+    liaomeishizhan = {'image': wangzhi + '/shouye/wenzi/liaomeishizhan.png', 'data': []}
+    sijiao = {'image': wangzhi + '/shouye/wenzi/sijiao.png', 'data': []}
+    xinliceshi = {'image': wangzhi + '/shouye/wenzi/xinliceshi.png', 'data': []}
     search = {"query": {"match_all": {}}}
     Docs = es.search(index='kechenglist', doc_type='kechenglist', body=search, size=3)['hits']['hits']
     try:
@@ -136,7 +205,7 @@ def getShouyeman():
         goumaidoc['data'] = {}
     for u, doc in enumerate(Docs):
         doc = doc['_source']
-        doc['newimage'] = wangzhi + 'shouye/images/kecheng' + str(u + 1) + '.png'
+        doc['newimage'] = wangzhi + '/shouye/images/kecheng' + str(u + 1) + '.png'
         if doc['id'] in goumaidoc['data']:
             doc['yigoumai'] = 1
         else:
@@ -145,19 +214,19 @@ def getShouyeman():
     Docs = es.search(index='xingxiangjianshe', doc_type='xingxiangjianshe', body=search, size=4)['hits']['hits']
     for u, doc in enumerate(Docs):
         doc = doc['_source']
-        doc['newimage'] = wangzhi + 'shouye/images/xingxiangjianshe' + str(u + 1) + '.png'
+        doc['newimage'] = wangzhi + '/shouye/images/xingxiangjianshe' + str(u + 1) + '.png'
         xingxiangjianshe['data'].append(doc)
     Docs = es.search(index='baikelist', doc_type='baikelist', body=search, size=3)['hits']['hits']
     for u, doc in enumerate(Docs):
         doc = doc['_source']
         doc['newimage'] = doc['image']
-        # doc['newimage'] = wangzhi + 'shouye/images/qingganbaike' + str(u + 1) + '.png'
+        # doc['newimage'] = wangzhi + '/shouye/images/qingganbaike' + str(u + 1) + '.png'
         qingganbaike['data'].append(doc)
     Docs = es.search(index='liaomeishizhanlist', doc_type='liaomeishizhanlist', body=search, size=4)['hits']['hits']
     for u, doc in enumerate(Docs):
         doc = doc['_source']
         doc['newimage'] = doc['image']
-        # doc['newimage'] = wangzhi + 'shouye/images/liaomeishizhan' + str(u + 1) + '.png'
+        # doc['newimage'] = wangzhi + '/shouye/images/liaomeishizhan' + str(u + 1) + '.png'
         liaomeishizhan['data'].append(doc)
     Docs = es.search(index='sijiao', doc_type='sijiao', body=search, size=3)['hits']['hits']
     for u, doc in enumerate(Docs):
@@ -167,11 +236,11 @@ def getShouyeman():
     Docs = es.search(index='xinliceshilist', doc_type='xinliceshilist', body=search, size=4)['hits']['hits']
     for u, doc in enumerate(Docs):
         doc = doc['_source']
-        doc['newimage'] = wangzhi + 'shouye/images/xinliceshi' + str(u + 1) + '.png'
+        doc['newimage'] = wangzhi + '/shouye/images/xinliceshi' + str(u + 1) + '.png'
         xinliceshi['data'].append(doc)
     return encrypt(json.dumps({'MSG': 'OK',
                                'gengduotext': '更多',
-                               'gengduoicon': wangzhi + 'shouye/gengduo.png',
+                               'gengduoicon': wangzhi + '/shouye/gengduo.png',
                                'kecheng': kecheng,
                                'xingxiangjianshe': xingxiangjianshe,
                                'qingganbaike': qingganbaike,
@@ -205,21 +274,6 @@ def xml_to_dict(xml_data):
     for child in root:
         xml_dict[child.tag] = child.text
     return xml_dict
-
-
-def adduserhis(userhis):
-    es.index(index='userhis', doc_type='userhis', body=userhis)
-    # global userhiss:
-    # action = {
-    #     "_index": "userhis",
-    #     "_type": "userhis",
-    #     "_source": userhis
-    # }
-    # userhiss.append(action)
-    # if len(userhis) >= 500:
-    #     helpers.bulk(es, userhiss)
-    #     userhiss = []
-    return None
 
 
 def getTime():
@@ -281,7 +335,7 @@ def addKeyword(params):
         userKeyWordHisList[unionid] = [inputValue]
 
 
-@app.route("/xcx/getUnionid", methods=["POST"])
+@app.route(apiqianzui + "getUnionid", methods=["POST"])
 def getUnionid():
     try:
         params = json.loads(decrypt(request.stream.read()))
@@ -387,11 +441,104 @@ def getUnionid():
     if 'options' not in userinfo:
         userinfo['options'] = options
     es.index(index='userinfo', doc_type='userinfo', id=unionid, body=userinfo)
-    adduserhis({'unionid': unionid, 'time': getTime(), 'event': 'getUnionid', 'detail': 'getUnionid', 'type': '0'})
+    apptype = 'app'
+    if 'apptype' in params:
+        apptype = params['apptype']
+    adduserhis(
+        {'unionid': unionid, 'time': getTime(), 'event': 'getUnionid', 'detail': 'getUnionid', 'apptype': apptype})
     return encrypt(json.dumps({'MSG': 'OK', 'data': {'unionid': unionid}}))
 
 
-@app.route("/xcx/checkUnionid", methods=["POST"])
+def getopenid_and_access_token(code):
+    url = 'https://api.weixin.qq.com/sns/oauth2/access_token?appid=' + fuwuhaoappid + '&secret=' + fuwuhaoAppSecret + '&code=' + code + '&grant_type=authorization_code'
+    response = requests.get(url)
+    response = response.json()
+    return response
+
+
+def openid_unionid(openid, access_token):
+    unionidurl = 'https://api.weixin.qq.com/sns/userinfo?access_token=' + access_token + '&openid=' + openid + '&lang=zh_CN'
+    response = requests.get(unionidurl)
+    response = response.json()
+    return response
+
+
+@app.route(apiqianzui + "getFwhnionid", methods=["POST"])
+def getFwhnionid():
+    try:
+        params = json.loads(decrypt(request.stream.read()))
+        code = params['code']
+    except Exception as e:
+        logger.error(e)
+        return json.dumps({'MSG': '警告！非法入侵！！！'})
+    response = getopenid_and_access_token(code)
+    resdata = openid_unionid(response['openid'], response['access_token'])
+    unionid = resdata['unionid']
+    resdata['fwhid'] = resdata['openid']
+    resdata.pop('openid')
+    try:
+        userinfodoc = es.get(index='userinfo', doc_type='userinfo', id=unionid)['_source']
+        userinfodoc.update(resdata)
+        resdata = userinfodoc
+    except:
+        resdata['addtime'] = getTime()
+        resdata['vipdengji'] = 0
+        resdata['viptime'] = int(time.time()) + viptime[0]
+        resdata['sijiaotime'] = 0
+        resdata['xiaofeicishu'] = 0
+        resdata['xiaofeizonge'] = 0
+    es.index(index='userinfo', doc_type='userinfo', id=unionid, body=resdata)
+    return encrypt(json.dumps({'MSG': 'OK', 'data': {'unionid': unionid}}))
+
+
+@app.route(apiqianzui + "getAppunionid", methods=["POST"])
+def getAppunionid():
+    try:
+        params = json.loads(decrypt(request.stream.read()))
+        code = params['code']
+    except Exception as e:
+        logger.error(e)
+        return json.dumps({'MSG': '警告！非法入侵！！！'})
+    url = 'https://api.weixin.qq.com/sns/oauth2/access_token?appid=' + appappid + '&secret=' + appsecret + '&code=' + code + '&grant_type=authorization_code'
+    response = requests.get(url)
+    response = response.json()
+    unionid = response['unionid']
+    yingyongid = response['openid']
+    url = 'https://api.weixin.qq.com/sns/userinfo?access_token=' + response['access_token'] + '&openid=' + yingyongid
+    response = requests.get(url)
+    userinfo = json.loads(bytes(response.text, encoding='ISO-8859-1').decode('utf8'))
+    userinfo['yingyongid'] = yingyongid
+    userinfo.pop('openid')
+    try:
+        opendoc = es.get(index='userinfo', doc_type='userinfo', id=unionid)['_source']
+        opendoc.update(userinfo)
+        es.index(index='userinfo', doc_type='userinfo', id=unionid, body=opendoc)
+    except:
+        if 'addtime' not in userinfo:
+            userinfo['addtime'] = getTime()
+            userinfo['vipdengji'] = 0
+            userinfo['viptime'] = int(time.time()) + viptime[0]
+            userinfo['sijiaotime'] = 0
+            userinfo['xiaofeicishu'] = 0
+            userinfo['xiaofeizonge'] = 0
+            es.index(index='userinfo', doc_type='userinfo', id=unionid, body=userinfo)
+    unionid_token = mydb['unionid_token']
+    token = str(int(time.time()))
+    try:
+        unionid_token.remove({'_id': unionid})
+    except:
+        None
+    unionid_token.update({'_id': unionid}, {"$set": {'_id': unionid, 'unionid': unionid, 'token': token}}, True)
+    apptype = 'app'
+    if 'apptype' in params:
+        apptype = params['apptype']
+    adduserhis(
+        {'unionid': unionid, 'time': getTime(), 'event': 'getAppunionid', 'detail': 'getAppunionid',
+         'apptype': apptype})
+    return encrypt(json.dumps({'MSG': 'OK', 'data': {'unionid': unionid, 'token': token, 'userinfo': userinfo}}))
+
+
+@app.route(apiqianzui + "checkUnionid", methods=["POST"])
 def checkUnionid():
     try:
         params = json.loads(decrypt(request.stream.read()))
@@ -416,7 +563,30 @@ def checkUnionid():
         return encrypt(json.dumps({'MSG': 'NO'}))
 
 
-@app.route("/xcx/searchLiaomeihuashu", methods=["POST"])
+@app.route(apiqianzui + "checkAppunionid", methods=["POST"])
+def checkAppunionid():
+    try:
+        params = json.loads(decrypt(request.stream.read()))
+        unionid = params['unionid']
+        token = params['token']
+    except Exception as e:
+        logger.error(e)
+        return encrypt(json.dumps({'MSG': 'NO'}))
+    if len(unionid) == 0 or len(token) == 0:
+        return encrypt(json.dumps({'MSG': 'NO'}))
+    unionid_token = mydb['unionid_token']
+    try:
+        results = unionid_token.find({'_id': unionid})
+        for doc in results:
+            if doc['token'] == token:
+                return encrypt(json.dumps({'MSG': 'YES'}))
+    except Exception as e:
+        logger.error(e)
+        return encrypt(json.dumps({'MSG': 'NO'}))
+    return encrypt(json.dumps({'MSG': 'NO'}))
+
+
+@app.route(apiqianzui + "searchLiaomeihuashu", methods=["POST"])
 def searchLiaomeihuashu():
     try:
         params = json.loads(decrypt(request.stream.read()))
@@ -430,7 +600,11 @@ def searchLiaomeihuashu():
     if check_user_res == 0:
         return encrypt(json.dumps({'MSG': 'LIMIT'}))
     addKeyword(params)
-    adduserhis({'unionid': unionid, 'time': getTime(), 'event': 'searchLiaomeihuashu', 'detail': query, 'type': '0'})
+    apptype = 'app'
+    if 'apptype' in params:
+        apptype = params['apptype']
+    adduserhis(
+        {'unionid': unionid, 'time': getTime(), 'event': 'searchLiaomeihuashu', 'detail': query, 'apptype': apptype})
     retdata = []
     search = {'query': {'match': {'chat_name': query}}}
     if scroll:
@@ -448,7 +622,7 @@ def searchLiaomeihuashu():
     return encrypt(json.dumps({'MSG': 'OK', 'data': retdata, 'scroll': scroll}))
 
 
-@app.route("/xcx/searchBiaoqing", methods=["POST"])
+@app.route(apiqianzui + "searchBiaoqing", methods=["POST"])
 def searchBiaoqing():
     try:
         params = json.loads(decrypt(request.stream.read()))
@@ -462,7 +636,10 @@ def searchBiaoqing():
     if check_user_res == 0:
         return encrypt(json.dumps({'MSG': 'LIMIT'}))
     addKeyword(params)
-    adduserhis({'unionid': unionid, 'time': getTime(), 'event': 'searchBiaoqing', 'detail': query, 'type': '0'})
+    apptype = 'app'
+    if 'apptype' in params:
+        apptype = params['apptype']
+    adduserhis({'unionid': unionid, 'time': getTime(), 'event': 'searchBiaoqing', 'detail': query, 'apptype': apptype})
     retdata = []
     search = {'query': {'match': {'imgExplain': query}}}
     if scroll:
@@ -480,7 +657,7 @@ def searchBiaoqing():
     return encrypt(json.dumps({'MSG': 'OK', 'data': retdata, 'scroll': scroll}))
 
 
-@app.route("/xcx/searchBaike", methods=["POST"])
+@app.route(apiqianzui + "searchBaike", methods=["POST"])
 def searchBaike():
     try:
         params = json.loads(decrypt(request.stream.read()))
@@ -491,7 +668,10 @@ def searchBaike():
         logger.error(e)
         return json.dumps({'MSG': '警告！非法入侵！！！'})
     addKeyword(params)
-    adduserhis({'unionid': unionid, 'time': getTime(), 'event': 'searchBaike', 'detail': query, 'type': '0'})
+    apptype = 'app'
+    if 'apptype' in params:
+        apptype = params['apptype']
+    adduserhis({'unionid': unionid, 'time': getTime(), 'event': 'searchBaike', 'detail': query, 'apptype': apptype})
     retdata = []
     search = {'query': {'match': {'title': query}}}
     if scroll:
@@ -509,7 +689,7 @@ def searchBaike():
     return encrypt(json.dumps({'MSG': 'OK', 'data': retdata, 'scroll': scroll}))
 
 
-@app.route("/xcx/getLiaomeitaoluList", methods=["POST"])
+@app.route(apiqianzui + "getLiaomeitaoluList", methods=["POST"])
 def getLiaomeitaoluList():
     try:
         params = json.loads(decrypt(request.stream.read()))
@@ -522,7 +702,11 @@ def getLiaomeitaoluList():
     check_user_res = check_user(unionid)
     if check_user_res == 0 and scroll != '':
         return encrypt(json.dumps({'MSG': 'LIMIT'}))
-    adduserhis({'unionid': unionid, 'time': getTime(), 'event': 'getLiaomeitaoluList', 'detail': cid, 'type': '0'})
+    apptype = 'app'
+    if 'apptype' in params:
+        apptype = params['apptype']
+    adduserhis(
+        {'unionid': unionid, 'time': getTime(), 'event': 'getLiaomeitaoluList', 'detail': cid, 'apptype': apptype})
     retdata = []
     search = {'query': {'bool': {'filter': {"term": {'cid': cid}}}}}
     if scroll:
@@ -540,7 +724,7 @@ def getLiaomeitaoluList():
     return encrypt(json.dumps({'MSG': 'OK', 'data': retdata, 'scroll': scroll}))
 
 
-@app.route("/xcx/getHiswordList", methods=["POST"])
+@app.route(apiqianzui + "getHiswordList", methods=["POST"])
 def getHiswordList():
     try:
         params = json.loads(decrypt(request.stream.read()))
@@ -555,7 +739,7 @@ def getHiswordList():
         return encrypt(json.dumps({'MSG': 'OK', 'data': []}))
 
 
-@app.route("/xcx/clearHiswords", methods=["POST"])
+@app.route(apiqianzui + "clearHiswords", methods=["POST"])
 def clearHiswords():
     try:
         params = json.loads(decrypt(request.stream.read()))
@@ -563,12 +747,15 @@ def clearHiswords():
     except Exception as e:
         logger.error(e)
         return json.dumps({'MSG': '警告！非法入侵！！！'})
-    adduserhis({'unionid': response['unionid'], 'time': getTime(), 'event': 'clearHiswords', 'type': '0'})
+    apptype = 'app'
+    if 'apptype' in params:
+        apptype = params['apptype']
+    adduserhis({'unionid': response['unionid'], 'time': getTime(), 'event': 'clearHiswords', 'apptype': apptype})
     userKeyWordHisList[unionid] = []
     return encrypt(json.dumps({'MSG': 'OK'}))
 
 
-@app.route("/xcx/getRecommend", methods=["POST"])
+@app.route(apiqianzui + "getRecommend", methods=["POST"])
 def getRecommend():
     try:
         params = json.loads(decrypt(request.stream.read()))
@@ -581,7 +768,7 @@ def getRecommend():
     return encrypt(json.dumps({'MSG': 'OK', 'data': {'hotWordsList': hotWords}}))
 
 
-@app.route("/xcx/getXingxiangjiansheList", methods=["POST"])
+@app.route(apiqianzui + "getXingxiangjiansheList", methods=["POST"])
 def getXingxiangjiansheList():
     try:
         params = json.loads(decrypt(request.stream.read()))
@@ -590,9 +777,12 @@ def getXingxiangjiansheList():
     except Exception as e:
         logger.error(e)
         return json.dumps({'MSG': '警告！非法入侵！！！'})
+    apptype = 'app'
+    if 'apptype' in params:
+        apptype = params['apptype']
     adduserhis(
         {'unionid': unionid, 'time': getTime(), 'event': 'getXingxiangjiansheList', 'detail': 'getXingxiangjiansheList',
-         'type': '0'})
+         'apptype': apptype})
     retdata = []
     search = {"query": {"match_all": {}}}
     if scroll:
@@ -610,7 +800,7 @@ def getXingxiangjiansheList():
     return encrypt(json.dumps({'MSG': 'OK', 'data': retdata, 'scroll': scroll}))
 
 
-@app.route("/xcx/getXingxiangjianshe", methods=["POST"])
+@app.route(apiqianzui + "getXingxiangjianshe", methods=["POST"])
 def getXingxiangjianshe():
     try:
         params = json.loads(decrypt(request.stream.read()))
@@ -619,15 +809,18 @@ def getXingxiangjianshe():
     except Exception as e:
         logger.error(e)
         return json.dumps({'MSG': '警告！非法入侵！！！'})
+    apptype = 'app'
+    if 'apptype' in params:
+        apptype = params['apptype']
     adduserhis({'unionid': unionid, 'time': getTime(), 'event': 'getXingxiangjianshe', 'detail': xingxiangjiansheid,
-                'type': '0'})
+                'apptype': apptype})
     doc = es.get(index='xingxiangjianshe', doc_type='xingxiangjianshe', id=xingxiangjiansheid)['_source']
     doc['count'] += 1
     es.index(index='xingxiangjianshe', doc_type='xingxiangjianshe', id=xingxiangjiansheid, body=doc)
     return encrypt(json.dumps({'MSG': 'OK', 'data': doc}))
 
 
-@app.route("/xcx/getLiaomeishizhanList", methods=["POST"])
+@app.route(apiqianzui + "getLiaomeishizhanList", methods=["POST"])
 def getLiaomeishizhanList():
     try:
         params = json.loads(decrypt(request.stream.read()))
@@ -636,9 +829,12 @@ def getLiaomeishizhanList():
     except Exception as e:
         logger.error(e)
         return json.dumps({'MSG': '警告！非法入侵！！！'})
+    apptype = 'app'
+    if 'apptype' in params:
+        apptype = params['apptype']
     adduserhis(
         {'unionid': unionid, 'time': getTime(), 'event': 'getLiaomeishizhanList', 'detail': 'getLiaomeishizhanList',
-         'type': '0'})
+         'apptype': apptype})
     retdata = []
     search = {"query": {"match_all": {}}}
     if scroll:
@@ -657,7 +853,7 @@ def getLiaomeishizhanList():
     return encrypt(json.dumps({'MSG': 'OK', 'data': retdata, 'scroll': scroll}))
 
 
-@app.route("/xcx/getLiaomeishizhan", methods=["POST"])
+@app.route(apiqianzui + "getLiaomeishizhan", methods=["POST"])
 def getLiaomeishizhan():
     try:
         params = json.loads(decrypt(request.stream.read()))
@@ -666,8 +862,11 @@ def getLiaomeishizhan():
     except Exception as e:
         logger.error(e)
         return json.dumps({'MSG': '警告！非法入侵！！！'})
+    apptype = 'app'
+    if 'apptype' in params:
+        apptype = params['apptype']
     adduserhis({'unionid': unionid, 'time': getTime(), 'event': 'getLiaomeishizhan', 'detail': liaomeishizhanid,
-                'type': '0'})
+                'apptype': apptype})
     doc = es.get(index='liaomeishizhanlist', doc_type='liaomeishizhanlist', id=liaomeishizhanid)['_source']
     doc['count'] += 1
     es.index(index='liaomeishizhanlist', doc_type='liaomeishizhanlist', id=liaomeishizhanid, body=doc)
@@ -675,7 +874,7 @@ def getLiaomeishizhan():
     return encrypt(json.dumps({'MSG': 'OK', 'data': doc}))
 
 
-@app.route("/xcx/getSijiaoList", methods=["POST"])
+@app.route(apiqianzui + "getSijiaoList", methods=["POST"])
 def getSijiaoList():
     try:
         params = json.loads(decrypt(request.stream.read()))
@@ -683,9 +882,12 @@ def getSijiaoList():
     except Exception as e:
         logger.error(e)
         return json.dumps({'MSG': '警告！非法入侵！！！'})
+    apptype = 'app'
+    if 'apptype' in params:
+        apptype = params['apptype']
     adduserhis(
         {'unionid': unionid, 'time': getTime(), 'event': 'getSijiaoList', 'detail': 'getSijiaoList',
-         'type': '0'})
+         'apptype': apptype})
     retdata = []
     search = {"query": {"match_all": {}}}
     Docs = es.search(index='sijiao', doc_type='sijiao', body=search, size=10000)
@@ -695,7 +897,7 @@ def getSijiaoList():
     return encrypt(json.dumps({'MSG': 'OK', 'data': retdata}))
 
 
-@app.route("/xcx/getKechengList", methods=["POST"])
+@app.route(apiqianzui + "getKechengList", methods=["POST"])
 def getKechengList():
     try:
         params = json.loads(decrypt(request.stream.read()))
@@ -704,9 +906,12 @@ def getKechengList():
     except Exception as e:
         logger.error(e)
         return json.dumps({'MSG': '警告！非法入侵！！！'})
+    apptype = 'app'
+    if 'apptype' in params:
+        apptype = params['apptype']
     adduserhis(
         {'unionid': unionid, 'time': getTime(), 'event': 'getKechengList', 'detail': 'getKechengList',
-         'type': '0'})
+         'apptype': apptype})
     retdata = []
     search = {"query": {"match_all": {}}}
     if scroll:
@@ -748,7 +953,7 @@ def getKechengList():
     return encrypt(json.dumps({'MSG': 'OK', 'data': retdata, 'scroll': scroll}))
 
 
-@app.route("/xcx/getKecheng", methods=["POST"])
+@app.route(apiqianzui + "getKecheng", methods=["POST"])
 def getKecheng():
     try:
         params = json.loads(decrypt(request.stream.read()))
@@ -759,8 +964,11 @@ def getKecheng():
     except Exception as e:
         logger.error(e)
         return json.dumps({'MSG': '警告！非法入侵！！！'})
+    apptype = 'app'
+    if 'apptype' in params:
+        apptype = params['apptype']
     adduserhis({'unionid': unionid, 'time': getTime(), 'event': 'getKecheng', 'detail': neirongid,
-                'type': '0'})
+                'apptype': apptype})
     if kefenxiang == '0':
         try:
             goumaidoc = es.get(index='kechenggoumai', doc_type='kechenggoumai', id=unionid)['_source']
@@ -775,7 +983,7 @@ def getKecheng():
     return encrypt(json.dumps({'MSG': 'NO'}))
 
 
-@app.route("/xcx/searchWenzhangList", methods=["POST"])
+@app.route(apiqianzui + "searchWenzhangList", methods=["POST"])
 def searchWenzhangList():
     try:
         params = json.loads(decrypt(request.stream.read()))
@@ -785,7 +993,11 @@ def searchWenzhangList():
     except Exception as e:
         logger.error(e)
         return json.dumps({'MSG': '警告！非法入侵！！！'})
-    adduserhis({'unionid': unionid, 'time': getTime(), 'event': 'searchWenzhangList', 'detail': query, 'type': '0'})
+    apptype = 'app'
+    if 'apptype' in params:
+        apptype = params['apptype']
+    adduserhis(
+        {'unionid': unionid, 'time': getTime(), 'event': 'searchWenzhangList', 'detail': query, 'apptype': apptype})
     retdata = []
     search = {'query': {'match': {'title': query}}}
     if scroll:
@@ -803,7 +1015,7 @@ def searchWenzhangList():
     return encrypt(json.dumps({'MSG': 'OK', 'data': retdata, 'scroll': scroll}))
 
 
-@app.route("/xcx/searchGanhuoList", methods=["POST"])
+@app.route(apiqianzui + "searchGanhuoList", methods=["POST"])
 def searchGanhuoList():
     try:
         params = json.loads(decrypt(request.stream.read()))
@@ -813,7 +1025,11 @@ def searchGanhuoList():
     except Exception as e:
         logger.error(e)
         return json.dumps({'MSG': '警告！非法入侵！！！'})
-    adduserhis({'unionid': unionid, 'time': getTime(), 'event': 'searchGanhuoList', 'detail': query, 'type': '0'})
+    apptype = 'app'
+    if 'apptype' in params:
+        apptype = params['apptype']
+    adduserhis(
+        {'unionid': unionid, 'time': getTime(), 'event': 'searchGanhuoList', 'detail': query, 'apptype': apptype})
     retdata = []
     search = {'query': {'match': {'title': query}}}
     if scroll:
@@ -831,7 +1047,7 @@ def searchGanhuoList():
     return encrypt(json.dumps({'MSG': 'OK', 'data': retdata, 'scroll': scroll}))
 
 
-@app.route("/xcx/getTuweiqinghuaList", methods=["POST"])
+@app.route(apiqianzui + "getTuweiqinghuaList", methods=["POST"])
 def getTuweiqinghuaList():
     try:
         params = json.loads(decrypt(request.stream.read()))
@@ -840,18 +1056,21 @@ def getTuweiqinghuaList():
     except Exception as e:
         logger.error(e)
         return json.dumps({'MSG': '警告！非法入侵！！！'})
+    apptype = 'app'
+    if 'apptype' in params:
+        apptype = params['apptype']
     adduserhis({'unionid': unionid, 'time': getTime(), 'event': 'getTuweiqinghuaList', 'detail': 'getTuweiqinghuaList',
-                'type': '0'})
+                'apptype': apptype})
     retdata = []
     search = {"query": {"match_all": {}}}
     if scroll:
         try:
             Docs = es.scroll(scroll_id=scroll, scroll="5m")
         except:
-            Docs = es.search(index='tuweiqinghua', doc_type='tuweiqinghua', body=search, size=10, scroll="5m")
+            Docs = es.search(index='tuweiqinghua', doc_type='tuweiqinghua', body=search, size=20, scroll="5m")
 
     else:
-        Docs = es.search(index='tuweiqinghua', doc_type='tuweiqinghua', body=search, size=10, scroll="5m")
+        Docs = es.search(index='tuweiqinghua', doc_type='tuweiqinghua', body=search, size=20, scroll="5m")
     scroll = Docs['_scroll_id']
     Docs = Docs['hits']['hits']
     for doc in Docs:
@@ -859,7 +1078,7 @@ def getTuweiqinghuaList():
     return encrypt(json.dumps({'MSG': 'OK', 'data': retdata, 'scroll': scroll}))
 
 
-@app.route("/xcx/getTuweiqinghua", methods=["POST"])
+@app.route(apiqianzui + "getTuweiqinghua", methods=["POST"])
 def getTuweiqinghua():
     try:
         params = json.loads(decrypt(request.stream.read()))
@@ -867,14 +1086,18 @@ def getTuweiqinghua():
     except Exception as e:
         logger.error(e)
         return json.dumps({'MSG': '警告！非法入侵！！！'})
+    apptype = 'app'
+    if 'apptype' in params:
+        apptype = params['apptype']
     adduserhis(
-        {'unionid': unionid, 'time': getTime(), 'event': 'getTuweiqinghua', 'detail': 'getTuweiqinghua', 'type': '0'})
+        {'unionid': unionid, 'time': getTime(), 'event': 'getTuweiqinghua', 'detail': 'getTuweiqinghua',
+         'apptype': apptype})
     tuweiqinghuaid = tuweiqinghua[random.randint(0, len(tuweiqinghua) - 1)]
     doc = es.get(index='tuweiqinghua', doc_type='tuweiqinghua', id=tuweiqinghuaid)
     return encrypt(json.dumps({'MSG': 'OK', 'data': doc['_source']}))
 
 
-@app.route("/xcx/getPhoneNumber", methods=["POST"])
+@app.route(apiqianzui + "getPhoneNumber", methods=["POST"])
 def getPhoneNumber():
     try:
         params = json.loads(decrypt(request.stream.read()))
@@ -891,25 +1114,43 @@ def getPhoneNumber():
     doc = es.get(index='userinfo', doc_type='userinfo', id=unionid)
     userphone.update(doc['_source'])
     es.index(index='userinfo', doc_type='userinfo', id=unionid, body=userphone)
+    apptype = 'app'
+    if 'apptype' in params:
+        apptype = params['apptype']
     adduserhis({'unionid': unionid, 'time': getTime(), 'event': 'getPhoneNumber', 'detail': 'getPhoneNumber',
-                'type': '0'})
+                'apptype': apptype})
     return encrypt(json.dumps({'MSG': 'OK', 'data': {'unionid': response['unionid']}}))
 
 
-@app.route("/xcx/get_prepay_id", methods=["POST"])
+@app.route(apiqianzui + "get_prepay_id", methods=["POST"])
 def get_prepay_id():
     try:
         params = json.loads(decrypt(request.stream.read()))
         unionid = params['unionid']
         zhifutype = int(params['zhifutype'])
         detail = params['detail']
+        apptype = params['apptype']
     except Exception as e:
         logger.error(e)
         return json.dumps({'MSG': '警告！非法入侵！！！'})
-    openid = es.get(index='userinfo', doc_type='userinfo', id=unionid)['_source']['openid']
+    nowappid = ''
+    openid = ''
+    trade_type = ''
+    if apptype == 'weixin':
+        nowappid = appid
+        trade_type = 'JSAPI'
+        openid = es.get(index='userinfo', doc_type='userinfo', id=unionid)['_source']['openid']
+    elif apptype == 'fwh':
+        nowappid = fuwuhaoappid
+        trade_type = 'JSAPI'
+        openid = es.get(index='userinfo', doc_type='userinfo', id=unionid)['_source']['fwhid']
+    else:
+        nowappid = appappid
+        trade_type = 'APP'
+        openid = es.get(index='userinfo', doc_type='userinfo', id=unionid)['_source']['yingyongid']
     url = 'https://api.mch.weixin.qq.com/pay/unifiedorder'
     prepaydata = {
-        'appid': appid,
+        'appid': nowappid,
         'mch_id': mch_id,
         'nonce_str': ''.join(random.sample(string.ascii_letters + string.digits, 32)),
         'body': detail,
@@ -917,8 +1158,8 @@ def get_prepay_id():
         'out_trade_no': str(int(time.time())) + '_' + str((random.randint(1000000, 9999999))),
         'total_fee': total_fees[zhifutype],
         'spbill_create_ip': request.remote_addr,
-        'notify_url': wangzhi + "xcx/paynotify",
-        'trade_type': "JSAPI",
+        'notify_url': wangzhi + apiqianzui + "paynotify",
+        'trade_type': trade_type,
         'openid': openid,
     }
     stringA = '&'.join(["{0}={1}".format(k, prepaydata.get(k)) for k in sorted(prepaydata)])
@@ -930,18 +1171,30 @@ def get_prepay_id():
     result = urllib.request.urlopen(req, timeout=10).read().decode('utf8')
     result = xml_to_dict(result)
     prepay_id = result['prepay_id']
-    paySign_data = {
-        'appId': appid,
-        'timeStamp': str(int(time.time())),
-        'nonceStr': result['nonce_str'],
-        'package': 'prepay_id={0}'.format(prepay_id),
-        'signType': 'MD5'
-    }
+    if apptype == 'weixin' or apptype == 'fwh':
+        paySign_data = {
+            'appId': nowappid,
+            'timeStamp': str(int(time.time())),
+            'nonceStr': result['nonce_str'],
+            'package': 'prepay_id={0}'.format(prepay_id),
+            'signType': 'MD5'
+        }
+    else:
+        paySign_data = {
+            'appid': nowappid,
+            'partnerid': mch_id,
+            'prepayid': prepay_id,
+            'package': 'Sign=WXPay',
+            'noncestr': result['nonce_str'],
+            'timestamp': str(int(time.time())),
+        }
     stringA = '&'.join(["{0}={1}".format(k, paySign_data.get(k)) for k in sorted(paySign_data)])
     stringSignTemp = '{0}&key={1}'.format(stringA, merchant_key)
     paySign = hashlib.md5(stringSignTemp.encode('utf8')).hexdigest()
-    paySign_data['paySign'] = paySign
-    paySign_data.pop('appId')
+    if apptype == 'weixin' or apptype == 'fwh':
+        paySign_data['paySign'] = paySign
+    else:
+        paySign_data['sign'] = paySign
     doc = es.get(index='userinfo', doc_type='userinfo', id=unionid)
     doc = doc['_source']
     if 'phoneNumber' not in doc:
@@ -949,7 +1202,7 @@ def get_prepay_id():
     return encrypt(json.dumps({'MSG': 'OK', 'data': paySign_data}))
 
 
-@app.route("/xcx/paynotify", methods=["POST"])
+@app.route(apiqianzui + "paynotify", methods=["POST"])
 def paynotify():
     zhifures = xml_to_dict(request.stream.read().decode('utf8'))
     sign = zhifures['sign']
@@ -1049,7 +1302,7 @@ def paynotify():
     return dict_to_xml({'return_code': 'SUCCESS', 'return_msg': 'OK'})
 
 
-@app.route("/xcx/getTequan", methods=["POST"])
+@app.route(apiqianzui + "getTequan", methods=["POST"])
 def getTequan():
     try:
         params = json.loads(decrypt(request.stream.read()))
@@ -1058,14 +1311,17 @@ def getTequan():
         logger.error(e)
         return json.dumps({'MSG': '警告！非法入侵！！！'})
     doc = es.get(index='userinfo', doc_type='userinfo', id=unionid)
+    apptype = 'app'
+    if 'apptype' in params:
+        apptype = params['apptype']
     adduserhis({'unionid': unionid, 'time': getTime(), 'event': 'getTequan', 'detail': 'getTequan',
-                'type': '0'})
+                'apptype': apptype})
     return encrypt(json.dumps({'MSG': 'OK', 'vipdengji': doc['_source']['vipdengji'],
                                'viptime': time.strftime("%Y-%m-%d %H:%M:%S",
                                                         time.localtime(doc['_source']['viptime']))}))
 
 
-@app.route("/xcx/getJifen", methods=["POST"])
+@app.route(apiqianzui + "getJifen", methods=["POST"])
 def getJifen():
     try:
         params = json.loads(decrypt(request.stream.read()))
@@ -1076,14 +1332,17 @@ def getJifen():
         return json.dumps({'MSG': '警告！非法入侵！！！'})
     doc = es.get(index='userinfo', doc_type='userinfo', id=unionid)
     if iszhudong == "1":
+        apptype = 'app'
+        if 'apptype' in params:
+            apptype = params['apptype']
         adduserhis({'unionid': unionid, 'time': getTime(), 'event': 'getJifen', 'detail': 'getJifen',
-                    'type': '0'})
+                    'apptype': apptype})
     return encrypt(json.dumps({'MSG': 'OK', 'data': {'vipdengji': doc['_source']['vipdengji'],
                                                      'jifen': int(doc['_source']['xiaofeizonge'] * 0.01),
                                                      'wenhouyu': 'HI，欢迎您~'}}))
 
 
-@app.route("/xcx/getDingdan", methods=["POST"])
+@app.route(apiqianzui + "getDingdan", methods=["POST"])
 def getDingdan():
     try:
         params = json.loads(decrypt(request.stream.read()))
@@ -1091,8 +1350,11 @@ def getDingdan():
     except Exception as e:
         logger.error(e)
         return json.dumps({'MSG': '警告！非法入侵！！！'})
+    apptype = 'app'
+    if 'apptype' in params:
+        apptype = params['apptype']
     adduserhis({'unionid': unionid, 'time': getTime(), 'event': 'getDingdan', 'detail': 'getDingdan',
-                'type': '0'})
+                'apptype': apptype})
     try:
         try:
             openid = es.get(index='userinfo', doc_type='userinfo', id=unionid)['_source']['openid']
@@ -1125,7 +1387,7 @@ def getDingdan():
         return encrypt(json.dumps({'MSG': 'OK', 'data': []}))
 
 
-@app.route("/xcx/getIslianmeng", methods=["POST"])
+@app.route(apiqianzui + "getIslianmeng", methods=["POST"])
 def getIslianmeng():
     try:
         params = json.loads(decrypt(request.stream.read()))
@@ -1134,29 +1396,23 @@ def getIslianmeng():
     except Exception as e:
         logger.error(e)
         return json.dumps({'MSG': '警告！非法入侵！！！'})
+    apptype = 'app'
+    if 'apptype' in params:
+        apptype = params['apptype']
     adduserhis({'unionid': unionid, 'time': getTime(), 'event': 'getIslianmeng', 'detail': 'getIslianmeng',
-                'type': '0'})
-    try:
-        doc = es.get(index='userinfo', doc_type='userinfo', id=unionid)
-        doc = doc['_source']
-        if doc['system'][:3].lower() == 'ios':
-            if doc['viptime'] > int(time.time()) and doc['vipdengji'] > 1:
-                return encrypt(json.dumps({'MSG': 'OK', 'issystem': issystem, 'islianmeng': 1}))
-            else:
-                return encrypt(json.dumps({'MSG': 'OK', 'issystem': issystem, 'islianmeng': islianmeng}))
-        else:
-            if doc['viptime'] > int(time.time()) and doc['vipdengji'] > 1:
-                return encrypt(json.dumps({'MSG': 'OK', 'issystem': 1, 'islianmeng': 1}))
-            else:
-                return encrypt(json.dumps({'MSG': 'OK', 'issystem': 1, 'islianmeng': islianmeng}))
-    except:
-        if system[:3].lower() == 'ios':
-            return encrypt(json.dumps({'MSG': 'OK', 'issystem': issystem, 'islianmeng': islianmeng}))
-        else:
-            return encrypt(json.dumps({'MSG': 'OK', 'issystem': 1, 'islianmeng': islianmeng}))
+                'apptype': apptype})
+    if system[:3].lower() == 'ios':
+        return encrypt(json.dumps(
+            {'MSG': 'OK', 'istuiguang': 0, 'weixinshenhe': weixinshenhe, 'tengxunshenhe': tengxunshenhe,
+             'huaweishenhe': huaweishenhe, 'appleshenhe': appleshenhe, 'appstoreshenhe': appstoreshenhe,
+             'baidushenhe': 1}))
+    else:
+        return encrypt(json.dumps(
+            {'MSG': 'OK', 'istuiguang': istuiguang, 'weixinshenhe': 1, 'tengxunshenhe': tengxunshenhe,
+             'huaweishenhe': huaweishenhe, 'appleshenhe': 1, 'appstoreshenhe': 1, 'baidushenhe': baidushenhe}))
 
 
-@app.route("/xcx/setJilu", methods=["POST"])
+@app.route(apiqianzui + "setJilu", methods=["POST"])
 def setJilu():
     try:
         params = json.loads(decrypt(request.stream.read()))
@@ -1169,13 +1425,16 @@ def setJilu():
     query = ''
     if 'query' in params:
         query = params['query']
+    apptype = 'app'
+    if 'apptype' in params:
+        apptype = params['apptype']
     adduserhis({'unionid': unionid, 'time': getTime(), 'event': 'setJilu', 'detail': query, 'jilutype': jilutype,
                 'jilucontent': jilucontent,
-                'type': '0'})
+                'apptype': apptype})
     return encrypt(json.dumps({'MSG': 'OK'}))
 
 
-@app.route("/xcx/getQingganbaike", methods=["POST"])
+@app.route(apiqianzui + "getQingganbaike", methods=["POST"])
 def getQingganbaike():
     try:
         params = json.loads(decrypt(request.stream.read()))
@@ -1183,12 +1442,15 @@ def getQingganbaike():
     except Exception as e:
         logger.error(e)
         return json.dumps({'MSG': '警告！非法入侵！！！'})
+    apptype = 'app'
+    if 'apptype' in params:
+        apptype = params['apptype']
     adduserhis({'unionid': unionid, 'time': getTime(), 'event': 'getQingganbaike', 'detail': 'getQingganbaike',
-                'type': '0'})
+                'apptype': apptype})
     return encrypt(json.dumps({'MSG': 'OK',
-                               'rumenjieduan': wangzhi + 'qingganbaike/rumenjieduan.png',
-                               'jinjiejieduan': wangzhi + 'qingganbaike/jinjiejieduan.png',
-                               'wenda': [{'title': '单身期', 'image': wangzhi + 'qingganbaike/danshenqi.png',
+                               'rumenjieduan': wangzhi + '/qingganbaike/rumenjieduan.png',
+                               'jinjiejieduan': wangzhi + '/qingganbaike/jinjiejieduan.png',
+                               'wenda': [{'title': '单身期', 'image': wangzhi + '/qingganbaike/danshenqi.png',
                                           'list': [{'category_name': '聊天搭讪', 'category_id': 6},
                                                    {'category_name': '相亲', 'category_id': 7},
                                                    {'category_name': '社交软件', 'category_id': 8},
@@ -1197,56 +1459,56 @@ def getQingganbaike():
                                                    {'category_name': '形象改造', 'category_id': 11},
                                                    {'category_name': '心态建设', 'category_id': 12},
                                                    {'category_name': '了解女性', 'category_id': 13}, ]},
-                                         {'title': '追求期', 'image': wangzhi + 'qingganbaike/zhuiqiuqi.png',
+                                         {'title': '追求期', 'image': wangzhi + '/qingganbaike/zhuiqiuqi.png',
                                           'list': [{'category_name': '吸引女生', 'category_id': 14},
                                                    {'category_name': '聊天技巧', 'category_id': 15},
                                                    {'category_name': '约会', 'category_id': 16},
                                                    {'category_name': '表白', 'category_id': 17}, ]},
-                                         {'title': '恋爱期', 'image': wangzhi + 'qingganbaike/lianaiqi.png',
+                                         {'title': '恋爱期', 'image': wangzhi + '/qingganbaike/lianaiqi.png',
                                           'list': [{'category_name': '异地恋', 'category_id': 18},
                                                    {'category_name': '出轨', 'category_id': 19},
                                                    {'category_name': '长期相处', 'category_id': 20},
                                                    {'category_name': '冷战吵架', 'category_id': 21}, ]},
-                                         {'title': '失恋期', 'image': wangzhi + 'qingganbaike/shilianqi.png',
+                                         {'title': '失恋期', 'image': wangzhi + '/qingganbaike/shilianqi.png',
                                           'list': [{'category_name': '挽回复合', 'category_id': 22},
                                                    {'category_name': '重建吸引', 'category_id': 23},
                                                    {'category_name': '挽回沟通', 'category_id': 24},
                                                    {'category_name': '真假分手', 'category_id': 25},
                                                    {'category_name': '走出失恋', 'category_id': 26}, ]},
-                                         {'title': '婚姻期', 'image': wangzhi + 'qingganbaike/hunyinqi.png',
+                                         {'title': '婚姻期', 'image': wangzhi + '/qingganbaike/hunyinqi.png',
                                           'list': [{'category_name': '挽救婚姻', 'category_id': 27},
                                                    {'category_name': '婚外情', 'category_id': 28}, ]}, ],
                                'rumen': [
-                                   {'title': '怎么让你的话撩动屏幕后面的她', 'image': wangzhi + 'qingganbaike/wangshangliaomei.png',
+                                   {'title': '怎么让你的话撩动屏幕后面的她', 'image': wangzhi + '/qingganbaike/wangshangliaomei.png',
                                     'category_name': '网上撩妹', 'category_id': 10},
-                                   {'title': '聊天宝典，随机随处可用', 'image': wangzhi + 'qingganbaike/xianxialiaotian.png',
+                                   {'title': '聊天宝典，随机随处可用', 'image': wangzhi + '/qingganbaike/xianxialiaotian.png',
                                     'category_name': '线下聊天', 'category_id': 3},
-                                   {'title': '邀约话术，让女生迫不及待的跟你约会', 'image': wangzhi + 'qingganbaike/yaoqingyuehui.png',
+                                   {'title': '邀约话术，让女生迫不及待的跟你约会', 'image': wangzhi + '/qingganbaike/yaoqingyuehui.png',
                                     'category_name': '邀请约会', 'category_id': 16},
-                                   {'title': '搭讪话题，搭讪技巧，让你快速破冰', 'image': wangzhi + 'qingganbaike/yixingdashan.png',
+                                   {'title': '搭讪话题，搭讪技巧，让你快速破冰', 'image': wangzhi + '/qingganbaike/yixingdashan.png',
                                     'category_name': '异性搭讪', 'category_id': 13},
-                                   {'title': '狙击真命女神，让她对你念念不忘', 'image': wangzhi + 'qingganbaike/jujizhenming.png',
+                                   {'title': '狙击真命女神，让她对你念念不忘', 'image': wangzhi + '/qingganbaike/jujizhenming.png',
                                     'category_name': '狙击真命', 'category_id': 9},
-                                   {'title': '避免表白雷区，表白无压力', 'image': wangzhi + 'qingganbaike/wanmeibiaobai.png',
+                                   {'title': '避免表白雷区，表白无压力', 'image': wangzhi + '/qingganbaike/wanmeibiaobai.png',
                                     'category_name': '完美表白', 'category_id': 11}, ],
                                'jinjie': [
-                                   {'title': '把控节奏，推进关系，让她离不开你', 'image': wangzhi + 'qingganbaike/quedingguanxi.png',
+                                   {'title': '把控节奏，推进关系，让她离不开你', 'image': wangzhi + '/qingganbaike/quedingguanxi.png',
                                     'category_name': '确定关系', 'category_id': 8},
-                                   {'title': '美满而幸福的婚姻是靠经营出来的', 'image': wangzhi + 'qingganbaike/hunyinjingying.png',
+                                   {'title': '美满而幸福的婚姻是靠经营出来的', 'image': wangzhi + '/qingganbaike/hunyinjingying.png',
                                     'category_name': '婚姻经营', 'category_id': 7},
-                                   {'title': '找到情感问题的关键', 'image': wangzhi + 'qingganbaike/fenshouwanhui.png',
+                                   {'title': '找到情感问题的关键', 'image': wangzhi + '/qingganbaike/fenshouwanhui.png',
                                     'category_name': '分手挽回', 'category_id': 4},
-                                   {'title': '升温情感，毁约交往更顺畅', 'image': wangzhi + 'qingganbaike/guanxipobing.png',
+                                   {'title': '升温情感，毁约交往更顺畅', 'image': wangzhi + '/qingganbaike/guanxipobing.png',
                                     'category_name': '关系破冰', 'category_id': 6},
-                                   {'title': '相亲小技巧，告别失败阴影', 'image': wangzhi + 'qingganbaike/xiangqinjiqiao.png',
+                                   {'title': '相亲小技巧，告别失败阴影', 'image': wangzhi + '/qingganbaike/xiangqinjiqiao.png',
                                     'category_name': '相亲技巧', 'category_id': 14},
-                                   {'title': '形象决定气质，改变从现在开始', 'image': wangzhi + 'qingganbaike/xingxiangtisheng.png',
+                                   {'title': '形象决定气质，改变从现在开始', 'image': wangzhi + '/qingganbaike/xingxiangtisheng.png',
                                     'category_name': '形象提升', 'category_id': 12},
-                                   {'title': '有爱，距离不是问题', 'image': wangzhi + 'qingganbaike/yidilian.png',
+                                   {'title': '有爱，距离不是问题', 'image': wangzhi + '/qingganbaike/yidilian.png',
                                     'category_name': '异地恋', 'category_id': 15}, ], }))
 
 
-@app.route("/xcx/getQingganbaikeList", methods=["POST"])
+@app.route(apiqianzui + "getQingganbaikeList", methods=["POST"])
 def getQingganbaikeList():
     try:
         params = json.loads(decrypt(request.stream.read()))
@@ -1256,8 +1518,11 @@ def getQingganbaikeList():
     except Exception as e:
         logger.error(e)
         return json.dumps({'MSG': '警告！非法入侵！！！'})
+    apptype = 'app'
+    if 'apptype' in params:
+        apptype = params['apptype']
     adduserhis({'unionid': unionid, 'time': getTime(), 'event': 'getQingganbaikeList', 'detail': category_id,
-                'type': '0'})
+                'apptype': apptype})
     retdata = []
     search = {'query': {'bool': {'filter': {"term": {'category_id': category_id}}}}}
     if scroll:
@@ -1276,7 +1541,7 @@ def getQingganbaikeList():
     return encrypt(json.dumps({'MSG': 'OK', 'data': retdata, 'scroll': scroll}))
 
 
-@app.route("/xcx/getBaike", methods=["POST"])
+@app.route(apiqianzui + "getBaike", methods=["POST"])
 def getBaike():
     try:
         params = json.loads(decrypt(request.stream.read()))
@@ -1285,8 +1550,11 @@ def getBaike():
     except Exception as e:
         logger.error(e)
         return json.dumps({'MSG': '警告！非法入侵！！！'})
+    apptype = 'app'
+    if 'apptype' in params:
+        apptype = params['apptype']
     adduserhis({'unionid': unionid, 'time': getTime(), 'event': 'getBaike', 'detail': baikeid,
-                'type': '0'})
+                'apptype': apptype})
     doc = es.get(index='baike', doc_type='baike', id=baikeid)['_source']
     listdoc = es.get(index='baikelist', doc_type='baikelist', id=baikeid)['_source']
     listdoc['count'] += 1
@@ -1294,7 +1562,7 @@ def getBaike():
     return encrypt(json.dumps({'MSG': 'OK', 'data': doc}))
 
 
-@app.route("/xcx/getWendaList", methods=["POST"])
+@app.route(apiqianzui + "getWendaList", methods=["POST"])
 def getWendaList():
     try:
         params = json.loads(decrypt(request.stream.read()))
@@ -1304,8 +1572,11 @@ def getWendaList():
     except Exception as e:
         logger.error(e)
         return json.dumps({'MSG': '警告！非法入侵！！！'})
+    apptype = 'app'
+    if 'apptype' in params:
+        apptype = params['apptype']
     adduserhis({'unionid': unionid, 'time': getTime(), 'event': 'getWendaList', 'detail': category_id,
-                'type': '0'})
+                'apptype': apptype})
     retdata = []
     search = {'query': {'bool': {'filter': {"term": {'category_id': category_id}}}}}
     if scroll:
@@ -1324,7 +1595,7 @@ def getWendaList():
     return encrypt(json.dumps({'MSG': 'OK', 'data': retdata, 'scroll': scroll}))
 
 
-@app.route("/xcx/getWenda", methods=["POST"])
+@app.route(apiqianzui + "getWenda", methods=["POST"])
 def getWenda():
     try:
         params = json.loads(decrypt(request.stream.read()))
@@ -1333,8 +1604,11 @@ def getWenda():
     except Exception as e:
         logger.error(e)
         return json.dumps({'MSG': '警告！非法入侵！！！'})
+    apptype = 'app'
+    if 'apptype' in params:
+        apptype = params['apptype']
     adduserhis({'unionid': unionid, 'time': getTime(), 'event': 'getWenda', 'detail': wendaid,
-                'type': '0'})
+                'apptype': apptype})
     doc = es.get(index='wenda', doc_type='wenda', id=wendaid)['_source']
     listdoc = es.get(index='wendalist', doc_type='wendalist', id=wendaid)['_source']
     listdoc['count'] += 1
@@ -1352,7 +1626,7 @@ def getWenda():
     return encrypt(json.dumps({'MSG': 'OK', 'data': doc, 'dianzan': dianzan, 'shoucang': shoucang}))
 
 
-@app.route("/xcx/getXinliceshiList", methods=["POST"])
+@app.route(apiqianzui + "getXinliceshiList", methods=["POST"])
 def getXinliceshiList():
     try:
         params = json.loads(decrypt(request.stream.read()))
@@ -1362,8 +1636,11 @@ def getXinliceshiList():
     except Exception as e:
         logger.error(e)
         return json.dumps({'MSG': '警告！非法入侵！！！'})
+    apptype = 'app'
+    if 'apptype' in params:
+        apptype = params['apptype']
     adduserhis({'unionid': unionid, 'time': getTime(), 'event': 'getXinliceshiList', 'detail': category_id,
-                'type': '0'})
+                'apptype': apptype})
     retdata = []
     search = {'query': {'bool': {'filter': {"term": {'category_id': category_id}}}}}
     if scroll:
@@ -1382,7 +1659,7 @@ def getXinliceshiList():
     return encrypt(json.dumps({'MSG': 'OK', 'data': retdata, 'scroll': scroll}))
 
 
-@app.route("/xcx/getXinliceshi", methods=["POST"])
+@app.route(apiqianzui + "getXinliceshi", methods=["POST"])
 def getXinliceshi():
     try:
         params = json.loads(decrypt(request.stream.read()))
@@ -1391,8 +1668,11 @@ def getXinliceshi():
     except Exception as e:
         logger.error(e)
         return json.dumps({'MSG': '警告！非法入侵！！！'})
+    apptype = 'app'
+    if 'apptype' in params:
+        apptype = params['apptype']
     adduserhis({'unionid': unionid, 'time': getTime(), 'event': 'getXinliceshi', 'detail': ceshiid,
-                'type': '0'})
+                'apptype': apptype})
     doc = es.get(index='xinliceshi', doc_type='xinliceshi', id=ceshiid)['_source']
     doc['questions'] = json.loads(doc['questions'])
     dianzan = 0
@@ -1408,7 +1688,7 @@ def getXinliceshi():
     return encrypt(json.dumps({'MSG': 'OK', 'data': doc, 'dianzan': dianzan, 'shoucang': shoucang}))
 
 
-@app.route("/xcx/getCeshidaan", methods=["POST"])
+@app.route(apiqianzui + "getCeshidaan", methods=["POST"])
 def getCeshidaan():
     try:
         params = json.loads(decrypt(request.stream.read()))
@@ -1420,8 +1700,11 @@ def getCeshidaan():
     except Exception as e:
         logger.error(e)
         return json.dumps({'MSG': '警告！非法入侵！！！'})
+    apptype = 'app'
+    if 'apptype' in params:
+        apptype = params['apptype']
     adduserhis({'unionid': unionid, 'time': getTime(), 'event': 'getCeshidaan', 'detail': ceshiid,
-                'type': '0'})
+                'apptype': apptype})
     doc = es.get(index='xinliceshiret', doc_type='xinliceshiret', id=ceshiid)['_source']
     doc['data'] = json.loads(doc['data'])
     retdata = {}
@@ -1452,7 +1735,7 @@ def getCeshidaan():
     return encrypt(json.dumps({'MSG': 'OK', 'data': retdata}))
 
 
-@app.route("/xcx/setDianzanshoucangshu", methods=["POST"])
+@app.route(apiqianzui + "setDianzanshoucangshu", methods=["POST"])
 def setDianzanshoucangshu():
     try:
         params = json.loads(decrypt(request.stream.read()))
@@ -1466,8 +1749,11 @@ def setDianzanshoucangshu():
     except Exception as e:
         logger.error(e)
         return json.dumps({'MSG': '警告！非法入侵！！！'})
+    apptype = 'app'
+    if 'apptype' in params:
+        apptype = params['apptype']
     adduserhis({'unionid': unionid, 'time': getTime(), 'event': 'setDianzanshoucangshu', 'detail': doctype,
-                'type': '0'})
+                'apptype': apptype})
     doc = es.get(index=doctype, doc_type=doctype, id=docid)['_source']
     doc['dianzan'] = dianzanshu
     doc['shoucangshu'] = shoucangshu
@@ -1497,7 +1783,7 @@ def setDianzanshoucangshu():
     return encrypt(json.dumps({'MSG': 'OK'}))
 
 
-@app.route("/xcx/getDianzanshoucangList", methods=["POST"])
+@app.route(apiqianzui + "getDianzanshoucangList", methods=["POST"])
 def getDianzanshoucangList():
     try:
         params = json.loads(decrypt(request.stream.read()))
@@ -1505,9 +1791,12 @@ def getDianzanshoucangList():
     except Exception as e:
         logger.error(e)
         return json.dumps({'MSG': '警告！非法入侵！！！'})
+    apptype = 'app'
+    if 'apptype' in params:
+        apptype = params['apptype']
     adduserhis(
         {'unionid': unionid, 'time': getTime(), 'event': 'getDianzanshoucangList', 'detail': 'getDianzanshoucangList',
-         'type': '0'})
+         'apptype': apptype})
     retdata = []
     try:
         try:
@@ -1530,7 +1819,7 @@ def getDianzanshoucangList():
     return encrypt(json.dumps({'MSG': 'OK', 'data': retdata}))
 
 
-@app.route("/xcx/getDianzanshoucang", methods=["POST"])
+@app.route(apiqianzui + "getDianzanshoucang", methods=["POST"])
 def getDianzanshoucang():
     try:
         params = json.loads(decrypt(request.stream.read()))
@@ -1540,9 +1829,12 @@ def getDianzanshoucang():
     except Exception as e:
         logger.error(e)
         return json.dumps({'MSG': '警告！非法入侵！！！'})
+    apptype = 'app'
+    if 'apptype' in params:
+        apptype = params['apptype']
     adduserhis(
         {'unionid': unionid, 'time': getTime(), 'event': 'getDianzanshoucang', 'detail': 'getDianzanshoucang',
-         'type': '0'})
+         'apptype': apptype})
     dianzan = 0
     shoucang = 0
     try:
@@ -1556,7 +1848,7 @@ def getDianzanshoucang():
     return encrypt(json.dumps({'MSG': 'OK', 'dianzan': dianzan, 'shoucang': shoucang}))
 
 
-@app.route("/xcx/setDianzanshoucang", methods=["POST"])
+@app.route(apiqianzui + "setDianzanshoucang", methods=["POST"])
 def setDianzanshoucang():
     try:
         params = json.loads(decrypt(request.stream.read()))
@@ -1565,28 +1857,46 @@ def setDianzanshoucang():
     except Exception as e:
         logger.error(e)
         return json.dumps({'MSG': '警告！非法入侵！！！'})
+    apptype = 'app'
+    if 'apptype' in params:
+        apptype = params['apptype']
     adduserhis(
         {'unionid': unionid, 'time': getTime(), 'event': 'setDianzanshoucang', 'detail': 'setDianzanshoucang',
-         'type': '0'})
+         'apptype': apptype})
     es.index(index='dianzanshoucang', doc_type='dianzanshoucang', id=unionid, body={'data': DianzanshoucangList})
     return encrypt(json.dumps({'MSG': 'OK'}))
 
 
-@app.route("/xcx/get_kechengprepay_id", methods=["POST"])
+@app.route(apiqianzui + "get_kechengprepay_id", methods=["POST"])
 def get_kechengprepay_id():
     try:
         params = json.loads(decrypt(request.stream.read()))
         unionid = params['unionid']
         kechengid = params['kechengid']
         detail = params['detail']
+        apptype = params['apptype']
     except Exception as e:
         logger.error(e)
         return json.dumps({'MSG': '警告！非法入侵！！！'})
+    nowappid = ''
+    openid = ''
+    trade_type = ''
+    if apptype == 'weixin':
+        nowappid = appid
+        trade_type = 'JSAPI'
+        openid = es.get(index='userinfo', doc_type='userinfo', id=unionid)['_source']['openid']
+    elif apptype == 'fwh':
+        nowappid = fuwuhaoappid
+        trade_type = 'JSAPI'
+        openid = es.get(index='userinfo', doc_type='userinfo', id=unionid)['_source']['fwhid']
+    else:
+        nowappid = appappid
+        trade_type = 'APP'
+        openid = es.get(index='userinfo', doc_type='userinfo', id=unionid)['_source']['yingyongid']
     kechengjiage = int(es.get(index='kechenglist', doc_type='kechenglist', id=kechengid)['_source']['jiage'] * 100)
-    openid = es.get(index='userinfo', doc_type='userinfo', id=unionid)['_source']['openid']
     url = 'https://api.mch.weixin.qq.com/pay/unifiedorder'
     prepaydata = {
-        'appid': appid,
+        'appid': nowappid,
         'mch_id': mch_id,
         'nonce_str': ''.join(random.sample(string.ascii_letters + string.digits, 32)),
         'body': detail,
@@ -1594,8 +1904,8 @@ def get_kechengprepay_id():
         'out_trade_no': str(int(time.time())) + '_' + str((random.randint(1000000, 9999999))),
         'total_fee': kechengjiage,
         'spbill_create_ip': request.remote_addr,
-        'notify_url': wangzhi + "xcx/kechengpaynotify",
-        'trade_type': "JSAPI",
+        'notify_url': wangzhi + apiqianzui + "kechengpaynotify",
+        'trade_type': trade_type,
         'openid': openid,
     }
     stringA = '&'.join(["{0}={1}".format(k, prepaydata.get(k)) for k in sorted(prepaydata)])
@@ -1607,18 +1917,30 @@ def get_kechengprepay_id():
     result = urllib.request.urlopen(req, timeout=10).read().decode('utf8')
     result = xml_to_dict(result)
     prepay_id = result['prepay_id']
-    paySign_data = {
-        'appId': appid,
-        'timeStamp': str(int(time.time())),
-        'nonceStr': result['nonce_str'],
-        'package': 'prepay_id={0}'.format(prepay_id),
-        'signType': 'MD5'
-    }
+    if apptype == 'weixin' or apptype == 'fwh':
+        paySign_data = {
+            'appId': nowappid,
+            'timeStamp': str(int(time.time())),
+            'nonceStr': result['nonce_str'],
+            'package': 'prepay_id={0}'.format(prepay_id),
+            'signType': 'MD5'
+        }
+    else:
+        paySign_data = {
+            'appid': nowappid,
+            'partnerid': mch_id,
+            'prepayid': prepay_id,
+            'package': 'Sign=WXPay',
+            'noncestr': result['nonce_str'],
+            'timestamp': str(int(time.time())),
+        }
     stringA = '&'.join(["{0}={1}".format(k, paySign_data.get(k)) for k in sorted(paySign_data)])
     stringSignTemp = '{0}&key={1}'.format(stringA, merchant_key)
     paySign = hashlib.md5(stringSignTemp.encode('utf8')).hexdigest()
-    paySign_data['paySign'] = paySign
-    paySign_data.pop('appId')
+    if apptype == 'weixin' or apptype == 'fwh':
+        paySign_data['paySign'] = paySign
+    else:
+        paySign_data['sign'] = paySign
     doc = es.get(index='userinfo', doc_type='userinfo', id=unionid)
     doc = doc['_source']
     if 'phoneNumber' not in doc:
@@ -1626,7 +1948,7 @@ def get_kechengprepay_id():
     return encrypt(json.dumps({'MSG': 'OK', 'data': paySign_data}))
 
 
-@app.route("/xcx/kechengpaynotify", methods=["POST"])
+@app.route(apiqianzui + "kechengpaynotify", methods=["POST"])
 def kechengpaynotify():
     zhifures = xml_to_dict(request.stream.read().decode('utf8'))
     sign = zhifures['sign']
@@ -1727,7 +2049,7 @@ def kechengpaynotify():
     return dict_to_xml({'return_code': 'SUCCESS', 'return_msg': 'OK'})
 
 
-@app.route("/xcx/getAdList", methods=["POST"])
+@app.route(apiqianzui + "getAdList", methods=["POST"])
 def getAdList():
     try:
         params = json.loads(decrypt(request.stream.read()))
@@ -1735,8 +2057,11 @@ def getAdList():
     except Exception as e:
         logger.error(e)
         return json.dumps({'MSG': '警告！非法入侵！！！'})
+    apptype = 'app'
+    if 'apptype' in params:
+        apptype = params['apptype']
     adduserhis({'unionid': unionid, 'time': getTime(), 'event': 'getAdList', 'detail': 'getAdList',
-                'type': '0'})
+                'apptype': apptype})
     return encrypt(json.dumps({'MSG': 'OK', 'data': [
         {'title': '小程序使用介绍', 'adurl': 'https://www.lianaizhuli.com/shouye/shiyongjieshaobanner.jpg',
          'type': 'ganhuo', 'url': 'cloud://lianailianmeng-086596.6c69-lianailianmeng-086596/shouye/shiyongjieshao.mp4',
@@ -1761,10 +2086,10 @@ def getIoswenan():
     except Exception as e:
         logger.error(e)
         return json.dumps({'MSG': '警告！非法入侵！！！'})
-    return encrypt(json.dumps({'MSG': 'OK', 'data': '由于相关规范，iOS功能暂不可用。'}))
+    return encrypt(json.dumps({'MSG': 'OK', 'data': ioswenan}))
 
 
-@app.route("/xcx/getFenxiao", methods=["POST"])
+@app.route(apiqianzui + "getFenxiao", methods=["POST"])
 def getFenxiao():
     try:
         params = json.loads(decrypt(request.stream.read()))
@@ -1772,8 +2097,11 @@ def getFenxiao():
     except Exception as e:
         logger.error(e)
         return json.dumps({'MSG': '警告！非法入侵！！！'})
+    apptype = 'app'
+    if 'apptype' in params:
+        apptype = params['apptype']
     adduserhis({'unionid': unionid, 'time': getTime(), 'event': 'getFenxiao', 'detail': 'getFenxiao',
-                'type': '0'})
+                'apptype': apptype})
     if len(unionid) < 10: return json.dumps({'MSG': '警告！非法入侵！！！'})
     try:
         fenxiao = es.get(index='fenxiao', doc_type='fenxiao', id=unionid)['_source']
@@ -1786,7 +2114,7 @@ def getFenxiao():
     fenxiao['xiangqing'] = 'https://www.lianaizhuli.com/fenxiao/fenxiaoguize.png'
     fenxiao['wenan'] = '①女生回了一句话 ②你恐惧回复不好 ③复制粘贴在这里试试？'
     fenxiao['tixiantixing'] = '提现金额大于1.00元，不超过200.00元，将以微信红包形式发给你的微信，在深圳宇子科技公众号消息里面，提现成功后请及时领取以免逾期，每天可提现10次。'
-    fenxiao['haibaoming'] = ''
+    fenxiao['haibaoming'] = '1'
     if len(fenxiao['yijiyonghu']) >= 30:
         fenxiao['jibie'] = '超级推广员'
         fenxiao['yijibili'] = '40%'
@@ -1854,7 +2182,7 @@ def shengchengtupian(haibaoming, yonghuming, unionid):
     return base64_str
 
 
-@app.route("/xcx/getHaibaobase64", methods=["POST"])
+@app.route(apiqianzui + "getHaibaobase64", methods=["POST"])
 def getHaibaobase64():
     try:
         params = json.loads(decrypt(request.stream.read()))
@@ -1868,7 +2196,65 @@ def getHaibaobase64():
     return encrypt(json.dumps({'MSG': 'OK', 'data': haibao}))
 
 
-@app.route("/xcx/getFenxiaodingdan", methods=["POST"])
+@app.route(apiqianzui + "getHaibao", methods=["POST"])
+def getHaibao():
+    try:
+        params = json.loads(decrypt(request.stream.read()))
+        unionid = params['unionid']
+        imgname = params['imgname']
+    except Exception as e:
+        logger.error(e)
+        return json.dumps({'MSG': '警告！非法入侵！！！'})
+    userinfodoc = es.get(index='userinfo', doc_type='userinfo', id=unionid)['_source']
+    yonghuming = userinfodoc['nickName'][:10]
+    newwidth = 500
+    haibao = Image.open('/home/ubuntu/data/lianailianmeng/data/opendata/fenxiao/' + imgname + '.png')
+    haibaow, haibaoh = haibao.size
+    haibao = haibao.resize((newwidth, int(haibaoh / haibaow * newwidth)), Image.BILINEAR)
+    haibaoh = int(haibaoh / haibaow * newwidth)
+    imgtou = Image.new('RGBA', (newwidth, 100), 'white')
+    draw = ImageDraw.Draw(imgtou)  # 生成绘制对象draw
+    big = 20
+    typeface = ImageFont.truetype('simkai.ttf', big)
+    text1 = "Hi，我是" + yonghuming
+    text2 = "推荐您这款超级棒的产品"
+    text3 = "（长按识别底部小程序码，助您快速脱单）"
+    draw.text(((newwidth - len(text1) * big) / 2, 10), text1, fill='#ff7e00', font=typeface)
+    draw.text(((newwidth - len(text2) * big) / 2, 20 + big), text2, fill='#ff7e00', font=typeface)
+    draw.text(((newwidth - len(text3) * big) / 2, 30 + 2 * big), text3, fill='#1861ce', font=typeface)
+    xcxmk = Image.new('RGBA', (newwidth, 200), 'white')
+    accessToken = Basic().get_access_token('xcx')
+    postUrl = "https://api.weixin.qq.com/wxa/getwxacodeunlimit?access_token=%s" % accessToken
+    postJson = {"scene": unionid, 'width': 280}
+    response = requests.post(postUrl, data=json.dumps(postJson))
+    xcxm = Image.open(BytesIO(response.content))
+    xcxm = xcxm.resize((100, 100), Image.BILINEAR)
+    xcxmk.paste(xcxm, (200, 50))
+    newimg = Image.new(haibao.mode, (newwidth, haibaoh + 300))
+    newimg.paste(imgtou, (0, 0))
+    newimg.paste(haibao, (0, 100))
+    newimg.paste(xcxmk, (0, 100 + haibaoh))
+    newimg.save('/home/ubuntu/data/lianailianmeng/data/opendata/fenxiao/' + unionid + imgname + '.png')
+    return encrypt(json.dumps({'MSG': 'OK'}))
+
+
+@app.route(apiqianzui + "deleteHaibao", methods=["POST"])
+def deleteHaibao():
+    try:
+        params = json.loads(decrypt(request.stream.read()))
+        unionid = params['unionid']
+        imgname = params['imgname']
+    except Exception as e:
+        logger.error(e)
+        return json.dumps({'MSG': '警告！非法入侵！！！'})
+    try:
+        os.remove('/home/ubuntu/data/lianailianmeng/data/opendata/fenxiao/' + unionid + imgname + '.png')
+    except:
+        None
+    return encrypt(json.dumps({'MSG': 'OK'}))
+
+
+@app.route(apiqianzui + "getFenxiaodingdan", methods=["POST"])
 def getFenxiaodingdan():
     try:
         params = json.loads(decrypt(request.stream.read()))
@@ -1876,8 +2262,11 @@ def getFenxiaodingdan():
     except Exception as e:
         logger.error(e)
         return json.dumps({'MSG': '警告！非法入侵！！！'})
+    apptype = 'app'
+    if 'apptype' in params:
+        apptype = params['apptype']
     adduserhis({'unionid': unionid, 'time': getTime(), 'event': 'getFenxiaodingdan', 'detail': 'getFenxiaodingdan',
-                'type': '0'})
+                'apptype': apptype})
     dingdan = []
     try:
         fenxiao = es.get(index='fenxiao', doc_type='fenxiao', id=unionid)['_source']
@@ -1887,7 +2276,7 @@ def getFenxiaodingdan():
     return encrypt(json.dumps({'MSG': 'OK', 'data': dingdan}))
 
 
-@app.route("/xcx/getYijiyonghu", methods=["POST"])
+@app.route(apiqianzui + "getYijiyonghu", methods=["POST"])
 def getYijiyonghu():
     try:
         params = json.loads(decrypt(request.stream.read()))
@@ -1895,8 +2284,11 @@ def getYijiyonghu():
     except Exception as e:
         logger.error(e)
         return json.dumps({'MSG': '警告！非法入侵！！！'})
+    apptype = 'app'
+    if 'apptype' in params:
+        apptype = params['apptype']
     adduserhis({'unionid': unionid, 'time': getTime(), 'event': 'getYijiyonghu', 'detail': 'getYijiyonghu',
-                'type': '0'})
+                'apptype': apptype})
     yijiyonghu = []
     try:
         fenxiao = es.get(index='fenxiao', doc_type='fenxiao', id=unionid)['_source']
@@ -1906,7 +2298,7 @@ def getYijiyonghu():
     return encrypt(json.dumps({'MSG': 'OK', 'data': yijiyonghu}))
 
 
-@app.route("/xcx/getFenxiaoyonghu", methods=["POST"])
+@app.route(apiqianzui + "getFenxiaoyonghu", methods=["POST"])
 def getFenxiaoyonghu():
     try:
         params = json.loads(decrypt(request.stream.read()))
@@ -1914,8 +2306,11 @@ def getFenxiaoyonghu():
     except Exception as e:
         logger.error(e)
         return json.dumps({'MSG': '警告！非法入侵！！！'})
+    apptype = 'app'
+    if 'apptype' in params:
+        apptype = params['apptype']
     adduserhis({'unionid': unionid, 'time': getTime(), 'event': 'getFenxiaoyonghu', 'detail': 'getFenxiaoyonghu',
-                'type': '0'})
+                'apptype': apptype})
     fenxiaoyonghu = []
     try:
         fenxiao = es.get(index='fenxiao', doc_type='fenxiao', id=unionid)['_source']
@@ -1925,7 +2320,7 @@ def getFenxiaoyonghu():
     return encrypt(json.dumps({'MSG': 'OK', 'data': fenxiaoyonghu}))
 
 
-@app.route("/xcx/getTixianjilu", methods=["POST"])
+@app.route(apiqianzui + "getTixianjilu", methods=["POST"])
 def getTixianjilu():
     try:
         params = json.loads(decrypt(request.stream.read()))
@@ -1933,8 +2328,11 @@ def getTixianjilu():
     except Exception as e:
         logger.error(e)
         return json.dumps({'MSG': '警告！非法入侵！！！'})
+    apptype = 'app'
+    if 'apptype' in params:
+        apptype = params['apptype']
     adduserhis({'unionid': unionid, 'time': getTime(), 'event': 'getTixianjilu', 'detail': 'getTixianjilu',
-                'type': '0'})
+                'apptype': apptype})
     tixianjilu = []
     try:
         fenxiao = es.get(index='fenxiao', doc_type='fenxiao', id=unionid)['_source']
@@ -1967,7 +2365,7 @@ def chaxundingdan(dingdanhao):
     return result
 
 
-@app.route("/xcx/tiXian", methods=["POST"])
+@app.route(apiqianzui + "tiXian", methods=["POST"])
 def tiXian():
     try:
         params = json.loads(decrypt(request.stream.read()))
@@ -2054,8 +2452,11 @@ def tiXian():
                 fenxiao['tixianjilu'].insert(0, {'tixianjine': tixianjine, 'time': getTime()})
                 fenxiao['ketixian'] -= tixianjine * 0.01
                 es.index(index='fenxiao', doc_type='fenxiao', id=unionid, body=fenxiao)
+                apptype = 'app'
+                if 'apptype' in params:
+                    apptype = params['apptype']
                 adduserhis({'unionid': unionid, 'time': getTime(), 'event': 'tiXian', 'detail': tixianjine,
-                            'type': '0'})
+                            'apptype': apptype})
                 tixianunionid.pop(unionid)
                 return encrypt(json.dumps({'MSG': 'YES', 'data': str(round(tixianjine * 0.01, 2))}))
             if result['result_code'] == 'FAIL' or result['err_code'] == 'SYSTEMERROR' or result[
@@ -2069,9 +2470,12 @@ def tiXian():
                                 fenxiao['tixianjilu'].insert(0, {'tixianjine': tixianjine, 'time': getTime()})
                                 fenxiao['ketixian'] -= tixianjine * 0.01
                                 es.index(index='fenxiao', doc_type='fenxiao', id=unionid, body=fenxiao)
+                                apptype = 'app'
+                                if 'apptype' in params:
+                                    apptype = params['apptype']
                                 adduserhis(
                                     {'unionid': unionid, 'time': getTime(), 'event': 'tiXian', 'detail': tixianjine,
-                                     'type': '0'})
+                                     'apptype': apptype})
                                 tixianunionid.pop(unionid)
                                 return encrypt(json.dumps({'MSG': 'YES', 'data': str(round(tixianjine * 0.01, 2))}))
                             if chaxunret['status'] == 'FAILED' or chaxunret['status'] == 'RFUND_ING' or chaxunret[

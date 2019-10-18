@@ -69,9 +69,11 @@ if __name__ == '__main__':
                 "name": "联系我们",
                 "sub_button": [
                     {
-                        "type": "view",
-                        "name": "意见反馈",
-                        "url": "http://www.lianaizhuli.com:1888/#/feedback",
+                        "name": "咨询客服",
+                        "type": "miniprogram",
+                        "appid": "wxa9ef833cef143ce1",
+                        "pagepath": "pages/info",
+                        "url": "https://www.lianaizhuli.com/gongzhonghao/lianxiwomen.html",
                         "sub_button": []
                     },
                     {

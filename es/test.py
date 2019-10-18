@@ -16,12 +16,13 @@ es = Elasticsearch([{"host": "182.254.227.188", "port": 9218}])
 
 
 # openid='oz7z64liSPmlzHped8ATXf23jqyI'#
-# unionid='ofIsD1YLw3q_1v4d2NgX9GrS3ZEM'#庞宇明
+unionid='ofIsD1YLw3q_1v4d2NgX9GrS3ZEM'#庞宇明
 # unionid='ofIsD1eQd-BlNZ5S0ftjwarnCUVk'#罗尼
 # unionid='ofIsD1T87U3XmGr7yr-9P6pv8GUo'#周先生
 # unionid='ofIsD1Xa9EqFkDLahXdiGZWH7sUo'#唔哩周周
 # openid='oz7z64isIQQZ3oLczZ3hcl978dco'
 # unionid='ofIsD1Xa9EqFkDLahXdiGZWH7sUo'
+
 
 
 # def getaccess_token(apptype):
@@ -54,12 +55,12 @@ es = Elasticsearch([{"host": "182.254.227.188", "port": 9218}])
 
 
 
-search = {"query": {"match_all": {}}}
-Docs=es.search(index='userinfo',doc_type='userinfo',body=search,size=10000)['hits']['hits']
-
-xiaofeizonge=0
-for doc in Docs:
-    docid=doc['_id']
-    doc=doc['_source']
-    xiaofeizonge+=doc['xiaofeizonge']
-print(xiaofeizonge)
+# search = {"query": {"match_all": {}}}
+# Docs=es.search(index='userinfo',doc_type='userinfo',body=search,size=10000)['hits']['hits']
+#
+# xiaofeizonge=0
+# for doc in Docs:
+#     docid=doc['_id']
+#     doc=doc['_source']
+#     xiaofeizonge+=doc['xiaofeizonge']
+# print(xiaofeizonge)
