@@ -52,7 +52,6 @@ appappid = 'wx492758c5b72a2e3f'
 appsecret = '89be1eaaf1cc9b5fc744488f2e404491'
 mch_id = '1519367291'
 merchant_key = 'shenzhenyuzikejiyouxiangongsi888'
-userKeyWordHisList = {}
 key = "szyzkjpangyuming"
 iv = "abcde920318abcde"
 BLOCK_SIZE = 16
@@ -69,18 +68,19 @@ total_fees = [0, 19900, 199900, 49900, 99900, 299900, 499900]
 # viptime = [0, 60, 60, 60, 60, 60, 60]
 # sijiaotime = [0, 60, 60, 60, 60, 60, 60]
 # total_fees = [0, 1, 2, 3, 4, 5, 6]
-# ioswenan = '由于相关规范，小程序下IOS虚拟商品支付暂不可用。'
-ioswenan = '由于相关规范，小程序下IOS虚拟商品支付暂不可用。IOS用户请到《恋爱联盟》公众号开通会员或购买课程'
+ioswenan = '由于相关规范，小程序下IOS虚拟商品支付暂不可用。'
+# ioswenan = '由于相关规范，小程序下IOS虚拟商品支付暂不可用。IOS用户请到《恋爱联盟》公众号开通会员或购买课程'
 tuweiqinghua = []
 for line in open('tuweiqinghua.json'):
     line = json.loads(line)
     tuweiqinghua.append(line['chatId'])
+isshenhe = 1
+iskaifang = 1
 baidushenhe = 1
-tengxunshenhe = 1
+tengxunshenhe = 0
 huaweishenhe = 1
-weixinshenhe = 1
+weixinshenhe = 0
 appleshenhe = 0
-appstoreshenhe = 0
 istuiguang = 0
 nowversion = '1.0.0'
 apiqianzui = '/xcx/'
@@ -192,7 +192,7 @@ def getShouyeman():
     kecheng = {'image': wangzhi + '/shouye/wenzi/kecheng.png', 'data': []}
     xingxiangjianshe = {'image': wangzhi + '/shouye/wenzi/xingxiangjianshe.png', 'data': []}
     qingganbaike = {'image': wangzhi + '/shouye/wenzi/qingganbaike.png', 'data': []}
-    liaomeishizhan = {'image': wangzhi + '/shouye/wenzi/liaomeishizhan.png', 'data': []}
+    liaomeishizhan = {'image': wangzhi + '/shouye/wenzi/liaotianshizhan.png', 'data': []}
     sijiao = {'image': wangzhi + '/shouye/wenzi/sijiao.png', 'data': []}
     xinliceshi = {'image': wangzhi + '/shouye/wenzi/xinliceshi.png', 'data': []}
     search = {"query": {"match_all": {}}}
@@ -318,21 +318,24 @@ def decryptweixin(encrypted, weixinkey, weixiniv):
 def addKeyword(params):
     unionid = params['unionid']
     inputValue = params['query']
-    if unionid in userKeyWordHisList:
-        if len(userKeyWordHisList[unionid]) == 0 or inputValue != userKeyWordHisList[unionid][0]:
-            flag = 1
-            for index, value in enumerate(userKeyWordHisList[unionid]):
-                if inputValue == value:
-                    flag = 0
-                    userKeyWordHisList[unionid] = [inputValue] + userKeyWordHisList[unionid][:index] + \
-                                                  userKeyWordHisList[
-                                                      unionid][
-                                                  index + 1:]
-            if flag:
-                userKeyWordHisList[unionid] = [inputValue] + userKeyWordHisList[unionid]
-                userKeyWordHisList[unionid] = userKeyWordHisList[unionid][:12]
-    else:
-        userKeyWordHisList[unionid] = [inputValue]
+    retdata = []
+    try:
+        doc = mydb['userkeywordhislist'].find_one({'_id': unionid})
+        retdata = doc['data']
+    except Exception as e:
+        None
+    if len(retdata) == 0 or inputValue != retdata[0]:
+        flag = 1
+        for index, value in enumerate(retdata):
+            if inputValue == value:
+                flag = 0
+                retdata = [inputValue] + retdata[:index] + \
+                          retdata[
+                          index + 1:]
+        if flag:
+            retdata = [inputValue] + retdata
+            retdata = retdata[:12]
+    mydb['userkeywordhislist'].update({'_id': unionid}, {"$set": {'data': retdata}}, True)
 
 
 @app.route(apiqianzui + "getUnionid", methods=["POST"])
@@ -732,11 +735,13 @@ def getHiswordList():
     except Exception as e:
         logger.error(e)
         return json.dumps({'MSG': '警告！非法入侵！！！'})
-    if unionid in userKeyWordHisList:
-        return encrypt(json.dumps({'MSG': 'OK', 'data': userKeyWordHisList[unionid]}))
-    else:
-        userKeyWordHisList[unionid] = []
-        return encrypt(json.dumps({'MSG': 'OK', 'data': []}))
+    retdata = []
+    try:
+        doc = mydb['userkeywordhislist'].find_one({'_id': unionid})
+        retdata = doc['data']
+    except Exception as e:
+        None
+    return encrypt(json.dumps({'MSG': 'OK', 'data': retdata}))
 
 
 @app.route(apiqianzui + "clearHiswords", methods=["POST"])
@@ -747,11 +752,9 @@ def clearHiswords():
     except Exception as e:
         logger.error(e)
         return json.dumps({'MSG': '警告！非法入侵！！！'})
-    apptype = 'app'
-    if 'apptype' in params:
-        apptype = params['apptype']
-    adduserhis({'unionid': response['unionid'], 'time': getTime(), 'event': 'clearHiswords', 'apptype': apptype})
-    userKeyWordHisList[unionid] = []
+    apptype = params['apptype']
+    adduserhis({'unionid': unionid, 'time': getTime(), 'event': 'clearHiswords', 'apptype': apptype})
+    mydb['userkeywordhislist'].update({'_id': unionid}, {"$set": {'data': []}}, True)
     return encrypt(json.dumps({'MSG': 'OK'}))
 
 
@@ -766,6 +769,39 @@ def getRecommend():
     hotWords = ['自恋', '厉害', '睡觉', '生气', '干嘛', '烦', '哈哈', '好吧', '介绍', '丑', '表白', '呵呵', '开场白', '赞美', '拉升关系', '高价值展示',
                 '幽默搞笑', '冷读', '推拉', '角色扮演', '框架', '打压', '进挪', '背景植入']
     return encrypt(json.dumps({'MSG': 'OK', 'data': {'hotWordsList': hotWords}}))
+
+
+@app.route(apiqianzui + "getHelpkeywords", methods=["POST"])
+def getHelpkeywords():
+    try:
+        params = json.loads(decrypt(request.stream.read()))
+        unionid = params['unionid']
+        query = params['query']
+        nowtab = params['nowtab'],
+    except Exception as e:
+        logger.error(e)
+        return json.dumps({'MSG': '警告！非法入侵！！！'})
+    retdata = []
+    nowtab = int(nowtab[0])
+    if nowtab == 0:
+        search = {'query': {'match': {'chat_name': query}}}
+        Docs = es.search(index='liaomeihuashu', doc_type='liaomeihuashu', body=search, size=10, scroll="5m")
+        Docs = Docs['hits']['hits']
+        for doc in Docs:
+            retdata.append(doc['_source']['chat_name'])
+    elif nowtab == 1:
+        search = {'query': {'match': {'imgExplain': query}}}
+        Docs = es.search(index='biaoqing', doc_type='biaoqing', body=search, size=10, scroll="5m")
+        Docs = Docs['hits']['hits']
+        for doc in Docs:
+            retdata.append(doc['_source']['imgExplain'])
+    else:
+        search = {'query': {'match': {'title': query}}}
+        Docs = es.search(index='search', doc_type='search', body=search, size=10, scroll="5m")
+        Docs = Docs['hits']['hits']
+        for doc in Docs:
+            retdata.append(doc['_source']['title'])
+    return encrypt(json.dumps({'MSG': 'OK', 'data': retdata}))
 
 
 @app.route(apiqianzui + "getXingxiangjiansheList", methods=["POST"])
@@ -1404,12 +1440,11 @@ def getIslianmeng():
     if system[:3].lower() == 'ios':
         return encrypt(json.dumps(
             {'MSG': 'OK', 'istuiguang': 0, 'weixinshenhe': weixinshenhe, 'tengxunshenhe': tengxunshenhe,
-             'huaweishenhe': huaweishenhe, 'appleshenhe': appleshenhe, 'appstoreshenhe': appstoreshenhe,
-             'baidushenhe': 1}))
+             'huaweishenhe': huaweishenhe, 'appleshenhe': appleshenhe, 'baidushenhe': 1}))
     else:
         return encrypt(json.dumps(
             {'MSG': 'OK', 'istuiguang': istuiguang, 'weixinshenhe': 1, 'tengxunshenhe': tengxunshenhe,
-             'huaweishenhe': huaweishenhe, 'appleshenhe': 1, 'appstoreshenhe': 1, 'baidushenhe': baidushenhe}))
+             'huaweishenhe': huaweishenhe, 'appleshenhe': 1, 'baidushenhe': baidushenhe, 'appstoreshenhe': 1}))
 
 
 @app.route(apiqianzui + "setJilu", methods=["POST"])

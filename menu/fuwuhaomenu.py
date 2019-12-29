@@ -46,13 +46,13 @@ if __name__ == '__main__':
                     {
                         "type": "view",
                         "name": "会员",
-                        "url": "http://www.lianaizhuli.com/shouquan?page=huiyuan",
+                        "url": "http://www.lianaizhuli.com/huiyuan",
                         "sub_button": []
                     },
                     {
                         "type": "view",
                         "name": "课程",
-                        "url": "http://www.lianaizhuli.com/shouquan?page=kechenglist",
+                        "url": "http://www.lianaizhuli.com/kechenglist",
                         "sub_button": []
                     },
                 ]

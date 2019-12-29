@@ -22,24 +22,6 @@ tulinkey = [
 es = Elasticsearch([{"host": "182.254.227.188", "port": 9218, "timeout": 3600}])
 
 
-# userhiss = []
-
-
-def adduserhis(userhis):
-    es.index(index='userhis', doc_type='userhis', body=userhis)
-    # global userhiss
-    # action = {
-    #     "_index": "userhis",
-    #     "_type": "userhis",
-    #     "_source": userhis
-    # }
-    # userhiss.append(action)
-    # if len(userhis) >= 500:
-    #     helpers.bulk(es, userhiss)
-    #     userhiss = []
-    return None
-
-
 def getTime():
     return time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
 
@@ -52,8 +34,8 @@ class Lianailianmeng_ES:
     def search(self, params):
         newquery = params['query']
         returnlist = []
-        search = {'query': {'match': {'MM': newquery}}}
-        Docs = es.search(index='huashu', doc_type='huashu', body=search, size=59)
+        search = {'query': {'match': {'chat_name': newquery}}}
+        Docs = es.search(index='liaomeihuashu', doc_type='liaomeihuashu', body=search, size=10)
         Docs = Docs['hits']['hits']
         key = tulinkey[0]
         tulinkey.append(tulinkey[0])
@@ -62,7 +44,7 @@ class Lianailianmeng_ES:
                     data={"key": key, "info": newquery})
         resp = resp.json()
         if resp['code'] == 100000:
-            returnlist.append({'MM': params['query'], 'GG': [resp['text']]})
+            returnlist.append({'MM': params['query'], 'GG': resp['text']})
         for doc in Docs:
             returnlist.append(doc['_source'])
         if len(Docs) == 0:
@@ -93,15 +75,26 @@ class Lianailianmeng_ES:
             query = query.replace(' ', '\ ')
             query = query.replace('"', '\"')
             search = {'query': {'query_string': {"query": query}}}
-            Docs = es.search(index='huashu', doc_type='huashu', body=search, size=59)
+            Docs = es.search(index='liaomeihuashu', doc_type='liaomeihuashu', body=search, size=10)
             Docs = Docs['hits']['hits']
             for doc in Docs:
                 returnlist.append(doc['_source'])
-        if len(returnlist) == 0:
-            returnlist.append({'MM': params['query'], 'GG': ['抱歉兄弟，没有搜索到合适的结果~机器人持续优化中。。。']})
-        adduserhis({'openid': params['open_id'], 'time': getTime(), 'event': params['msg_type'], 'detail': newquery,
-                    'type': '1'})
-        f = open('query.txt', 'a')
-        f.write(str(params) + ',' + str(returnlist) + '\n')
-        f.close()
-        return {'msg_type': 'text', 'data': returnlist}
+        newresponse = ''
+        for line in returnlist:
+            if 'MM' in line:
+                newresponse += 'MM:'
+                newresponse += line['MM']
+                newresponse += 'GG:'
+                newresponse += line['GG']
+                newresponse += '\n'
+            else:
+                for newline in line['chat_content']:
+                    if newline['ans_sex'] == 1:
+                        newresponse += 'GG:'
+                    else:
+                        newresponse += 'MM:'
+                    newresponse += newline['content'] + '\n'
+                newresponse += '\n'
+                if len(newresponse) > 300:
+                    break
+        return newresponse

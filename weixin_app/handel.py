@@ -19,6 +19,7 @@ reply_sentens = {
     'subscribe': '感谢您关注恋爱联盟，这是一款智能回复妹纸的撩妹聊天神器，点击公众号菜单栏中间的小程序，复制女生聊天的话在小程序里搜索，轻轻一点即可复制回复女生。海量幽默、推拉话术、套路可供搜索使用，海量形象展示、撩妹实战、土味情话、情感百科、心理测试免费供你使用。恋爱联盟竭诚为您服务，祝您赢取女神欢心！/:rose/:rose/:rose',
 }
 es = Elasticsearch([{"host": "182.254.227.188", "port": 9218, "timeout": 3600}])
+LALMES=Lianailianmeng_ES()
 
 
 def getTime():
@@ -51,7 +52,8 @@ class Handel:
             if receive_content in reply_sentens:
                 reply_content = reply_sentens[receive_content]
             else:
-                reply_content = reply_sentens['subscribe']
+                # reply_content = reply_sentens['subscribe']
+                reply_content=LALMES.search(params={'query':receive_content})
         elif msgType == 'image':
             picUrl = recMsg.PicUrl
             msgId = recMsg.MsgId

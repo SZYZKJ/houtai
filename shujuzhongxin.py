@@ -32,7 +32,7 @@ CORS(app, supports_credentials=True)
 es = Elasticsearch([{"host": "182.254.227.188", "port": 9218, "timeout": 3600}])
 histype = {'searchLiaomeihuashu': 0, 'searchBiaoqing': 0, 'searchBaike': 0, 'getLiaomeitaoluList': 0,
            'getXingxiangjianshe': 0, 'getLiaomeishizhan': 0, 'getKecheng': 0, 'getTuweiqinghua': 0, 'getBaike': 0,
-           'getWenda': 0, 'getCeshidaan': 0, 'setDianzanshoucang': 0, 'setJilu':0,}
+           'getWenda': 0, 'getCeshidaan': 0, 'setDianzanshoucang': 0, 'setJilu': 0, }
 key = "pangyuming920318"
 iv = "abcdefabcdefabcd"
 appid = 'wxa9ef833cef143ce1'
@@ -111,7 +111,7 @@ def xiaFashuruzhuangtai():
         return json.dumps({'MSG': '警告！非法入侵！！！'})
     access_token = getaccess_token()
     url = 'https://api.weixin.qq.com/cgi-bin/message/custom/typing?access_token=' + access_token
-    openid=es.get(index='userinfo',doc_type='userinfo',id=unionid)['_source']['openid']
+    openid = es.get(index='userinfo', doc_type='userinfo', id=unionid)['_source']['openid']
     values = {
         "touser": openid,
         "command": command
@@ -345,7 +345,9 @@ def kefutuisong():
         content['person'] = 0
         if content['MsgType'] != 'event':
             search = {'query': {'match': {'openid': content['FromUserName']}}}
-            unionid=es.search(index='userinfo',doc_type='userinfo',body=search,size=1)['hits']['hits'][0]['_source']['unionid']
+            unionid = \
+            es.search(index='userinfo', doc_type='userinfo', body=search, size=1)['hits']['hits'][0]['_source'][
+                'unionid']
             try:
                 doc = es.get(index='kefu', doc_type='kefu', id=unionid)
                 doc = doc['_source']
@@ -634,8 +636,8 @@ def getXiangqing():
         if line['event'] in histype:
             try:
                 if line['event'] == 'setJilu':
-                    if line['jilutype']=='huashu':
-                        wenti.insert(0,{'wenti':line['detail'],'daan':line['jilucontent']})
+                    if line['jilutype'] == 'huashu':
+                        wenti.insert(0, {'wenti': line['detail'], 'daan': line['jilucontent']})
                 else:
                     retdata['all']['renshu'][line['unionid']] = 0
                     retdata['all']['cishu'] += 1
@@ -771,13 +773,22 @@ def getZhifulist():
         purePhoneNumber = ''
         if 'purePhoneNumber' in doc:
             purePhoneNumber = doc['purePhoneNumber']
-        retlist.append([doc['nickName'],
-                        doc['addtime'], str(doc['xiaofeicishu']), str(doc['xiaofeizonge']), doc[
+        nickName = ''
+        if 'nickName' in doc:
+            nickName = doc['nickName']
+        elif 'nickname' in doc:
+            nickName = doc['nickname']
+        yingyongid = ''
+        if 'yingyongid' in doc:
+            yingyongid = doc['yingyongid']
+        retlist.append([nickName,
+                        doc['addtime'], str(doc['xiaofeicishu']), str(doc['xiaofeizonge']), doc['province'], doc[
                             'city'], unionidlist[unionid][:4] + '-' + unionidlist[unionid][4:6] + '-' + unionidlist[
                                                                                                             unionid][
                                                                                                         6:8] + ' ' +
                         unionidlist[unionid][8:10] + ':' + unionidlist[unionid][10:12] + ':' + unionidlist[unionid][
-                                                                                               12:14],purePhoneNumber])
+                                                                                               12:14], purePhoneNumber,
+                        yingyongid])
     return encrypt(json.dumps({'MSG': 'OK', 'data': retlist}))
 
 
