@@ -57,8 +57,6 @@ iv = "abcde920318abcde"
 BLOCK_SIZE = 16
 pad = lambda s: s + (BLOCK_SIZE - len(s) % BLOCK_SIZE) * bytes(chr(BLOCK_SIZE - len(s) % BLOCK_SIZE), encoding='utf8')
 unpad = lambda s: s[0:-ord(s[-1])]
-whitelist = {}
-# userhiss = []
 tixianunionid = {}
 tixianunionid_time = {}
 vipdengji = [0, 1, 2, 3, 4, 5, 6]
@@ -74,31 +72,65 @@ tuweiqinghua = []
 for line in open('tuweiqinghua.json'):
     line = json.loads(line)
     tuweiqinghua.append(line['chatId'])
-isshenhe = 1
-iskaifang = 1
-baidushenhe = 1
-tengxunshenhe = 0
-huaweishenhe = 1
-weixinshenhe = 0
-appleshenhe = 0
+pingguoshenhe = 1
+tengxunshenhe = 1
+weixinshenhe = 1
+weixinpingguoshenhe = 1
 istuiguang = 0
-nowversion = '1.0.0'
+nowversion = '1.0.5'
 apiqianzui = '/xcx/'
 
 
 def adduserhis(userhis):
     es.index(index='userhis', doc_type='userhis', body=userhis)
-    # global userhiss:
-    # action = {
-    #     "_index": "userhis",
-    #     "_type": "userhis",
-    #     "_source": userhis
-    # }
-    # userhiss.append(action)
-    # if len(userhis) >= 500:
-    #     helpers.bulk(es, userhiss)
-    #     userhiss = []
     return None
+
+
+@app.route(apiqianzui + "getIslianmeng", methods=["POST"])
+def getIslianmeng():
+    try:
+        params = json.loads(decrypt(request.stream.read()))
+        unionid = params['unionid']
+        system = params['system']
+    except Exception as e:
+        logger.error(e)
+        return json.dumps({'MSG': '警告！非法入侵！！！'})
+    apptype = 'app'
+    if 'apptype' in params:
+        apptype = params['apptype']
+    adduserhis({'unionid': unionid, 'time': getTime(), 'event': 'getIslianmeng', 'detail': 'getIslianmeng',
+                'apptype': apptype})
+    if system[:3].lower() == 'ios':
+        return encrypt(json.dumps(
+            {'MSG': 'OK', 'istuiguang': istuiguang, 'weixinshenhe': weixinshenhe,
+             'weixinpingguoshenhe': weixinpingguoshenhe, 'pingguoshenhe': pingguoshenhe, 'tengxunshenhe': 0}))
+    else:
+        return encrypt(json.dumps(
+            {'MSG': 'OK', 'istuiguang': istuiguang, 'weixinshenhe': weixinshenhe, 'weixinpingguoshenhe': 0,
+             'pingguoshenhe': 0,
+             'tengxunshenhe': tengxunshenhe, 'appleshenhe': 1}))
+
+
+@app.route(apiqianzui + "jianChagengxin", methods=["POST"])
+def jianChagengxin():
+    try:
+        params = json.loads(decrypt(request.stream.read()))
+        version = params['version']
+        apptype = params['apptype']
+    except Exception as e:
+        logger.error(e)
+        return json.dumps({'MSG': '警告！非法入侵！！！'})
+    gengxintype = 0
+    msgtype = 0
+    msgtext = ''
+    openurl = wangzhi
+    if version < nowversion:
+        gengxintype = 1  # 更新
+        # gengxintype = 2  # 打开网页
+    gengxinurl = wangzhi + '/app/' + apptype + '_' + nowversion + '.wgt'
+    return encrypt(json.dumps({'MSG': 'YES',
+                               'data': {'gengxintype': gengxintype, 'gengxinurl': gengxinurl, 'openurl': openurl,
+                                        'msgtype': msgtype, 'msgtext': msgtext}}))
 
 
 @app.route(apiqianzui + "checkVersion", methods=["POST"])
@@ -109,10 +141,10 @@ def checkVersion():
     if oldversion < nowversion:
         andoridupdatetype = 1
         iosupdatetype = 1
-    andoridxiaourl = 'https://www.xingnanzhuli.com/__UNI__29FA639.wgt'
+    andoridxiaourl = 'https://www.xingnanzhuli.com/app_1.0.5.wgt'
     andoriddaurl = 'http://www.lianaizhuli.com/'
     andoridurl = 'https://www.xingnanzhuli.com/Love-Union.apk'
-    iosxiaourl = 'https://www.xingnanzhuli.com/__UNI__29FA639.wgt'
+    iosxiaourl = 'https://www.xingnanzhuli.com/app_1.0.5.wgt'
     iosdaurl = 'http://www.lianaizhuli.com/'
     androidmagtype = 0
     androidmsg = ''
@@ -281,8 +313,6 @@ def getTime():
 
 
 def check_user(unionid):
-    if unionid in whitelist:
-        return 1
     doc = es.get(index='userinfo', doc_type='userinfo', id=unionid)
     doc = doc['_source']
     if doc['viptime'] > int(time.time()):
@@ -579,10 +609,9 @@ def checkAppunionid():
         return encrypt(json.dumps({'MSG': 'NO'}))
     unionid_token = mydb['unionid_token']
     try:
-        results = unionid_token.find({'_id': unionid})
-        for doc in results:
-            if doc['token'] == token:
-                return encrypt(json.dumps({'MSG': 'YES'}))
+        results = unionid_token.find_one({'_id': unionid})
+        if results['token'] == token:
+            return encrypt(json.dumps({'MSG': 'YES'}))
     except Exception as e:
         logger.error(e)
         return encrypt(json.dumps({'MSG': 'NO'}))
@@ -785,22 +814,28 @@ def getHelpkeywords():
     nowtab = int(nowtab[0])
     if nowtab == 0:
         search = {'query': {'match': {'chat_name': query}}}
-        Docs = es.search(index='liaomeihuashu', doc_type='liaomeihuashu', body=search, size=10, scroll="5m")
+        Docs = es.search(index='liaomeihuashu', doc_type='liaomeihuashu', body=search, size=20, scroll="5m")
         Docs = Docs['hits']['hits']
         for doc in Docs:
-            retdata.append(doc['_source']['chat_name'])
+            retdata.append(doc['_source']['chat_name'].strip())
     elif nowtab == 1:
         search = {'query': {'match': {'imgExplain': query}}}
-        Docs = es.search(index='biaoqing', doc_type='biaoqing', body=search, size=10, scroll="5m")
+        Docs = es.search(index='biaoqing', doc_type='biaoqing', body=search, size=20, scroll="5m")
         Docs = Docs['hits']['hits']
         for doc in Docs:
             retdata.append(doc['_source']['imgExplain'])
     else:
         search = {'query': {'match': {'title': query}}}
-        Docs = es.search(index='search', doc_type='search', body=search, size=10, scroll="5m")
+        Docs = es.search(index='search', doc_type='search', body=search, size=20, scroll="5m")
         Docs = Docs['hits']['hits']
         for doc in Docs:
             retdata.append(doc['_source']['title'])
+    nowi = 0
+    for i in range(1, len(retdata)):
+        if retdata[nowi] != retdata[i]:
+            nowi += 1
+            retdata[nowi] = retdata[i]
+    retdata = retdata[:10]
     return encrypt(json.dumps({'MSG': 'OK', 'data': retdata}))
 
 
@@ -1421,30 +1456,6 @@ def getDingdan():
         return encrypt(json.dumps({'MSG': 'OK', 'data': retdata}))
     except:
         return encrypt(json.dumps({'MSG': 'OK', 'data': []}))
-
-
-@app.route(apiqianzui + "getIslianmeng", methods=["POST"])
-def getIslianmeng():
-    try:
-        params = json.loads(decrypt(request.stream.read()))
-        unionid = params['unionid']
-        system = params['system']
-    except Exception as e:
-        logger.error(e)
-        return json.dumps({'MSG': '警告！非法入侵！！！'})
-    apptype = 'app'
-    if 'apptype' in params:
-        apptype = params['apptype']
-    adduserhis({'unionid': unionid, 'time': getTime(), 'event': 'getIslianmeng', 'detail': 'getIslianmeng',
-                'apptype': apptype})
-    if system[:3].lower() == 'ios':
-        return encrypt(json.dumps(
-            {'MSG': 'OK', 'istuiguang': 0, 'weixinshenhe': weixinshenhe, 'tengxunshenhe': tengxunshenhe,
-             'huaweishenhe': huaweishenhe, 'appleshenhe': appleshenhe, 'baidushenhe': 1}))
-    else:
-        return encrypt(json.dumps(
-            {'MSG': 'OK', 'istuiguang': istuiguang, 'weixinshenhe': 1, 'tengxunshenhe': tengxunshenhe,
-             'huaweishenhe': huaweishenhe, 'appleshenhe': 1, 'baidushenhe': baidushenhe, 'appstoreshenhe': 1}))
 
 
 @app.route(apiqianzui + "setJilu", methods=["POST"])
