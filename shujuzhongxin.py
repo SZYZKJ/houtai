@@ -346,8 +346,8 @@ def kefutuisong():
         if content['MsgType'] != 'event':
             search = {'query': {'match': {'openid': content['FromUserName']}}}
             unionid = \
-            es.search(index='userinfo', doc_type='userinfo', body=search, size=1)['hits']['hits'][0]['_source'][
-                'unionid']
+                es.search(index='userinfo', doc_type='userinfo', body=search, size=1)['hits']['hits'][0]['_source'][
+                    'unionid']
             try:
                 doc = es.get(index='kefu', doc_type='kefu', id=unionid)
                 doc = doc['_source']
@@ -515,79 +515,79 @@ def getChengGong():
     body = {"query": {"bool": {"filter": [{"term": {"vipdengji": 1}}, ]}}}
     Docs = es.search(index='userinfo', doc_type='userinfo', body=body, size=1000, scroll="1m")
     scroll = Docs['_scroll_id']
-    newhisdata['xianyuehuiyuan'] = len(Docs['hits']['hits'])
+    newhisdata['zhongshenhuiyuan'] = len(Docs['hits']['hits'])
     while 1:
         try:
             Docs = es.scroll(scroll_id=scroll, scroll="1m")
             if (len(Docs['hits']['hits']) == 0):
                 break
             scroll = Docs['_scroll_id']
-            newhisdata['xianyuehuiyuan'] += len(Docs['hits']['hits'])
+            newhisdata['zhongshenhuiyuan'] += len(Docs['hits']['hits'])
         except:
             break
     body = {"query": {"bool": {"filter": [{"term": {"vipdengji": 2}}, ]}}}
     Docs = es.search(index='userinfo', doc_type='userinfo', body=body, size=1000, scroll="1m")
     scroll = Docs['_scroll_id']
-    newhisdata['xiannianhuiyuan'] = len(Docs['hits']['hits'])
+    newhisdata['fenshouwanhui'] = len(Docs['hits']['hits'])
     while 1:
         try:
             Docs = es.scroll(scroll_id=scroll, scroll="1m")
             if (len(Docs['hits']['hits']) == 0):
                 break
             scroll = Docs['_scroll_id']
-            newhisdata['xiannianhuiyuan'] += len(Docs['hits']['hits'])
+            newhisdata['fenshouwanhui'] += len(Docs['hits']['hits'])
         except:
             break
     body = {"query": {"bool": {"filter": [{"term": {"vipdengji": 3}}, ]}}}
     Docs = es.search(index='userinfo', doc_type='userinfo', body=body, size=1000, scroll="1m")
     scroll = Docs['_scroll_id']
-    newhisdata['xiansijiaoyigeyue'] = len(Docs['hits']['hits'])
+    newhisdata['sijiaoyigeyue'] = len(Docs['hits']['hits'])
     while 1:
         try:
             Docs = es.scroll(scroll_id=scroll, scroll="1m")
             if (len(Docs['hits']['hits']) == 0):
                 break
             scroll = Docs['_scroll_id']
-            newhisdata['xiansijiaoyigeyue'] += len(Docs['hits']['hits'])
+            newhisdata['sijiaoyigeyue'] += len(Docs['hits']['hits'])
         except:
             break
     body = {"query": {"bool": {"filter": [{"term": {"vipdengji": 4}}, ]}}}
     Docs = es.search(index='userinfo', doc_type='userinfo', body=body, size=1000, scroll="1m")
     scroll = Docs['_scroll_id']
-    newhisdata['xiansijiaosangeyue'] = len(Docs['hits']['hits'])
+    newhisdata['sijiaosangeyue'] = len(Docs['hits']['hits'])
     while 1:
         try:
             Docs = es.scroll(scroll_id=scroll, scroll="1m")
             if (len(Docs['hits']['hits']) == 0):
                 break
             scroll = Docs['_scroll_id']
-            newhisdata['xiansijiaosangeyue'] += len(Docs['hits']['hits'])
+            newhisdata['sijiaosangeyue'] += len(Docs['hits']['hits'])
         except:
             break
     body = {"query": {"bool": {"filter": [{"term": {"vipdengji": 5}}, ]}}}
     Docs = es.search(index='userinfo', doc_type='userinfo', body=body, size=1000, scroll="1m")
     scroll = Docs['_scroll_id']
-    newhisdata['xiansijiaoyinian'] = len(Docs['hits']['hits'])
+    newhisdata['sijiaoyinian'] = len(Docs['hits']['hits'])
     while 1:
         try:
             Docs = es.scroll(scroll_id=scroll, scroll="1m")
             if (len(Docs['hits']['hits']) == 0):
                 break
             scroll = Docs['_scroll_id']
-            newhisdata['xiansijiaoyinian'] += len(Docs['hits']['hits'])
+            newhisdata['sijiaoyinian'] += len(Docs['hits']['hits'])
         except:
             break
     body = {"query": {"bool": {"filter": [{"term": {"vipdengji": 6}}, ]}}}
     Docs = es.search(index='userinfo', doc_type='userinfo', body=body, size=1000, scroll="1m")
     scroll = Docs['_scroll_id']
-    newhisdata['xianlianmenghuiyuan'] = len(Docs['hits']['hits'])
+    newhisdata['lianmenghuiyuan'] = len(Docs['hits']['hits'])
     while 1:
         try:
             Docs = es.scroll(scroll_id=scroll, scroll="1m")
             if (len(Docs['hits']['hits']) == 0):
                 break
             scroll = Docs['_scroll_id']
-            newhisdata['xianlianmenghuiyuan'] += len(Docs['hits']['hits'])
+            newhisdata['lianmenghuiyuan'] += len(Docs['hits']['hits'])
         except:
             break
 
@@ -659,6 +659,89 @@ def getXiangqing():
     return encrypt(json.dumps({'MSG': 'OK', 'data': newdata, 'wenti': wenti}))
 
 
+@app.route("/test/getYonghu", methods=["POST"])
+def getYonghu():
+    try:
+        params = json.loads(decrypt(request.stream.read()))
+        yidingchenggong = params['yidingchenggong']
+    except Exception as e:
+        print(e)
+        return json.dumps({'MSG': '警告！非法入侵！！！'})
+    dangritime = time.strftime("%Y-%m-%d", time.localtime())
+    dangyuetime = time.strftime("%Y-%m", time.localtime())
+    retdata = {'all': {'dangri': 0, 'dangyue': 0, 'apptype': '总计', 'zongshu': 0, 'cishu': 0},
+               'app': {'dangri': 0, 'dangyue': 0, 'apptype': 'app', 'zongshu': 0, 'cishu': 0},
+               'guanwang': {'dangri': 0, 'dangyue': 0, 'apptype': 'guanwang', 'zongshu': 0, 'cishu': 0},
+               'weixin': {'dangri': 0, 'dangyue': 0, 'apptype': 'weixin', 'zongshu': 0, 'cishu': 0},
+               'pingguo': {'dangri': 0, 'dangyue': 0, 'apptype': 'pingguo', 'zongshu': 0, 'cishu': 0},
+               'tengxun': {'dangri': 0, 'dangyue': 0, 'apptype': 'tengxun', 'zongshu': 0, 'cishu': 0},
+               'vivo': {'dangri': 0, 'dangyue': 0, 'apptype': 'vivo', 'zongshu': 0, 'cishu': 0},
+               'oppo': {'dangri': 0, 'dangyue': 0, 'apptype': 'oppo', 'zongshu': 0, 'cishu': 0},
+               'xiaomi': {'dangri': 0, 'dangyue': 0, 'apptype': 'xiaomi', 'zongshu': 0, 'cishu': 0},
+               'baidu': {'dangri': 0, 'dangyue': 0, 'apptype': 'baidu', 'zongshu': 0, 'cishu': 0},
+               'huawei': {'dangri': 0, 'dangyue': 0, 'apptype': 'huawei', 'zongshu': 0, 'cishu': 0},
+               '360': {'dangri': 0, 'dangyue': 0, 'apptype': '360', 'zongshu': 0, 'cishu': 0},
+               'meizu': {'dangri': 0, 'dangyue': 0, 'apptype': 'meizu', 'zongshu': 0, 'cishu': 0},
+               'lianxiang': {'dangri': 0, 'dangyue': 0, 'apptype': 'lianxiang', 'zongshu': 0, 'cishu': 0},
+               'alibaba': {'dangri': 0, 'dangyue': 0, 'apptype': 'alibaba', 'zongshu': 0, 'cishu': 0}, }
+    body = {"query": {"match_all": {}}}
+    Docs = es.search(index='userinfo', doc_type='userinfo', body=body, size=10000, scroll="1m")
+    scroll = Docs['_scroll_id']
+    allDocs = []
+    allDocs += Docs['hits']['hits']
+    while 1:
+        try:
+            Docs = es.scroll(scroll_id=scroll, scroll="1m")
+            if (len(Docs['hits']['hits']) == 0):
+                break
+            scroll = Docs['_scroll_id']
+            allDocs += Docs['hits']['hits']
+        except:
+            break
+    for doc in allDocs:
+        doc = doc['_source']
+        apptype = 'app'
+        if 'apptype' in doc:
+            apptype = doc['apptype']
+        retdata['all']['zongshu'] += 1
+        retdata[apptype]['zongshu'] += 1
+        if dangritime == doc['addtime'][:10]:
+            retdata['all']['dangri'] += 1
+            retdata[apptype]['dangri'] += 1
+        if dangyuetime == doc['addtime'][:7]:
+            retdata['all']['dangyue'] += 1
+            retdata[apptype]['dangyue'] += 1
+    body = {"query": {"match_phrase_prefix": {"time": dangritime}}}
+    Docs = es.search(index='userhis', doc_type='userhis', body=body, size=1000, scroll="1m")
+    scroll = Docs['_scroll_id']
+    allDocs = []
+    allDocs += Docs['hits']['hits']
+    while 1:
+        try:
+            Docs = es.scroll(scroll_id=scroll, scroll="1m")
+            if (len(Docs['hits']['hits']) == 0):
+                break
+            scroll = Docs['_scroll_id']
+            allDocs += Docs['hits']['hits']
+        except:
+            break
+    for line in allDocs:
+        line = line['_source']
+        if line['event'] in histype and line['event'] != 'setJilu':
+            try:
+                apptype = 'app'
+                if 'apptype' in line:
+                    apptype = line['apptype']
+                retdata[apptype]['cishu'] += 1
+                retdata['all']['cishu'] += 1
+            except:
+                None
+    newdata = []
+    for line in retdata:
+        newdata.append(retdata[line])
+    newdata = sorted(newdata, key=lambda x: (x['dangri'], x['dangyue'], x['zongshu'], x['cishu']), reverse=True)
+    return encrypt(json.dumps({'MSG': 'OK', 'data': newdata}))
+
 
 @app.route("/test/getZhifulist", methods=["POST"])
 def getZhifulist():
@@ -691,9 +774,9 @@ def getZhifulist():
             nickName = doc['nickName']
         elif 'nickname' in doc:
             nickName = doc['nickname']
-        yingyongid = ''
-        if 'yingyongid' in doc:
-            yingyongid = doc['yingyongid']
+        apptype = 'app'
+        if 'apptype' in doc:
+            apptype = doc['apptype']
         retlist.append([nickName,
                         doc['addtime'], str(doc['xiaofeicishu']), str(doc['xiaofeizonge']), doc['province'], doc[
                             'city'], unionidlist[unionid][:4] + '-' + unionidlist[unionid][4:6] + '-' + unionidlist[
@@ -701,7 +784,7 @@ def getZhifulist():
                                                                                                         6:8] + ' ' +
                         unionidlist[unionid][8:10] + ':' + unionidlist[unionid][10:12] + ':' + unionidlist[unionid][
                                                                                                12:14], purePhoneNumber,
-                        yingyongid])
+                        apptype])
     return encrypt(json.dumps({'MSG': 'OK', 'data': retlist}))
 
 

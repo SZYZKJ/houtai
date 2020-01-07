@@ -73,11 +73,12 @@ for line in open('tuweiqinghua.json'):
     line = json.loads(line)
     tuweiqinghua.append(line['chatId'])
 pingguoshenhe = 1
+baidushenhe = 0
 tengxunshenhe = 1
-weixinshenhe = 1
+weixinshenhe = 0
 weixinpingguoshenhe = 1
 istuiguang = 0
-nowversion = '1.0.5'
+nowversion = '1.0.6'
 apiqianzui = '/xcx/'
 
 
@@ -100,15 +101,19 @@ def getIslianmeng():
         apptype = params['apptype']
     adduserhis({'unionid': unionid, 'time': getTime(), 'event': 'getIslianmeng', 'detail': 'getIslianmeng',
                 'apptype': apptype})
+    nowbaidushenhe = 0
+    if apptype == 'baidu':
+        nowbaidushenhe = baidushenhe
     if system[:3].lower() == 'ios':
         return encrypt(json.dumps(
             {'MSG': 'OK', 'istuiguang': istuiguang, 'weixinshenhe': weixinshenhe,
-             'weixinpingguoshenhe': weixinpingguoshenhe, 'pingguoshenhe': pingguoshenhe, 'tengxunshenhe': 0}))
+             'weixinpingguoshenhe': weixinpingguoshenhe, 'pingguoshenhe': pingguoshenhe, 'tengxunshenhe': 0,
+             'baidushenhe': nowbaidushenhe}))
     else:
         return encrypt(json.dumps(
             {'MSG': 'OK', 'istuiguang': istuiguang, 'weixinshenhe': weixinshenhe, 'weixinpingguoshenhe': 0,
              'pingguoshenhe': 0,
-             'tengxunshenhe': tengxunshenhe, 'appleshenhe': 1}))
+             'tengxunshenhe': tengxunshenhe, 'baidushenhe': nowbaidushenhe, 'appleshenhe': 1}))
 
 
 @app.route(apiqianzui + "jianChagengxin", methods=["POST"])
@@ -141,10 +146,10 @@ def checkVersion():
     if oldversion < nowversion:
         andoridupdatetype = 1
         iosupdatetype = 1
-    andoridxiaourl = 'https://www.xingnanzhuli.com/app_1.0.5.wgt'
+    andoridxiaourl = 'https://www.lianaizhuli.com/app_1.0.6.wgt'
     andoriddaurl = 'http://www.lianaizhuli.com/'
-    andoridurl = 'https://www.xingnanzhuli.com/Love-Union.apk'
-    iosxiaourl = 'https://www.xingnanzhuli.com/app_1.0.5.wgt'
+    andoridurl = 'https://www.lianaizhuli.com/app.apk'
+    iosxiaourl = 'https://www.lianaizhuli.com/app_1.0.6.wgt'
     iosdaurl = 'http://www.lianaizhuli.com/'
     androidmagtype = 0
     androidmsg = ''
@@ -365,7 +370,7 @@ def addKeyword(params):
         if flag:
             retdata = [inputValue] + retdata
             retdata = retdata[:12]
-    mydb['userkeywordhislist'].update({'_id': unionid}, {"$set": {'data': retdata}}, True)
+    mydb['userkeywordhislist'].update_one({'_id': unionid}, {"$set": {'data': retdata}}, True)
 
 
 @app.route(apiqianzui + "getUnionid", methods=["POST"])
@@ -381,6 +386,9 @@ def getUnionid():
     except Exception as e:
         logger.error(e)
         return json.dumps({'MSG': '警告！非法入侵！！！'})
+    apptype = 'app'
+    if 'apptype' in params:
+        apptype = params['apptype']
     url = 'https://api.weixin.qq.com/sns/jscode2session?appid=' + appid + '&secret=' + secret + '&js_code=' + js_code + '&grant_type=authorization_code'
     response = requests.get(url)
     response = response.json()
@@ -471,12 +479,10 @@ def getUnionid():
         userinfo['sijiaotime'] = 0
         userinfo['xiaofeicishu'] = 0
         userinfo['xiaofeizonge'] = 0
+        userinfo['apptype'] = apptype
     if 'options' not in userinfo:
         userinfo['options'] = options
     es.index(index='userinfo', doc_type='userinfo', id=unionid, body=userinfo)
-    apptype = 'app'
-    if 'apptype' in params:
-        apptype = params['apptype']
     adduserhis(
         {'unionid': unionid, 'time': getTime(), 'event': 'getUnionid', 'detail': 'getUnionid', 'apptype': apptype})
     return encrypt(json.dumps({'MSG': 'OK', 'data': {'unionid': unionid}}))
@@ -501,6 +507,7 @@ def getFwhnionid():
     try:
         params = json.loads(decrypt(request.stream.read()))
         code = params['code']
+        apptype = params['apptype']
     except Exception as e:
         logger.error(e)
         return json.dumps({'MSG': '警告！非法入侵！！！'})
@@ -520,6 +527,7 @@ def getFwhnionid():
         resdata['sijiaotime'] = 0
         resdata['xiaofeicishu'] = 0
         resdata['xiaofeizonge'] = 0
+        resdata['apptype'] = apptype
     es.index(index='userinfo', doc_type='userinfo', id=unionid, body=resdata)
     return encrypt(json.dumps({'MSG': 'OK', 'data': {'unionid': unionid}}))
 
@@ -532,6 +540,9 @@ def getAppunionid():
     except Exception as e:
         logger.error(e)
         return json.dumps({'MSG': '警告！非法入侵！！！'})
+    apptype = 'app'
+    if 'apptype' in params:
+        apptype = params['apptype']
     url = 'https://api.weixin.qq.com/sns/oauth2/access_token?appid=' + appappid + '&secret=' + appsecret + '&code=' + code + '&grant_type=authorization_code'
     response = requests.get(url)
     response = response.json()
@@ -545,6 +556,7 @@ def getAppunionid():
     try:
         opendoc = es.get(index='userinfo', doc_type='userinfo', id=unionid)['_source']
         opendoc.update(userinfo)
+        opendoc['apptype'] = apptype
         es.index(index='userinfo', doc_type='userinfo', id=unionid, body=opendoc)
     except:
         if 'addtime' not in userinfo:
@@ -554,6 +566,7 @@ def getAppunionid():
             userinfo['sijiaotime'] = 0
             userinfo['xiaofeicishu'] = 0
             userinfo['xiaofeizonge'] = 0
+            userinfo['apptype'] = apptype
             es.index(index='userinfo', doc_type='userinfo', id=unionid, body=userinfo)
     unionid_token = mydb['unionid_token']
     token = str(int(time.time()))
@@ -561,10 +574,7 @@ def getAppunionid():
         unionid_token.remove({'_id': unionid})
     except:
         None
-    unionid_token.update({'_id': unionid}, {"$set": {'_id': unionid, 'unionid': unionid, 'token': token}}, True)
-    apptype = 'app'
-    if 'apptype' in params:
-        apptype = params['apptype']
+    unionid_token.update_one({'_id': unionid}, {"$set": {'_id': unionid, 'unionid': unionid, 'token': token}}, True)
     adduserhis(
         {'unionid': unionid, 'time': getTime(), 'event': 'getAppunionid', 'detail': 'getAppunionid',
          'apptype': apptype})
@@ -581,6 +591,11 @@ def checkUnionid():
     except Exception as e:
         logger.error(e)
         return encrypt(json.dumps({'MSG': 'NO'}))
+    try:
+        unionid_token = mydb['unionid_token']
+        unionid_token.delete_one({'_id':unionid})
+    except:
+        None
     try:
         doc = es.get(index='userinfo', doc_type='userinfo', id=unionid)
         newdoc = doc['_source']
@@ -783,7 +798,7 @@ def clearHiswords():
         return json.dumps({'MSG': '警告！非法入侵！！！'})
     apptype = params['apptype']
     adduserhis({'unionid': unionid, 'time': getTime(), 'event': 'clearHiswords', 'apptype': apptype})
-    mydb['userkeywordhislist'].update({'_id': unionid}, {"$set": {'data': []}}, True)
+    mydb['userkeywordhislist'].update_one({'_id': unionid}, {"$set": {'data': []}}, True)
     return encrypt(json.dumps({'MSG': 'OK'}))
 
 

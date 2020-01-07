@@ -10,9 +10,7 @@ import requests
 datapath = '/home/ubuntu/data/lianailianmeng/data'
 os.chdir(datapath)
 
-
 es = Elasticsearch([{"host": "182.254.227.188", "port": 9218}])
-
 
 # openid='oz7z64liSPmlzHped8ATXf23jqyI'#
 # unionid='ofIsD1YLw3q_1v4d2NgX9GrS3ZEM'#庞宇明
@@ -21,7 +19,6 @@ es = Elasticsearch([{"host": "182.254.227.188", "port": 9218}])
 # unionid='ofIsD1Xa9EqFkDLahXdiGZWH7sUo'#唔哩周周
 # openid='oz7z64isIQQZ3oLczZ3hcl978dco'
 # unionid='ofIsD1Xa9EqFkDLahXdiGZWH7sUo'
-
 
 
 # def getaccess_token(apptype):
@@ -69,11 +66,14 @@ es = Elasticsearch([{"host": "182.254.227.188", "port": 9218}])
 # es.index(index='userinfo',doc_type='userinfo',id=docid1,body=doc1)
 # es.index(index='userinfo',doc_type='userinfo',id=docid2,body=doc2)
 
-# search = {"query": {"match_all": {}}}
-# Docs=es.search(index='userinfo',doc_type='userinfo',body=search,size=10000)['hits']['hits']
-# xiaofeizonge=0
-# for doc in Docs:
-#     docid=doc['_id']
-#     doc=doc['_source']
-#     if 'nickName' in doc and 'So_what' in doc['nickName']:
-#         print(docid)
+search = {"query": {"match_all": {}}}
+Docs = es.search(index='userinfo', doc_type='userinfo', body=search, size=10000)['hits']['hits']
+xiaofeizonge = 0
+t = 0
+for doc in Docs:
+    docid = doc['_id']
+    doc = doc['_source']
+    if doc['vipdengji']==2:
+        t+=1
+print(t)
+
