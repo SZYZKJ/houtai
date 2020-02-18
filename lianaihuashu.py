@@ -81,7 +81,7 @@ ioswenan = '由于相关规范，小程序下IOS虚拟商品支付暂不可用�
 tuweiqinghua = []
 for line in open('tuweiqinghua.json'):
     line = json.loads(line)
-    tuweiqinghua.append(line['chatId'])
+    tuweiqinghua.append(line['id'])
 pingguoshenhe = 1
 baidushenhe = 0
 tengxunshenhe = 1
