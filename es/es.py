@@ -6,7 +6,7 @@ import time
 from random import randint
 from requests import post
 
-datapath = '/home/ubuntu/data/lianailianmeng/data'
+datapath = '/home/ubuntu/data/lianaihuashu/data'
 os.chdir(datapath)
 tulinkey = [
     '1dea0cd4b44a4613b19d0a02442624a8',

@@ -6,7 +6,7 @@ from elasticsearch import Elasticsearch
 from elasticsearch import helpers
 from es.es import Lianailianmeng_ES
 
-datapath = '/home/ubuntu/data/lianailianmeng/data'
+datapath = '/home/ubuntu/data/lianaihuashu/data'
 os.chdir(datapath)
 
 reply_sentens = {

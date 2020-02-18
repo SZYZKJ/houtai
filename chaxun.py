@@ -9,7 +9,7 @@ from elasticsearch import Elasticsearch
 from elasticsearch import helpers
 
 es = Elasticsearch([{"host": "182.254.227.188", "port": 9218, "timeout": 3600}])
-datapath = '/home/ubuntu/data/lianailianmeng/data'
+datapath = '/home/ubuntu/data/lianaihuashu/data'
 os.chdir(datapath)
 unionidlist = {}
 nowtime = time.strftime("%Y%m%d", time.localtime())

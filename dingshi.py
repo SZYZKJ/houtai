@@ -7,7 +7,7 @@ import json
 import random
 import requests
 
-datapath = '/home/ubuntu/data/lianailianmeng/data'
+datapath = '/home/ubuntu/data/lianaihuashu/data'
 os.chdir(datapath)
 blocklen=10000
 

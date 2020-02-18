@@ -42,8 +42,8 @@ handler.setFormatter(formatter)
 logger.addHandler(handler)
 dingyuehaoappid = 'wxc1deae6a065dffa9'
 encodingAESKey = "UmBlx5gtFv7zravWwE9tCLjC99qPxRZQDPDdfeFCBfg"
-token = 'lianailianmeng'
-os.chdir('/home/ubuntu/data/lianailianmeng/data')
+token = 'lianaihuashu'
+os.chdir('/home/ubuntu/data/lianaihuashu/data')
 HD = handel.Handel()
 
 
@@ -120,8 +120,8 @@ def index():
     return "ok"
 
 
-@app.route("/v1/lianailianmeng", methods=["GET", "POST"])
-def lianailianmeng():
+@app.route("/v1/lianaihuashu", methods=["GET", "POST"])
+def lianaihuashu():
     if request.method == "GET":
         signature = request.args.get('signature')
         timestamp = request.args.get('timestamp')
