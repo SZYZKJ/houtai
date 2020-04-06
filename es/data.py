@@ -36,7 +36,7 @@ es = Elasticsearch([{"host": "182.254.227.188", "port": 9218, "timeout": 3600}])
 actions = []
 # es.indices.delete(index='liaomeihuashu')
 # es.indices.delete(index='liaomeitaolu')
-es.indices.delete(index='tuweiqinghua')
+# es.indices.delete(index='tuweiqinghua')
 # es.indices.delete(index='kechenglist')
 # es.indices.delete(index='kecheng')
 # es.indices.delete(index='sijiao')
@@ -53,13 +53,14 @@ es.indices.delete(index='tuweiqinghua')
 # es.indices.delete(index='search')
 # es.indices.delete(index='biaoqing')
 # es.indices.delete(index='fenxiao')
+# es.indices.delete(index='userhis')
 
 # ret_data = es.indices.create(index='liaomeihuashu', body=lianaizhuli_index, ignore=400)
 # print(ret_data)
 # ret_data = es.indices.create(index='liaomeitaolu', body=lianaizhuli_index, ignore=400)
 # print(ret_data)
-ret_data = es.indices.create(index='tuweiqinghua', body=lianaizhuli_index, ignore=400)
-print(ret_data)
+# ret_data = es.indices.create(index='tuweiqinghua', body=lianaizhuli_index, ignore=400)
+# print(ret_data)
 # ret_data = es.indices.create(index='kechenglist', body=lianaizhuli_index, ignore=400)
 # print(ret_data)
 # ret_data = es.indices.create(index='kecheng', body=lianaizhuli_index, ignore=400)
@@ -92,6 +93,8 @@ print(ret_data)
 # print(ret_data)
 # ret_data = es.indices.create(index='fenxiao', body=lianaizhuli_index, ignore=400)
 # print(ret_data)
+# ret_data = es.indices.create(index='userhis', body=lianaizhuli_index, ignore=400)
+# print(ret_data)
 
 # with open('liaomeihuashu.json', 'r') as f:
 #     for line in f:
@@ -121,20 +124,20 @@ print(ret_data)
 #     helpers.bulk(es, actions[:blocklen])
 #     actions = actions[blocklen:]
 #
-with open('tuweiqinghua.json', 'r') as f:
-    for line in f:
-        item = json.loads(line.strip())
-        action = {
-            "_index": "tuweiqinghua",
-            "_type": "tuweiqinghua",
-            "_source": item,
-            '_id': item['id']
-        }
-        actions.append(action)
-random.shuffle(actions)
-while len(actions):
-    helpers.bulk(es, actions[:blocklen])
-    actions = actions[blocklen:]
+# with open('tuweiqinghua.json', 'r') as f:
+#     for line in f:
+#         item = json.loads(line.strip())
+#         action = {
+#             "_index": "tuweiqinghua",
+#             "_type": "tuweiqinghua",
+#             "_source": item,
+#             '_id': item['id']
+#         }
+#         actions.append(action)
+# random.shuffle(actions)
+# while len(actions):
+#     helpers.bulk(es, actions[:blocklen])
+#     actions = actions[blocklen:]
 #
 # with open('kecheng.json', 'r') as f:
 #     for line in f:

@@ -6,11 +6,12 @@ import time
 import json
 import random
 import requests
+import pymongo
 
 datapath = '/home/ubuntu/data/lianaihuashu/data'
 os.chdir(datapath)
 
-# es = Elasticsearch([{"host": "182.254.227.188", "port": 9218}])
+es = Elasticsearch([{"host": "182.254.227.188", "port": 9218}])
 
 # openid='oz7z64liSPmlzHped8ATXf23jqyI'#
 # unionid='ofIsD1YLw3q_1v4d2NgX9GrS3ZEM'#庞宇明
@@ -66,4 +67,28 @@ os.chdir(datapath)
 # es.index(index='userinfo',doc_type='userinfo',id=docid1,body=doc1)
 # es.index(index='userinfo',doc_type='userinfo',id=docid2,body=doc2)
 
-search = {"query": {"match_all": {}}}
+# import pymongo
+# def getTime():
+#     return time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+# myclient = pymongo.MongoClient("mongodb://localhost:27017/")
+# mydb = myclient["zhangfen"]
+# nowtime = '^' + getTime()[:10]
+# docs = mydb['shouquanma'].find(
+#     {'zhifuzhuangtai': 0, 'tingyong': 0, 'zhuangtai': '未激活',
+#      'goumaishijian': {"$regex": nowtime}}).limit(10000)
+# t=0
+
+
+# search = {"query": {"match_all": {}}}
+# Docs = es.search(index='userinfo', doc_type='userinfo', body=search, size=10000, scroll="5m")
+# t = 0
+# while len(Docs['hits']['hits']):
+#     for doc in Docs['hits']['hits']:
+#         t += 1
+#         doc = doc['_source']
+#         if 'nickName' in doc and '庞宇明' in doc['nickName']:
+#             doc['viptime'] = int(time.time())
+#             doc['vipdengji'] = 0
+#             es.index(index='userinfo', doc_type='userinfo', id=doc['unionid'], body=doc)
+#     Docs = es.scroll(scroll_id=Docs['_scroll_id'], scroll="5m")
+# print(t)

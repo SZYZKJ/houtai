@@ -45,6 +45,18 @@ if __name__ == '__main__':
                 "sub_button": [
                     {
                         "type": "view",
+                        "name": "涨粉",
+                        "url": "http://www.lianaizhuli.com/zhangfen",
+                        "sub_button": []
+                    },
+                    {
+                        "type": "view",
+                        "name": "起名",
+                        "url": "http://www.lianaizhuli.com/baobao",
+                        "sub_button": []
+                    },
+                    {
+                        "type": "view",
                         "name": "会员",
                         "url": "http://www.lianaizhuli.com/huiyuan",
                         "sub_button": []

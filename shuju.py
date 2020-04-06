@@ -401,7 +401,7 @@ def getChengGong():
     hisdatajintian = hisdata['jintian'][:4] + hisdata['jintian'][5:7] + hisdata['jintian'][8:10]
     if (jintian != hisdata['jintian']):
         searchtian = {"query": {"match_phrase_prefix": {"addtime": hisdata['jintian']}}}
-        Docs = es.search(index='userinfo', doc_type='userinfo', body=searchtian, size=1000, scroll="1m")
+        Docs = es.search(index='userinfo', doc_type='userinfo', body=searchtian, size=10000, scroll="1m")
         scroll = Docs['_scroll_id']
         jintianyonghushu = len(Docs['hits']['hits'])
         jintianfufeiyonghushu = 0
@@ -417,7 +417,7 @@ def getChengGong():
             except:
                 break
         searchtian = {"query": {"match_phrase_prefix": {"updatatime": hisdatajintian}}}
-        Docs = es.search(index='userzhifu', doc_type='userzhifu', body=searchtian, size=1000, scroll="1m")
+        Docs = es.search(index='userzhifu', doc_type='userzhifu', body=searchtian, size=10000, scroll="1m")
         scroll = Docs['_scroll_id']
         for doc in Docs['hits']['hits']:
             doc = doc['_source']
@@ -462,7 +462,7 @@ def getChengGong():
         f.close()
         hisdata = newhisdata.copy()
     searchtian = {"query": {"match_phrase_prefix": {"addtime": jintian}}}
-    Docs = es.search(index='userinfo', doc_type='userinfo', body=searchtian, size=1000, scroll="1m")
+    Docs = es.search(index='userinfo', doc_type='userinfo', body=searchtian, size=10000, scroll="1m")
     scroll = Docs['_scroll_id']
     jintianyonghushu = len(Docs['hits']['hits'])
     jintianfufeiyonghushu = 0
@@ -478,7 +478,7 @@ def getChengGong():
         except:
             break
     searchtian = {"query": {"match_phrase_prefix": {"updatatime": nowtime}}}
-    Docs = es.search(index='userzhifu', doc_type='userzhifu', body=searchtian, size=1000, scroll="1m")
+    Docs = es.search(index='userzhifu', doc_type='userzhifu', body=searchtian, size=10000, scroll="1m")
     scroll = Docs['_scroll_id']
     for doc in Docs['hits']['hits']:
         doc = doc['_source']
@@ -514,7 +514,7 @@ def getChengGong():
     newhisdata['dangyuefufeicishu'] = hisdata['dangyuefufeicishu'] + jintianfufeicishu
     newhisdata['dangyuefufeizonge'] = hisdata['dangyuefufeizonge'] + jintianfufeizonge
     body = {"query": {"bool": {"filter": [{"term": {"vipdengji": 1}}, ]}}}
-    Docs = es.search(index='userinfo', doc_type='userinfo', body=body, size=1000, scroll="1m")
+    Docs = es.search(index='userinfo', doc_type='userinfo', body=body, size=10000, scroll="1m")
     scroll = Docs['_scroll_id']
     newhisdata['zhongshenhuiyuan'] = len(Docs['hits']['hits'])
     while 1:
@@ -527,7 +527,7 @@ def getChengGong():
         except:
             break
     body = {"query": {"bool": {"filter": [{"term": {"vipdengji": 2}}, ]}}}
-    Docs = es.search(index='userinfo', doc_type='userinfo', body=body, size=1000, scroll="1m")
+    Docs = es.search(index='userinfo', doc_type='userinfo', body=body, size=10000, scroll="1m")
     scroll = Docs['_scroll_id']
     newhisdata['fenshouwanhui'] = len(Docs['hits']['hits'])
     while 1:
@@ -540,7 +540,7 @@ def getChengGong():
         except:
             break
     body = {"query": {"bool": {"filter": [{"term": {"vipdengji": 3}}, ]}}}
-    Docs = es.search(index='userinfo', doc_type='userinfo', body=body, size=1000, scroll="1m")
+    Docs = es.search(index='userinfo', doc_type='userinfo', body=body, size=10000, scroll="1m")
     scroll = Docs['_scroll_id']
     newhisdata['sijiaoyigeyue'] = len(Docs['hits']['hits'])
     while 1:
@@ -553,7 +553,7 @@ def getChengGong():
         except:
             break
     body = {"query": {"bool": {"filter": [{"term": {"vipdengji": 4}}, ]}}}
-    Docs = es.search(index='userinfo', doc_type='userinfo', body=body, size=1000, scroll="1m")
+    Docs = es.search(index='userinfo', doc_type='userinfo', body=body, size=10000, scroll="1m")
     scroll = Docs['_scroll_id']
     newhisdata['sijiaosangeyue'] = len(Docs['hits']['hits'])
     while 1:
@@ -566,7 +566,7 @@ def getChengGong():
         except:
             break
     body = {"query": {"bool": {"filter": [{"term": {"vipdengji": 5}}, ]}}}
-    Docs = es.search(index='userinfo', doc_type='userinfo', body=body, size=1000, scroll="1m")
+    Docs = es.search(index='userinfo', doc_type='userinfo', body=body, size=10000, scroll="1m")
     scroll = Docs['_scroll_id']
     newhisdata['sijiaoyinian'] = len(Docs['hits']['hits'])
     while 1:
@@ -579,7 +579,7 @@ def getChengGong():
         except:
             break
     body = {"query": {"bool": {"filter": [{"term": {"vipdengji": 6}}, ]}}}
-    Docs = es.search(index='userinfo', doc_type='userinfo', body=body, size=1000, scroll="1m")
+    Docs = es.search(index='userinfo', doc_type='userinfo', body=body, size=10000, scroll="1m")
     scroll = Docs['_scroll_id']
     newhisdata['lianmenghuiyuan'] = len(Docs['hits']['hits'])
     while 1:
@@ -620,7 +620,7 @@ def getXiangqing():
                'setDianzanshoucangshu': {'renshu': {}, 'cishu': 0, 'name': '点赞收藏', 'renshuzhanbi': 0,
                                          'cishuzhanbi': 0}, }
     # wenti = []
-    Docs = es.search(index='userhis', doc_type='userhis', body=body, size=1000, scroll="1m")
+    Docs = es.search(index='userhis', doc_type='userhis', body=body, size=10000, scroll="1m")
     scroll = Docs['_scroll_id']
     allDocs = []
     allDocs += Docs['hits']['hits']
@@ -642,9 +642,9 @@ def getXiangqing():
                     # if line['jilutype'] == 'huashu':
                     #     wenti.insert(0, {'wenti': line['detail'], 'daan': line['jilucontent']})
                 else:
-                    retdata['all']['renshu'][line['unionid']] = 0
+                    retdata['all']['renshu'][line['detail']['unionid']] = 0
                     retdata['all']['cishu'] += 1
-                    retdata[line['event']]['renshu'][line['unionid']] = 0
+                    retdata[line['event']]['renshu'][line['detail']['unionid']] = 0
                     retdata[line['event']]['cishu'] += 1
             except:
                 None
@@ -675,7 +675,6 @@ def getYonghu():
     dangyuetime = time.strftime("%Y-%m", time.localtime())
     retdata = {'all': {'dangri': 0, 'dangyue': 0, 'apptype': '总计', 'zongshu': 0, 'cishu': 0},
                'app': {'dangri': 0, 'dangyue': 0, 'apptype': 'app', 'zongshu': 0, 'cishu': 0},
-               'guanwang': {'dangri': 0, 'dangyue': 0, 'apptype': 'guanwang', 'zongshu': 0, 'cishu': 0},
                'weixin': {'dangri': 0, 'dangyue': 0, 'apptype': 'weixin', 'zongshu': 0, 'cishu': 0},
                'pingguo': {'dangri': 0, 'dangyue': 0, 'apptype': 'pingguo', 'zongshu': 0, 'cishu': 0},
                'tengxun': {'dangri': 0, 'dangyue': 0, 'apptype': 'tengxun', 'zongshu': 0, 'cishu': 0},
@@ -718,7 +717,7 @@ def getYonghu():
             retdata['all']['dangyue'] += 1
             retdata[apptype]['dangyue'] += 1
     body = {"query": {"match_phrase_prefix": {"time": dangritime}}}
-    Docs = es.search(index='userhis', doc_type='userhis', body=body, size=1000, scroll="1m")
+    Docs = es.search(index='userhis', doc_type='userhis', body=body, size=10000, scroll="1m")
     scroll = Docs['_scroll_id']
     allDocs = []
     allDocs += Docs['hits']['hits']
@@ -736,8 +735,8 @@ def getYonghu():
         if line['event'] in histype and line['event'] != 'setJilu':
             try:
                 apptype = 'app'
-                if 'apptype' in line:
-                    apptype = line['apptype']
+                if 'apptype' in line['detail']:
+                    apptype = line['detail']['apptype']
                 retdata[apptype]['cishu'] += 1
                 retdata['all']['cishu'] += 1
             except:
