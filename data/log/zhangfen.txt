@@ -1600,3 +1600,5 @@
 2020-07-17 04:41:00,092 - checkUnionid - __main__ - 401 - ERROR - 'NoneType' object has no attribute 'update'
 2020-07-17 05:11:09,047 - checkUnionid - __main__ - 401 - ERROR - 'NoneType' object has no attribute 'update'
 2020-07-17 06:11:19,623 - checkUnionid - __main__ - 401 - ERROR - 'NoneType' object has no attribute 'update'
+2020-07-17 06:36:32,731 - checkUnionid - __main__ - 401 - ERROR - 'NoneType' object has no attribute 'update'
+2020-07-17 06:45:10,402 - checkUnionid - __main__ - 401 - ERROR - 'NoneType' object has no attribute 'update'

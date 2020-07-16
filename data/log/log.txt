@@ -7359,3 +7359,4 @@
 2020-07-17 03:48:52,104 - getUnionid - __main__ - 400 - ERROR - 'utf-8' codec can't decode byte 0x80 in position 1: invalid start byte
 2020-07-17 06:25:31,929 - getUnionid - __main__ - 400 - ERROR - 'utf-8' codec can't decode byte 0xc6 in position 2: invalid continuation byte
 2020-07-17 06:25:32,073 - getUnionid - __main__ - 400 - ERROR - 'utf-8' codec can't decode byte 0xa0 in position 1: invalid start byte
+2020-07-17 07:14:41,906 - getUnionid - __main__ - 400 - ERROR - 'utf-8' codec can't decode byte 0x9a in position 0: invalid start byte
