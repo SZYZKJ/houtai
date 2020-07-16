@@ -25,14 +25,19 @@ from WXBizMsgCrypt import WXBizMsgCrypt
 from flask_sockets import Sockets
 from geventwebsocket.handler import WebSocketHandler
 from gevent.pywsgi import WSGIServer
+import pymongo
 
 app = Flask(__name__)
 sockets = Sockets(app)
 CORS(app, supports_credentials=True)
 es = Elasticsearch([{"host": "182.254.227.188", "port": 9218, "timeout": 3600}])
+myclient = pymongo.MongoClient("mongodb://localhost:27017/")
+mydb1 = myclient["baobao"]
+myclient = pymongo.MongoClient("mongodb://localhost:27017/")
+mydb2 = myclient["zhangfen"]
 histype = {'searchLiaomeihuashu': 0, 'searchBiaoqing': 0, 'searchBaike': 0, 'getLiaomeitaoluList': 0,
            'getXingxiangjianshe': 0, 'getLiaomeishizhan': 0, 'getKecheng': 0, 'getTuweiqinghua': 0, 'getBaike': 0,
-           'getWenda': 0, 'getCeshidaan': 0, 'setDianzanshoucangshu': 0, 'setJilu': 0, }
+           'getWenda': 0, 'getCeshidaan': 0, 'setDianzanshoucangshu': 0, 'setJilu': 0}
 key = "shujushujushujus"
 iv = "abcdefabcdefabcd"
 appid = 'wxa9ef833cef143ce1'
@@ -45,12 +50,21 @@ unpad = lambda s: s[0:-ord(s[-1])]
 datapath = '/home/ubuntu/data/lianaihuashu/data'
 os.chdir(datapath)
 
-hisdata = {}
-newhisdata = {}
+hisdata0 = {}
+newhisdata0 = {}
+hisdata1 = {}
+newhisdata1 = {}
+hisdata2 = {}
+newhisdata2 = {}
 f = open('shuju.json')
 for line in f:
-    hisdata = json.loads(line)
-    newhisdata = json.loads(line)
+    alldata = json.loads(line)
+    hisdata0 = alldata['chenggong0']
+    newhisdata0 = hisdata0
+    hisdata1 = alldata['chenggong1']
+    newhisdata1 = hisdata1
+    hisdata2 = alldata['chenggong2']
+    newhisdata2 = hisdata2
 f.close()
 
 constws = {}
@@ -395,12 +409,12 @@ def getChengGong():
     except Exception as e:
         print(e)
         return json.dumps({'MSG': '警告！非法入侵！！！'})
-    global hisdata, newhisdata
+    global hisdata0, newhisdata0,hisdata1,newhisdata1,hisdata2,newhisdata2
     jintian = time.strftime("%Y-%m-%d", time.localtime())
     nowtime = time.strftime("%Y%m%d", time.localtime())
-    hisdatajintian = hisdata['jintian'][:4] + hisdata['jintian'][5:7] + hisdata['jintian'][8:10]
-    if (jintian != hisdata['jintian']):
-        searchtian = {"query": {"match_phrase_prefix": {"addtime": hisdata['jintian']}}}
+    hisdatajintian = hisdata0['jintian'][:4] + hisdata0['jintian'][5:7] + hisdata0['jintian'][8:10]
+    if (jintian != hisdata0['jintian']):
+        searchtian = {"query": {"match_phrase_prefix": {"addtime": hisdata0['jintian']}}}
         Docs = es.search(index='userinfo', doc_type='userinfo', body=searchtian, size=10000, scroll="1m")
         scroll = Docs['_scroll_id']
         jintianyonghushu = len(Docs['hits']['hits'])
@@ -441,26 +455,26 @@ def getChengGong():
                             jintianfufeizonge += int(int(zhifudata['total_fee']) * 0.01)
             except:
                 break
-        newhisdata['zuotianyonghushu'] = jintianyonghushu
-        newhisdata['zuotianfufeicishu'] = jintianfufeicishu
-        newhisdata['zuotianfufeizonge'] = jintianfufeizonge
-        if (jintian[:7] != hisdata['jintian'][:7]):
-            newhisdata['dangyueyonghushu'] = 0
-            newhisdata['dangyuefufeicishu'] = 0
-            newhisdata['dangyuefufeizonge'] = 0
+        newhisdata0['zuotianyonghushu'] = jintianyonghushu
+        newhisdata0['zuotianfufeicishu'] = jintianfufeicishu
+        newhisdata0['zuotianfufeizonge'] = jintianfufeizonge
+        if (jintian[:7] != hisdata0['jintian'][:7]):
+            newhisdata0['dangyueyonghushu'] = 0
+            newhisdata0['dangyuefufeicishu'] = 0
+            newhisdata0['dangyuefufeizonge'] = 0
         else:
-            newhisdata['dangyueyonghushu'] = hisdata['dangyueyonghushu'] + jintianyonghushu
-            newhisdata['dangyuefufeicishu'] = hisdata['dangyuefufeicishu'] + jintianfufeicishu
-            newhisdata['dangyuefufeizonge'] = hisdata['dangyuefufeizonge'] + jintianfufeizonge
-        newhisdata['zongyonghushu'] = hisdata['zongyonghushu'] + jintianyonghushu
-        newhisdata['zongfufeiyonghushu'] = hisdata['zongfufeiyonghushu'] + jintianfufeiyonghushu
-        newhisdata['zongfufeicishu'] = hisdata['zongfufeicishu'] + jintianfufeicishu
-        newhisdata['zongfufeie'] = hisdata['zongfufeie'] + jintianfufeizonge
-        newhisdata['jintian'] = jintian
+            newhisdata0['dangyueyonghushu'] = hisdata0['dangyueyonghushu'] + jintianyonghushu
+            newhisdata0['dangyuefufeicishu'] = hisdata0['dangyuefufeicishu'] + jintianfufeicishu
+            newhisdata0['dangyuefufeizonge'] = hisdata0['dangyuefufeizonge'] + jintianfufeizonge
+        newhisdata0['zongyonghushu'] = hisdata0['zongyonghushu'] + jintianyonghushu
+        newhisdata0['zongfufeiyonghushu'] = hisdata0['zongfufeiyonghushu'] + jintianfufeiyonghushu
+        newhisdata0['zongfufeicishu'] = hisdata0['zongfufeicishu'] + jintianfufeicishu
+        newhisdata0['zongfufeie'] = hisdata0['zongfufeie'] + jintianfufeizonge
+        newhisdata0['jintian'] = jintian
         f = open('shuju.json', 'w')
-        f.write(json.dumps(newhisdata) + '\n')
+        f.write(json.dumps({'chenggong0': newhisdata0, 'chenggong1': newhisdata1, 'chenggong2': newhisdata2}) + '\n')
         f.close()
-        hisdata = newhisdata.copy()
+        hisdata0 = newhisdata0.copy()
     searchtian = {"query": {"match_phrase_prefix": {"addtime": jintian}}}
     Docs = es.search(index='userinfo', doc_type='userinfo', body=searchtian, size=10000, scroll="1m")
     scroll = Docs['_scroll_id']
@@ -502,97 +516,467 @@ def getChengGong():
                         jintianfufeizonge += int(int(zhifudata['total_fee']) * 0.01)
         except:
             break
-    newhisdata = hisdata.copy()
-    newhisdata['zongyonghushu'] = hisdata['zongyonghushu'] + jintianyonghushu
-    newhisdata['zongfufeiyonghushu'] = hisdata['zongfufeiyonghushu'] + jintianfufeiyonghushu
-    newhisdata['zongfufeicishu'] = hisdata['zongfufeicishu'] + jintianfufeicishu
-    newhisdata['zongfufeie'] = hisdata['zongfufeie'] + jintianfufeizonge
-    newhisdata['jintianyonghushu'] = jintianyonghushu
-    newhisdata['jintianfufeicishu'] = jintianfufeicishu
-    newhisdata['jintianfufeizonge'] = jintianfufeizonge
-    newhisdata['dangyueyonghushu'] = hisdata['dangyueyonghushu'] + jintianyonghushu
-    newhisdata['dangyuefufeicishu'] = hisdata['dangyuefufeicishu'] + jintianfufeicishu
-    newhisdata['dangyuefufeizonge'] = hisdata['dangyuefufeizonge'] + jintianfufeizonge
+    newhisdata0 = hisdata0.copy()
+    newhisdata0['zongyonghushu'] = hisdata0['zongyonghushu'] + jintianyonghushu
+    newhisdata0['zongfufeiyonghushu'] = hisdata0['zongfufeiyonghushu'] + jintianfufeiyonghushu
+    newhisdata0['zongfufeicishu'] = hisdata0['zongfufeicishu'] + jintianfufeicishu
+    newhisdata0['zongfufeie'] = hisdata0['zongfufeie'] + jintianfufeizonge
+    newhisdata0['jintianyonghushu'] = jintianyonghushu
+    newhisdata0['jintianfufeicishu'] = jintianfufeicishu
+    newhisdata0['jintianfufeizonge'] = jintianfufeizonge
+    newhisdata0['dangyueyonghushu'] = hisdata0['dangyueyonghushu'] + jintianyonghushu
+    newhisdata0['dangyuefufeicishu'] = hisdata0['dangyuefufeicishu'] + jintianfufeicishu
+    newhisdata0['dangyuefufeizonge'] = hisdata0['dangyuefufeizonge'] + jintianfufeizonge
     body = {"query": {"bool": {"filter": [{"term": {"vipdengji": 1}}, ]}}}
     Docs = es.search(index='userinfo', doc_type='userinfo', body=body, size=10000, scroll="1m")
     scroll = Docs['_scroll_id']
-    newhisdata['zhongshenhuiyuan'] = len(Docs['hits']['hits'])
+    newhisdata0['dengji1'] = len(Docs['hits']['hits'])
     while 1:
         try:
             Docs = es.scroll(scroll_id=scroll, scroll="1m")
             if (len(Docs['hits']['hits']) == 0):
                 break
             scroll = Docs['_scroll_id']
-            newhisdata['zhongshenhuiyuan'] += len(Docs['hits']['hits'])
+            newhisdata0['dengji1'] += len(Docs['hits']['hits'])
         except:
             break
     body = {"query": {"bool": {"filter": [{"term": {"vipdengji": 2}}, ]}}}
     Docs = es.search(index='userinfo', doc_type='userinfo', body=body, size=10000, scroll="1m")
     scroll = Docs['_scroll_id']
-    newhisdata['fenshouwanhui'] = len(Docs['hits']['hits'])
+    newhisdata0['dengji2'] = len(Docs['hits']['hits'])
     while 1:
         try:
             Docs = es.scroll(scroll_id=scroll, scroll="1m")
             if (len(Docs['hits']['hits']) == 0):
                 break
             scroll = Docs['_scroll_id']
-            newhisdata['fenshouwanhui'] += len(Docs['hits']['hits'])
+            newhisdata0['dengji2'] += len(Docs['hits']['hits'])
         except:
             break
     body = {"query": {"bool": {"filter": [{"term": {"vipdengji": 3}}, ]}}}
     Docs = es.search(index='userinfo', doc_type='userinfo', body=body, size=10000, scroll="1m")
     scroll = Docs['_scroll_id']
-    newhisdata['sijiaoyigeyue'] = len(Docs['hits']['hits'])
+    newhisdata0['dengji3'] = len(Docs['hits']['hits'])
     while 1:
         try:
             Docs = es.scroll(scroll_id=scroll, scroll="1m")
             if (len(Docs['hits']['hits']) == 0):
                 break
             scroll = Docs['_scroll_id']
-            newhisdata['sijiaoyigeyue'] += len(Docs['hits']['hits'])
+            newhisdata0['dengji3'] += len(Docs['hits']['hits'])
         except:
             break
     body = {"query": {"bool": {"filter": [{"term": {"vipdengji": 4}}, ]}}}
     Docs = es.search(index='userinfo', doc_type='userinfo', body=body, size=10000, scroll="1m")
     scroll = Docs['_scroll_id']
-    newhisdata['sijiaosangeyue'] = len(Docs['hits']['hits'])
+    newhisdata0['dengji4'] = len(Docs['hits']['hits'])
     while 1:
         try:
             Docs = es.scroll(scroll_id=scroll, scroll="1m")
             if (len(Docs['hits']['hits']) == 0):
                 break
             scroll = Docs['_scroll_id']
-            newhisdata['sijiaosangeyue'] += len(Docs['hits']['hits'])
+            newhisdata0['dengji4'] += len(Docs['hits']['hits'])
         except:
             break
     body = {"query": {"bool": {"filter": [{"term": {"vipdengji": 5}}, ]}}}
     Docs = es.search(index='userinfo', doc_type='userinfo', body=body, size=10000, scroll="1m")
     scroll = Docs['_scroll_id']
-    newhisdata['sijiaoyinian'] = len(Docs['hits']['hits'])
+    newhisdata0['dengji5'] = len(Docs['hits']['hits'])
     while 1:
         try:
             Docs = es.scroll(scroll_id=scroll, scroll="1m")
             if (len(Docs['hits']['hits']) == 0):
                 break
             scroll = Docs['_scroll_id']
-            newhisdata['sijiaoyinian'] += len(Docs['hits']['hits'])
+            newhisdata0['dengji5'] += len(Docs['hits']['hits'])
         except:
             break
     body = {"query": {"bool": {"filter": [{"term": {"vipdengji": 6}}, ]}}}
     Docs = es.search(index='userinfo', doc_type='userinfo', body=body, size=10000, scroll="1m")
     scroll = Docs['_scroll_id']
-    newhisdata['lianmenghuiyuan'] = len(Docs['hits']['hits'])
+    newhisdata0['dengji6'] = len(Docs['hits']['hits'])
     while 1:
         try:
             Docs = es.scroll(scroll_id=scroll, scroll="1m")
             if (len(Docs['hits']['hits']) == 0):
                 break
             scroll = Docs['_scroll_id']
-            newhisdata['lianmenghuiyuan'] += len(Docs['hits']['hits'])
+            newhisdata0['dengji6'] += len(Docs['hits']['hits'])
         except:
             break
 
-    return encrypt(json.dumps({'MSG': 'OK', 'data': newhisdata}))
+    return encrypt(json.dumps({'MSG': 'OK', 'data': newhisdata0}))
+
+
+@app.route(qianzui + "getChengGong1", methods=["POST"])
+def getChengGong1():
+    try:
+        params = json.loads(decrypt(request.stream.read()))
+        yidingchenggong = params['yidingchenggong']
+    except Exception as e:
+        print(e)
+        return json.dumps({'MSG': '警告！非法入侵！！！'})
+    global hisdata0, newhisdata0, hisdata1, newhisdata1, hisdata2, newhisdata2
+    jintian = time.strftime("%Y-%m-%d", time.localtime())
+    nowtime = time.strftime("%Y%m%d", time.localtime())
+    hisdatajintian = hisdata1['jintian'][:4] + hisdata1['jintian'][5:7] + hisdata1['jintian'][8:10]
+    if (jintian != hisdata1['jintian']):
+        scroll = 0
+        p = '^' + hisdata1['jintian']
+        Docs = mydb1['userinfo'].find(
+            {'addtime': {"$regex": p}}).limit(10000).skip(scroll * 10000)
+        scroll += 1
+        jintianyonghushu = 0
+        flag = 0
+        for doc in Docs:
+            jintianyonghushu += 1
+            flag += 1
+        jintianfufeiyonghushu = 0
+        jintianfufeicishu = 0
+        jintianfufeizonge = 0
+        while flag == 10000:
+            Docs = mydb1['userinfo'].find(
+                {'addtime': {"$regex": p}}).limit(10000).skip(scroll * 10000)
+            scroll += 1
+            flag = 0
+            for doc in Docs:
+                flag += 1
+                jintianyonghushu += 1
+        scroll = 0
+        p = '^' + hisdatajintian
+        Docs = mydb1['userzhifu'].find(
+            {'updatatime': {"$regex": p}}).limit(10000).skip(scroll * 10000)
+        scroll += 1
+        flag = 0
+        for doc in Docs:
+            flag += 1
+            if (len(doc['zhifudata']) == 1): jintianfufeiyonghushu += 1
+            for zhifudata in doc['zhifudata']:
+                if hisdatajintian == zhifudata['time_end'][:8]:
+                    jintianfufeicishu += 1
+                    jintianfufeizonge += int(int(zhifudata['total_fee']) * 0.01)
+        while flag == 10000:
+            Docs = mydb1['userzhifu'].find(
+                {'updatatime': {"$regex": p}}).limit(10000).skip(scroll * 10000)
+            scroll += 1
+            flag = 0
+            for doc in Docs:
+                flag += 1
+                if (len(doc['zhifudata']) == 1): jintianfufeiyonghushu += 1
+                for zhifudata in doc['zhifudata']:
+                    if hisdatajintian == zhifudata['time_end'][:8]:
+                        jintianfufeicishu += 1
+                        jintianfufeizonge += int(int(zhifudata['total_fee']) * 0.01)
+        newhisdata1['zuotianyonghushu'] = jintianyonghushu
+        newhisdata1['zuotianfufeicishu'] = jintianfufeicishu
+        newhisdata1['zuotianfufeizonge'] = jintianfufeizonge
+        if (jintian[:7] != hisdata1['jintian'][:7]):
+            newhisdata1['dangyueyonghushu'] = 0
+            newhisdata1['dangyuefufeicishu'] = 0
+            newhisdata1['dangyuefufeizonge'] = 0
+        else:
+            newhisdata1['dangyueyonghushu'] = hisdata1['dangyueyonghushu'] + jintianyonghushu
+            newhisdata1['dangyuefufeicishu'] = hisdata1['dangyuefufeicishu'] + jintianfufeicishu
+            newhisdata1['dangyuefufeizonge'] = hisdata1['dangyuefufeizonge'] + jintianfufeizonge
+        newhisdata1['zongyonghushu'] = hisdata1['zongyonghushu'] + jintianyonghushu
+        newhisdata1['zongfufeiyonghushu'] = hisdata1['zongfufeiyonghushu'] + jintianfufeiyonghushu
+        newhisdata1['zongfufeicishu'] = hisdata1['zongfufeicishu'] + jintianfufeicishu
+        newhisdata1['zongfufeie'] = hisdata1['zongfufeie'] + jintianfufeizonge
+        newhisdata1['jintian'] = jintian
+        f = open('shuju.json', 'w')
+        f.write(json.dumps({'chenggong0': newhisdata0, 'chenggong1': newhisdata1, 'chenggong2': newhisdata2}) + '\n')
+        f.close()
+        hisdata1 = newhisdata1.copy()
+
+    p = '^' + jintian
+    scroll = 0
+    Docs = mydb1['userinfo'].find(
+        {'addtime': {"$regex": p}}).limit(10000).skip(scroll * 10000)
+    scroll += 1
+    jintianyonghushu = 0
+    flag = 0
+    for doc in Docs:
+        jintianyonghushu += 1
+        flag += 1
+    jintianfufeiyonghushu = 0
+    jintianfufeicishu = 0
+    jintianfufeizonge = 0
+    while flag == 10000:
+        Docs = mydb1['userinfo'].find(
+            {'addtime': {"$regex": p}}).limit(10000).skip(scroll * 10000)
+        scroll += 1
+        flag = 0
+        for doc in Docs:
+            jintianyonghushu += 1
+            flag += 1
+    p = '^' + nowtime
+    scroll = 0
+    Docs = mydb1['userzhifu'].find(
+        {'updatatime': {"$regex": p}}).limit(10000).skip(scroll * 10000)
+    scroll += 1
+    flag = 0
+    for doc in Docs:
+        flag += 1
+        if (len(doc['zhifudata']) == 1): jintianfufeiyonghushu += 1
+        for zhifudata in doc['zhifudata']:
+            if nowtime == zhifudata['time_end'][:8]:
+                jintianfufeicishu += 1
+                jintianfufeizonge += int(int(zhifudata['total_fee']) * 0.01)
+    while flag == 10000:
+        Docs = mydb1['userzhifu'].find(
+            {'updatatime': {"$regex": p}}).limit(10000).skip(scroll * 10000)
+        scroll += 1
+        flag = 0
+        for doc in Docs:
+            flag += 1
+            if (len(doc['zhifudata']) == 1): jintianfufeiyonghushu += 1
+            for zhifudata in doc['zhifudata']:
+                if nowtime == zhifudata['time_end'][:8]:
+                    jintianfufeicishu += 1
+                    jintianfufeizonge += int(int(zhifudata['total_fee']) * 0.01)
+    newhisdata1 = hisdata1.copy()
+    newhisdata1['zongyonghushu'] = hisdata1['zongyonghushu'] + jintianyonghushu
+    newhisdata1['zongfufeiyonghushu'] = hisdata1['zongfufeiyonghushu'] + jintianfufeiyonghushu
+    newhisdata1['zongfufeicishu'] = hisdata1['zongfufeicishu'] + jintianfufeicishu
+    newhisdata1['zongfufeie'] = hisdata1['zongfufeie'] + jintianfufeizonge
+    newhisdata1['jintianyonghushu'] = jintianyonghushu
+    newhisdata1['jintianfufeicishu'] = jintianfufeicishu
+    newhisdata1['jintianfufeizonge'] = jintianfufeizonge
+    newhisdata1['dangyueyonghushu'] = hisdata1['dangyueyonghushu'] + jintianyonghushu
+    newhisdata1['dangyuefufeicishu'] = hisdata1['dangyuefufeicishu'] + jintianfufeicishu
+    newhisdata1['dangyuefufeizonge'] = hisdata1['dangyuefufeizonge'] + jintianfufeizonge
+    scroll = 0
+    Docs = mydb1['userinfo'].find({'vipdengji': 1}).limit(10000).skip(scroll * 10000)
+    scroll += 1
+    newhisdata1['dengji1'] = 0
+    flag = 0
+    for doc in Docs:
+        flag += 1
+        newhisdata1['dengji1'] += 1
+    while flag == 10000:
+        Docs = mydb1['userinfo'].find({'vipdengji': 1}).limit(10000).skip(scroll * 10000)
+        scroll += 1
+        flag = 0
+        for doc in Docs:
+            flag += 1
+            newhisdata1['dengji1'] += 1
+    scroll = 0
+    Docs = mydb1['userinfo'].find({'vipdengji': 2}).limit(10000).skip(scroll * 10000)
+    scroll += 1
+    newhisdata1['dengji2'] = 0
+    flag = 0
+    for doc in Docs:
+        flag += 1
+        newhisdata1['dengji2'] += 1
+    while flag == 10000:
+        Docs = mydb1['userinfo'].find({'vipdengji': 2}).limit(10000).skip(scroll * 10000)
+        scroll += 1
+        flag = 0
+        for doc in Docs:
+            flag += 1
+            newhisdata1['dengji2'] += 1
+    return encrypt(json.dumps({'MSG': 'OK', 'data': newhisdata1}))
+
+
+@app.route(qianzui + "getChengGong2", methods=["POST"])
+def getChengGong2():
+    try:
+        params = json.loads(decrypt(request.stream.read()))
+        yidingchenggong = params['yidingchenggong']
+    except Exception as e:
+        print(e)
+        return json.dumps({'MSG': '警告！非法入侵！！！'})
+    global hisdata0, newhisdata0, hisdata1, newhisdata1, hisdata2, newhisdata2
+    jintian = time.strftime("%Y-%m-%d", time.localtime())
+    nowtime = time.strftime("%Y%m%d", time.localtime())
+    hisdatajintian = hisdata2['jintian'][:4] + hisdata2['jintian'][5:7] + hisdata2['jintian'][8:10]
+    if (jintian != hisdata2['jintian']):
+        scroll = 0
+        p = '^' + hisdata2['jintian']
+        Docs = mydb2['userinfo'].find(
+            {'addtime': {"$regex": p}}).limit(10000).skip(scroll * 10000)
+        scroll += 1
+        jintianyonghushu = 0
+        flag = 0
+        for doc in Docs:
+            jintianyonghushu += 1
+            flag += 1
+        jintianfufeiyonghushu = 0
+        jintianfufeicishu = 0
+        jintianfufeizonge = 0
+        while flag == 10000:
+            Docs = mydb2['userinfo'].find(
+                {'addtime': {"$regex": p}}).limit(10000).skip(scroll * 10000)
+            scroll += 1
+            flag = 0
+            for doc in Docs:
+                flag += 1
+                jintianyonghushu += 1
+        scroll = 0
+        p = '^' + hisdatajintian
+        Docs = mydb2['userzhifu'].find(
+            {'updatatime': {"$regex": p}}).limit(10000).skip(scroll * 10000)
+        scroll += 1
+        flag = 0
+        for doc in Docs:
+            flag += 1
+            if (len(doc['zhifudata']) == 1): jintianfufeiyonghushu += 1
+            for zhifudata in doc['zhifudata']:
+                if hisdatajintian == zhifudata['time_end'][:8]:
+                    jintianfufeicishu += 1
+                    jintianfufeizonge += int(int(zhifudata['total_fee']) * 0.01)
+        while flag == 10000:
+            Docs = mydb2['userzhifu'].find(
+                {'updatatime': {"$regex": p}}).limit(10000).skip(scroll * 10000)
+            scroll += 1
+            flag = 0
+            for doc in Docs:
+                flag += 1
+                if (len(doc['zhifudata']) == 1): jintianfufeiyonghushu += 1
+                for zhifudata in doc['zhifudata']:
+                    if hisdatajintian == zhifudata['time_end'][:8]:
+                        jintianfufeicishu += 1
+                        jintianfufeizonge += int(int(zhifudata['total_fee']) * 0.01)
+        newhisdata2['zuotianyonghushu'] = jintianyonghushu
+        newhisdata2['zuotianfufeicishu'] = jintianfufeicishu
+        newhisdata2['zuotianfufeizonge'] = jintianfufeizonge
+        if (jintian[:7] != hisdata2['jintian'][:7]):
+            newhisdata2['dangyueyonghushu'] = 0
+            newhisdata2['dangyuefufeicishu'] = 0
+            newhisdata2['dangyuefufeizonge'] = 0
+        else:
+            newhisdata2['dangyueyonghushu'] = hisdata2['dangyueyonghushu'] + jintianyonghushu
+            newhisdata2['dangyuefufeicishu'] = hisdata2['dangyuefufeicishu'] + jintianfufeicishu
+            newhisdata2['dangyuefufeizonge'] = hisdata2['dangyuefufeizonge'] + jintianfufeizonge
+        newhisdata2['zongyonghushu'] = hisdata2['zongyonghushu'] + jintianyonghushu
+        newhisdata2['zongfufeiyonghushu'] = hisdata2['zongfufeiyonghushu'] + jintianfufeiyonghushu
+        newhisdata2['zongfufeicishu'] = hisdata2['zongfufeicishu'] + jintianfufeicishu
+        newhisdata2['zongfufeie'] = hisdata2['zongfufeie'] + jintianfufeizonge
+        newhisdata2['jintian'] = jintian
+        f = open('shuju.json', 'w')
+        f.write(json.dumps({'chenggong0': newhisdata0, 'chenggong1': newhisdata1, 'chenggong2': newhisdata2}) + '\n')
+        f.close()
+        hisdata2 = newhisdata2.copy()
+
+    p = '^' + jintian
+    scroll = 0
+    Docs = mydb2['userinfo'].find(
+        {'addtime': {"$regex": p}}).limit(10000).skip(scroll * 10000)
+    scroll += 1
+    jintianyonghushu = 0
+    flag = 0
+    for doc in Docs:
+        jintianyonghushu += 1
+        flag += 1
+    jintianfufeiyonghushu = 0
+    jintianfufeicishu = 0
+    jintianfufeizonge = 0
+    while flag == 10000:
+        Docs = mydb2['userinfo'].find(
+            {'addtime': {"$regex": p}}).limit(10000).skip(scroll * 10000)
+        scroll += 1
+        flag = 0
+        for doc in Docs:
+            jintianyonghushu += 1
+            flag += 1
+    p = '^' + nowtime
+    scroll = 0
+    Docs = mydb2['userzhifu'].find(
+        {'updatatime': {"$regex": p}}).limit(10000).skip(scroll * 10000)
+    scroll += 1
+    flag = 0
+    for doc in Docs:
+        flag += 1
+        if (len(doc['zhifudata']) == 1): jintianfufeiyonghushu += 1
+        for zhifudata in doc['zhifudata']:
+            if nowtime == zhifudata['time_end'][:8]:
+                jintianfufeicishu += 1
+                jintianfufeizonge += int(int(zhifudata['total_fee']) * 0.01)
+    while flag == 10000:
+        Docs = mydb2['userzhifu'].find(
+            {'updatatime': {"$regex": p}}).limit(10000).skip(scroll * 10000)
+        scroll += 1
+        flag = 0
+        for doc in Docs:
+            flag += 1
+            if (len(doc['zhifudata']) == 1): jintianfufeiyonghushu += 1
+            for zhifudata in doc['zhifudata']:
+                if nowtime == zhifudata['time_end'][:8]:
+                    jintianfufeicishu += 1
+                    jintianfufeizonge += int(int(zhifudata['total_fee']) * 0.01)
+    newhisdata2 = hisdata2.copy()
+    newhisdata2['zongyonghushu'] = hisdata2['zongyonghushu'] + jintianyonghushu
+    newhisdata2['zongfufeiyonghushu'] = hisdata2['zongfufeiyonghushu'] + jintianfufeiyonghushu
+    newhisdata2['zongfufeicishu'] = hisdata2['zongfufeicishu'] + jintianfufeicishu
+    newhisdata2['zongfufeie'] = hisdata2['zongfufeie'] + jintianfufeizonge
+    newhisdata2['jintianyonghushu'] = jintianyonghushu
+    newhisdata2['jintianfufeicishu'] = jintianfufeicishu
+    newhisdata2['jintianfufeizonge'] = jintianfufeizonge
+    newhisdata2['dangyueyonghushu'] = hisdata2['dangyueyonghushu'] + jintianyonghushu
+    newhisdata2['dangyuefufeicishu'] = hisdata2['dangyuefufeicishu'] + jintianfufeicishu
+    newhisdata2['dangyuefufeizonge'] = hisdata2['dangyuefufeizonge'] + jintianfufeizonge
+    scroll = 0
+    Docs = mydb2['userinfo'].find({'vipdengji': 1}).limit(10000).skip(scroll * 10000)
+    scroll += 1
+    newhisdata2['dengji1'] = 0
+    flag = 0
+    for doc in Docs:
+        flag += 1
+        newhisdata2['dengji1'] += 1
+    while flag == 10000:
+        Docs = mydb2['userinfo'].find({'vipdengji': 1}).limit(10000).skip(scroll * 10000)
+        scroll += 1
+        flag = 0
+        for doc in Docs:
+            flag += 1
+            newhisdata2['dengji1'] += 1
+    scroll = 0
+    Docs = mydb2['userinfo'].find({'vipdengji': 2}).limit(10000).skip(scroll * 10000)
+    scroll += 1
+    newhisdata2['dengji2'] = 0
+    flag = 0
+    for doc in Docs:
+        flag += 1
+        newhisdata2['dengji2'] += 1
+    while flag == 10000:
+        Docs = mydb2['userinfo'].find({'vipdengji': 2}).limit(10000).skip(scroll * 10000)
+        scroll += 1
+        flag = 0
+        for doc in Docs:
+            flag += 1
+            newhisdata2['dengji2'] += 1
+    scroll = 0
+    Docs = mydb2['userinfo'].find({'vipdengji': 3}).limit(10000).skip(scroll * 10000)
+    scroll += 1
+    newhisdata2['dengji3'] = 0
+    flag = 0
+    for doc in Docs:
+        flag += 1
+        newhisdata2['dengji3'] += 1
+    while flag == 10000:
+        Docs = mydb2['userinfo'].find({'vipdengji': 3}).limit(10000).skip(scroll * 10000)
+        scroll += 1
+        flag = 0
+        for doc in Docs:
+            flag += 1
+            newhisdata2['dengji3'] += 1
+    scroll = 0
+    Docs = mydb2['userinfo'].find({'vipdengji': 4}).limit(10000).skip(scroll * 10000)
+    scroll += 1
+    newhisdata2['dengji4'] = 0
+    flag = 0
+    for doc in Docs:
+        flag += 1
+        newhisdata2['dengji4'] += 1
+    while flag == 10000:
+        Docs = mydb2['userinfo'].find({'vipdengji': 4}).limit(10000).skip(scroll * 10000)
+        scroll += 1
+        flag = 0
+        for doc in Docs:
+            flag += 1
+            newhisdata2['dengji4'] += 1
+    return encrypt(json.dumps({'MSG': 'OK', 'data': newhisdata2}))
 
 
 @app.route(qianzui + "getXiangqing", methods=["POST"])
@@ -771,9 +1155,6 @@ def getZhifulist():
     retlist = []
     for unionid in userlist:
         doc = es.get(index='userinfo', doc_type='userinfo', id=unionid)['_source']
-        purePhoneNumber = ''
-        if 'purePhoneNumber' in doc:
-            purePhoneNumber = doc['purePhoneNumber']
         nickName = ''
         if 'nickName' in doc:
             nickName = doc['nickName']
@@ -788,8 +1169,7 @@ def getZhifulist():
                                                                                                             unionid][
                                                                                                         6:8] + ' ' +
                         unionidlist[unionid][8:10] + ':' + unionidlist[unionid][10:12] + ':' + unionidlist[unionid][
-                                                                                               12:14], purePhoneNumber,
-                        apptype])
+                                                                                               12:14], apptype])
     return encrypt(json.dumps({'MSG': 'OK', 'data': retlist}))
 
 

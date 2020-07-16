@@ -41,26 +41,9 @@ if __name__ == '__main__':
     postJson ={
         "button": [
             {
-                "name": "加入会员",
-                "sub_button": [
-                    {
-                        "type": "view",
-                        "name": "会员",
-                        "url": "http://www.lianaizhuli.com/huiyuan",
-                        "sub_button": []
-                    },
-                    {
-                        "type": "view",
-                        "name": "课程",
-                        "url": "http://www.lianaizhuli.com/kechenglist",
-                        "sub_button": []
-                    },
-                ]
-            },
-            {
                 "name": "小程序",
                 "type": "miniprogram",
-                "appid": "wxa9ef833cef143ce1",
+                "appid": "wx37ef7f5da5362166",
                 "pagepath": "pages/home",
                 "url": "https://www.lianaizhuli.com/gongzhonghao/lianxiwomen.html",
                 "sub_button": []
@@ -71,7 +54,7 @@ if __name__ == '__main__':
                     {
                         "name": "咨询客服",
                         "type": "miniprogram",
-                        "appid": "wxa9ef833cef143ce1",
+                        "appid": "wx37ef7f5da5362166",
                         "pagepath": "pages/info",
                         "url": "https://www.lianaizhuli.com/gongzhonghao/lianxiwomen.html",
                         "sub_button": []
@@ -80,12 +63,6 @@ if __name__ == '__main__':
                         "type": "view",
                         "name": "联系我们",
                         "url": "https://www.lianaizhuli.com/gongzhonghao/lianxiwomen.html",
-                        "sub_button": []
-                    },
-                    {
-                        "type": "view",
-                        "name": "人才招聘",
-                        "url": "https://mp.weixin.qq.com/s/iCoVfPko0v-egPYSKTbN9Q",
                         "sub_button": []
                     },
                     {

@@ -83,7 +83,7 @@ if __name__ == '__main__':
                     {
                         "name": "咨询客服",
                         "type": "miniprogram",
-                        "appid": "wxa9ef833cef143ce1",
+                        "appid": "wx37ef7f5da5362166",
                         "pagepath": "pages/info",
                         "url": "https://www.lianaizhuli.com/gongzhonghao/lianxiwomen.html",
                         "sub_button": []

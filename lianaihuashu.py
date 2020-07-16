@@ -50,14 +50,14 @@ xiaochengxus = {'lianaihuashuai': {'appid': 'wxa9ef833cef143ce1', 'secret': '574
                 'liaotianhuashu': {'appid': 'wx81e1a4ccc8385f3a', 'secret': 'be67438b9553c084c6e10041b69a8d8d'},
                 'liaotianshenqi': {'appid': 'wx37351e7c4754d5fd', 'secret': '25a70835c7e02b7a7aff8be37a72e1d6'},
                 'tuodanhuashu': {'appid': 'wxfd8bc693434e910f', 'secret': '72e3a71fc433defaa6acb485b4ed51bb'}}
-fuwuhaoappid = 'wx2cc1bc5a412d44d2'
-fuwuhaoAppSecret = '3290467fd91f3e4ae427fca28d0137c9'
+fuwuhaoappid = 'wxc1deae6a065dffa9'
+fuwuhaoAppSecret = 'c41de1c8444ae79798ff0f1a5880295a'
 apps = {'lianaituodanhuashu': {'appid': 'wx492758c5b72a2e3f', 'secret': '89be1eaaf1cc9b5fc744488f2e404491'},
         'lianaihuashu': {'appid': 'wxa3fd03bd67991724', 'secret': '9603dcb14f0728e3cc2df4ad5ac51100'},
-        'tuodanhuashu': {'appid': 'wxe8d85652ce34761a', 'secret': 'bb5da1ed0b7663bf815eb14cb28ba814'},
-        'liaotianhuashu': {'appid': 'wx95d8198056366e70', 'secret': 'b1d31434470fe63a07a6355b49c2bd95'},
         'lianaishenqi': {'appid': 'wxf826c7c4ef8113c3', 'secret': 'a699107b8e5ad3081bdc6540dbe243bb'},
-        'liaotianshenqi': {'appid': 'wx8d09d578e92e9eca', 'secret': '48bd1b8daba333f1a799701e549e15aa'}}
+        'liaotianhuashu': {'appid': 'wx95d8198056366e70', 'secret': 'b1d31434470fe63a07a6355b49c2bd95'},
+        'liaotianshenqi': {'appid': 'wx8d09d578e92e9eca', 'secret': '48bd1b8daba333f1a799701e549e15aa'},
+        'tuodanhuashu': {'appid': 'wxe8d85652ce34761a', 'secret': 'bb5da1ed0b7663bf815eb14cb28ba814'}}
 mch_id = '1519367291'
 merchant_key = 'shenzhenyuzikejiyouxiangongsi888'
 key = "szyzkjpangyuming"
@@ -68,9 +68,14 @@ unpad = lambda s: s[0:-ord(s[-1])]
 tixianunionid = {}
 tixianunionid_time = {}
 vipdengji = [0, 1, 2, 3, 4, 5, 6]
-viptime = [86400, 3153600000, 3153600000, 3153600000, 3153600000, 3153600000, 3153600000]
-sijiaotime = [0, 0, 2592000, 15552000, 7776000, 31536000, 3153600000]
-total_fees = [0, 19900, 199900, 49900, 99900, 299900, 499900]
+viptime = [600, 604800, 2592000, 7776000, 31536000, 31536000, 31536000]
+sijiaotime = [0, 0, 0, 0, 0, 2592000, 7776000]
+total_fees = [0, 6900, 9900, 14900, 19900, 49900, 99900]
+vipdengjimiaoshu = ['非会员', '周会员', '月会员', '季会员', '年会员', '私教1个月(送年会员)', '私教3个月(送年会员)']
+contentlist1 = ['1、恋爱话术课程共9门', '2、20万+条恋爱话术可供搜索', '3、上万+条恋爱话题可供参考', '4、百万+张逗趣表情可供搜索', '5、丰富的聊天实战案例', '6、丰富的展示面案例',
+                '7、丰富的恋爱百科知识', '8、丰富的土味情话', '9、丰富的心理测试', '10、500人答疑群']
+contentlist2 = ['1、小程序年会员', '2、500人高级答疑群', '3、恋爱话术课程共9门', '4、恋爱挽回婚姻一对一私教指导']
+contentlist = [contentlist1, contentlist1, contentlist1, contentlist1, contentlist1, contentlist2, contentlist2]
 # viptime = [0, 60, 60, 60, 60, 60, 60]
 # sijiaotime = [0, 60, 60, 60, 60, 60, 60]
 # total_fees = [0, 19900, 199900, 1, 99900, 299900, 499900]
@@ -79,17 +84,18 @@ for line in open('tuweiqinghua.json'):
     line = json.loads(line)
     tuweiqinghua.append(line['id'])
 tiyancishu = 3
-pingguoshenhe = 1
-baidushenhe = 1
+pingguoshenhe = 0
+baidushenhe = 0
+kefushenhe = 1
 tengxunshenhe = 0
-weixinshenhe = 1
+weixinshenhe = 0
 weixinpingguoshenhe = 1
-if weixinshenhe == 1:
+liaomeishenhe = 1
+if pingguoshenhe == 1 or weixinshenhe == 1:
     ioswenan = '由于相关规范，小程序下IOS虚拟商品支付暂不可用。'
 else:
     ioswenan = '由于相关规范，小程序下IOS虚拟商品支付暂不可用。IOS用户请到个人页咨询在线客服。'
-istuiguang = 0
-nowversion = '1.1.1'
+nowversion = '3.6.0'
 apiqianzui = '/xcx/'
 
 
@@ -102,23 +108,29 @@ def adduserhis(userhis):
 def getIslianmeng():
     try:
         params = json.loads(decrypt(request.stream.read()))
-        system = params['system']
     except Exception as e:
         logger.error(e)
         return json.dumps({'MSG': '警告！非法入侵！！！'})
     nowbaidushenhe = 0
+    nowkefushenhe = 0
     if params['apptype'] == 'baidu':
         nowbaidushenhe = baidushenhe
+    if params['apptype'] == 'huawei':
+        nowkefushenhe = kefushenhe
+    if params['apptype'] == 'pingguo':
+        return encrypt(json.dumps(
+            {'MSG': 'OK', 'pingguoshenhe': pingguoshenhe}))
+    system = params['system']
     if system[:3].lower() == 'ios':
         return encrypt(json.dumps(
-            {'MSG': 'OK', 'istuiguang': istuiguang, 'weixinshenhe': weixinshenhe,
-             'weixinpingguoshenhe': weixinpingguoshenhe, 'pingguoshenhe': pingguoshenhe, 'tengxunshenhe': 0,
-             'baidushenhe': nowbaidushenhe}))
+            {'MSG': 'OK', 'weixinshenhe': weixinshenhe, 'weixinpingguoshenhe': weixinpingguoshenhe,
+             'pingguoshenhe': pingguoshenhe, 'tengxunshenhe': 0, 'baidushenhe': nowbaidushenhe,
+             'liaomeishenhe': liaomeishenhe, 'kefushenhe': nowkefushenhe}))
     else:
         return encrypt(json.dumps(
-            {'MSG': 'OK', 'istuiguang': istuiguang, 'weixinshenhe': weixinshenhe, 'weixinpingguoshenhe': 0,
-             'pingguoshenhe': 0,
-             'tengxunshenhe': tengxunshenhe, 'baidushenhe': nowbaidushenhe, 'appleshenhe': 1}))
+            {'MSG': 'OK', 'weixinshenhe': weixinshenhe, 'weixinpingguoshenhe': 0,
+             'pingguoshenhe': 0, 'tengxunshenhe': tengxunshenhe, 'baidushenhe': nowbaidushenhe,
+             'liaomeishenhe': liaomeishenhe, 'kefushenhe': nowkefushenhe}))
 
 
 @app.route(apiqianzui + "jianChagengxin", methods=["POST"])
@@ -136,39 +148,14 @@ def jianChagengxin():
     gengxintype = 0
     msgtype = 0
     msgtext = ''
-    openurl = wangzhi
-    if version < nowversion:
+    openurl = 'http://www.lianaizhuli.com/'
+    if version < nowversion and params['apptype'] != 'pingguo':
         gengxintype = 1  # 更新
         # gengxintype = 2  # 打开网页
-    gengxinurl = wangzhi + '/app/' + apptype + '_' + nametype + '.wgt'
+    gengxinurl = wangzhi + '/app/' + 'app.apk'
     return encrypt(json.dumps({'MSG': 'YES',
                                'data': {'gengxintype': gengxintype, 'gengxinurl': gengxinurl, 'openurl': openurl,
                                         'msgtype': msgtype, 'msgtext': msgtext}}))
-
-
-@app.route(apiqianzui + "checkVersion", methods=["POST"])
-def checkVersion():
-    oldversion = request.form['version']
-    andoridupdatetype = 0
-    iosupdatetype = 0
-    if oldversion < nowversion:
-        andoridupdatetype = 1
-        iosupdatetype = 1
-    andoridxiaourl = 'https://www.lianaizhuli.com/app_lianaituodanhuashu.wgt'
-    andoriddaurl = 'http://www.lianaizhuli.com/'
-    andoridurl = 'https://www.lianaizhuli.com/app.apk'
-    iosxiaourl = 'https://www.lianaizhuli.com/app_lianaituodanhuashu.wgt'
-    iosdaurl = 'http://www.lianaizhuli.com/'
-    androidmagtype = 0
-    androidmsg = ''
-    iosmsgtype = 0
-    isomsg = ''
-    return json.dumps({'MSG': 'YES',
-                       'data': {'andoridupdatetype': andoridupdatetype, 'andoridxiaourl': andoridxiaourl,
-                                'andoriddaurl': andoriddaurl, 'andoridurl': andoridurl, 'iosupdatetype': iosupdatetype,
-                                'iosxiaourl': iosxiaourl,
-                                'iosdaurl': iosdaurl, 'androidmagtype': androidmagtype, 'androidmsg': androidmsg,
-                                'iosmsgtype': iosmsgtype, 'isomsg': isomsg, 'version': nowversion}})
 
 
 @app.route(apiqianzui + "getShouyekuai", methods=["POST"])
@@ -187,7 +174,7 @@ def getShouyekuai():
         # {'title': '恋爱联盟招聘',
         #  'adurl': 'https://www.lianaizhuli.com/shouye/zhaopinbanner.jpg',
         #  'type': 'image', 'url': 'cloud://lianaihuashu-086596.6c69-lianaihuashu-086596/shouye/zhaopin1.jpg'},
-        {'title': '和友商对比', 'adurl': wangzhi + '/shouye/lunbotu/WechatIMG43.jpeg',
+        {'title': '和友商对比', 'adurl': wangzhi + '/shouye/lunbotu/duibi.jpeg',
          'type': 'html', 'url': 'https://mp.weixin.qq.com/s/xR2iH6bHkY9OUvRVYHWv9w'},
         {'title': '分手挽回', 'adurl': wangzhi + '/shouye/lunbotu/fenshouwanhui.png',
          'type': 'path', 'url': '/pages/sijiao',
@@ -195,14 +182,14 @@ def getShouyekuai():
                   "id": "yusd3ntvgRLCNFpxKw", "image": "https://www.lianaizhuli.com/shouye/images/sijiao4.png",
                   "count": 7532}},
     ],
-                               'tubiao': [{'title': '土味情话', 'image': wangzhi + '/shouye/tubiao/tuweiqinghua.png',
+                               'tubiao': [{'title': '土味情话', 'image': wangzhi + '/shouye/tubiao/qingganbaike.png',
                                            'page': 'tuweiqinghualist'},
-                                          {'title': '聊天实战', 'image': wangzhi + '/shouye/tubiao/liaomeitaolu.png',
-                                           'page': 'liaomeishizhanlist'},
-                                          {'title': '情感百科', 'image': wangzhi + '/shouye/tubiao/qingganbaike.png',
-                                           'page': 'qingganbaike'},
                                           {'title': '心理测试', 'image': wangzhi + '/shouye/tubiao/xinliceshi.png',
-                                           'page': 'xinliceshilist'}, ],
+                                           'page': 'xinliceshilist'},
+                                          {'title': '形象建设', 'image': wangzhi + '/shouye/tubiao/tuweiqinghua.png',
+                                           'page': 'xingxiangjianshelist'},
+                                          {'title': '情感私教', 'image': wangzhi + '/shouye/tubiao/liaomeitaolu.png',
+                                           'page': 'sijiaolist'}, ],
                                'searchicon': wangzhi + '/shouye/search.png',
                                'miaoshu': '①女生回了一句话 ②你恐惧回复不好 ③复制粘贴在这里试试？',
                                'tuijian': ['我有男朋友了', '你真自恋', '我睡觉了', '表白', '哈哈'],
@@ -248,13 +235,11 @@ def getShouyeman():
     for u, doc in enumerate(Docs):
         doc = doc['_source']
         doc['newimage'] = doc['image']
-        # doc['newimage'] = wangzhi + '/shouye/images/qingganbaike' + str(u + 1) + '.png'
         qingganbaike['data'].append(doc)
     Docs = es.search(index='liaomeishizhanlist', doc_type='liaomeishizhanlist', body=search, size=4)['hits']['hits']
     for u, doc in enumerate(Docs):
         doc = doc['_source']
         doc['newimage'] = doc['image']
-        # doc['newimage'] = wangzhi + '/shouye/images/liaomeishizhan' + str(u + 1) + '.png'
         liaomeishizhan['data'].append(doc)
     Docs = es.search(index='sijiao', doc_type='sijiao', body=search, size=3)['hits']['hits']
     for u, doc in enumerate(Docs):
@@ -421,8 +406,7 @@ def getUnionid():
         logger.error(json.dumps(options, ensure_ascii=False))
         None
     userinfo['openid'] = openid
-    if openid != unionid:
-        userinfo['unionid'] = unionid
+    userinfo['unionid'] = unionid
     # if 'query' in options and 'scene' in options['query']:
     #     shangji = options['query']['scene']
     #     try:
@@ -579,8 +563,6 @@ def checkUnionid():
     try:
         params = json.loads(decrypt(request.stream.read()))
         unionid = params['unionid']
-        userinfo = params['userinfo']
-        system = params['system']
     except Exception as e:
         logger.error(e)
         return encrypt(json.dumps({'MSG': 'NO'}))
@@ -590,12 +572,8 @@ def checkUnionid():
     except:
         None
     try:
-        doc = es.get(index='userinfo', doc_type='userinfo', id=unionid)
-        newdoc = doc['_source']
-        newdoc.update(userinfo)
-        newdoc['system'] = system
-        es.index(index='userinfo', doc_type='userinfo', id=unionid, body=newdoc)
-        if 'unionid' in newdoc and 'openid' in newdoc:
+        doc = es.get(index='userinfo', doc_type='userinfo', id=unionid)['_source']
+        if 'unionid' in doc and 'openid' in doc:
             return encrypt(json.dumps({'MSG': 'YES'}))
         else:
             return encrypt(json.dumps({'MSG': 'NO'}))
@@ -622,6 +600,21 @@ def checkAppunionid():
     except:
         return encrypt(json.dumps({'MSG': 'NO'}))
     return encrypt(json.dumps({'MSG': 'NO'}))
+
+
+@app.route(apiqianzui + "getIfguanggao", methods=["POST"])
+def getIfguanggao():
+    try:
+        params = json.loads(decrypt(request.stream.read()))
+        unionid = params['unionid']
+    except Exception as e:
+        logger.error(e)
+        return encrypt(json.dumps({'MSG': 'NO'}))
+    try:
+        doc = es.get(index='userinfo', doc_type='userinfo', id=unionid)['_source']
+        return encrypt(json.dumps({'MSG': 'OK', 'ifguanggao': doc['vipdengji']} == 0))
+    except:
+        return encrypt(json.dumps({'MSG': 'OK', 'ifguanggao': 1}))
 
 
 @app.route(apiqianzui + "getTiyancishu", methods=["POST"])
@@ -685,6 +678,8 @@ def searchLiaomeihuashu():
     Docs = Docs['hits']['hits']
     for doc in Docs:
         retdata.append(doc['_source'])
+    if '打压' in query or '服从性' in query or '套路' in query or '撩妹' in query:
+        retdata = []
     return encrypt(json.dumps({'MSG': 'OK', 'data': retdata, 'scroll': scroll}))
 
 
@@ -728,7 +723,20 @@ def searchBaike():
     addKeyword(params)
     adduserhis({'time': getTime(), 'event': 'searchBaike', 'detail': params})
     retdata = []
-    search = {'query': {'match': {'title': query}}}
+    if liaomeishenhe:
+        search = {
+            "query": {
+                "bool": {
+                    "should": [
+                        {"match": {
+                            'title': query,
+                        }},
+                    ],
+                    "must_not": [{"term": {"doctype": "liaomeishizhan"}}, {"term": {"doctype": "baike"}},
+                                 {"term": {"doctype": "wenda"}}],
+                    "minimum_should_match": 1, }}}
+    else:
+        search = {'query': {'match': {'title': query}}}
     if scroll:
         try:
             Docs = es.scroll(scroll_id=scroll, scroll="5m")
@@ -1118,10 +1126,15 @@ def getTequan():
     except Exception as e:
         logger.error(e)
         return json.dumps({'MSG': '警告！非法入侵！！！'})
-    doc = es.get(index='userinfo', doc_type='userinfo', id=unionid)
-    return encrypt(json.dumps({'MSG': 'OK', 'vipdengji': doc['_source']['vipdengji'],
-                               'viptime': time.strftime("%Y-%m-%d %H:%M:%S",
-                                                        time.localtime(doc['_source']['viptime']))}))
+    doc = es.get(index='userinfo', doc_type='userinfo', id=unionid)['_source']
+    if doc['viptime'] > time.time():
+        viptimestr = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(doc['viptime']))
+    else:
+        viptimestr = '已到期'
+    return encrypt(json.dumps(
+        {'MSG': 'OK', 'vipdengji': doc['vipdengji'], 'vipdengjimiaoshu': vipdengjimiaoshu[doc['vipdengji']],
+         'contentlist': contentlist[doc['vipdengji']], 'viptime': viptimestr, 'wenhouyu': 'HI，欢迎您~',
+         'kefuid': 'gh_6e02510c7f48'}))
 
 
 @app.route(apiqianzui + "getJifen", methods=["POST"])
@@ -1132,10 +1145,15 @@ def getJifen():
     except Exception as e:
         logger.error(e)
         return json.dumps({'MSG': '警告！非法入侵！！！'})
-    doc = es.get(index='userinfo', doc_type='userinfo', id=unionid)
-    return encrypt(json.dumps({'MSG': 'OK', 'data': {'vipdengji': doc['_source']['vipdengji'],
-                                                     'jifen': int(doc['_source']['xiaofeizonge'] * 0.01),
-                                                     'wenhouyu': 'HI，欢迎您~'}}))
+    doc = es.get(index='userinfo', doc_type='userinfo', id=unionid)['_source']
+    if doc['viptime'] > time.time():
+        viptimestr = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(doc['viptime']))
+    else:
+        viptimestr = '已到期'
+    return encrypt(json.dumps({'MSG': 'OK',
+                               'data': {'vipdengji': doc['vipdengji'], 'jifen': int(doc['xiaofeizonge'] * 0.01),
+                                        'vipdengjimiaoshu': vipdengjimiaoshu[doc['vipdengji']], 'viptime': viptimestr,
+                                        'wenhouyu': 'HI，欢迎您~'}}))
 
 
 @app.route(apiqianzui + "getDingdan", methods=["POST"])
@@ -1534,13 +1552,13 @@ def getJiagelist():
     except Exception as e:
         logger.error(e)
         return json.dumps({'MSG': '警告！非法入侵！！！'})
-    jiagelist = [{'jiage': total_fees[0], 'miaoshu': '非会员'},
-                 {'jiage': total_fees[1], 'miaoshu': '终身会员'},
-                 {'jiage': total_fees[2], 'miaoshu': '分手挽回(送终身会员)'},
-                 {'jiage': total_fees[3], 'miaoshu': '私教1个月(送终身会员)'},
-                 {'jiage': total_fees[4], 'miaoshu': '私教3个月(送终身会员)'},
-                 {'jiage': total_fees[5], 'miaoshu': '私教1年(送终身会员)'},
-                 {'jiage': total_fees[6], 'miaoshu': '私教终身(送终身会员)'}]
+    jiagelist = [{'jiage': total_fees[0], 'miaoshu': vipdengjimiaoshu[0], 'contentlist': contentlist[0]},
+                 {'jiage': total_fees[1], 'miaoshu': vipdengjimiaoshu[1], 'contentlist': contentlist[1]},
+                 {'jiage': total_fees[2], 'miaoshu': vipdengjimiaoshu[2], 'contentlist': contentlist[2]},
+                 {'jiage': total_fees[3], 'miaoshu': vipdengjimiaoshu[3], 'contentlist': contentlist[3]},
+                 {'jiage': total_fees[4], 'miaoshu': vipdengjimiaoshu[4], 'contentlist': contentlist[4]},
+                 {'jiage': total_fees[5], 'miaoshu': vipdengjimiaoshu[5], 'contentlist': contentlist[5]},
+                 {'jiage': total_fees[6], 'miaoshu': vipdengjimiaoshu[6], 'contentlist': contentlist[6]}]
     return encrypt(json.dumps({'MSG': 'OK', 'jiagelist': jiagelist}))
 
 
@@ -1933,7 +1951,6 @@ def get_prepay_id():
         params = json.loads(decrypt(request.stream.read()))
         unionid = params['unionid']
         zhifutype = int(params['zhifutype'])
-        detail = params['detail']
         apptype = params['apptype']
     except Exception as e:
         logger.error(e)
@@ -1963,8 +1980,9 @@ def get_prepay_id():
         'mch_id': mch_id,
         'nonce_str': ''.join(random.sample(string.ascii_letters + string.digits, 32)),
         'device_info': nametype,
-        'body': detail,
-        'attach': json.dumps({'zhifutype': zhifutype, 'detail': detail, 'unionid': unionid}, ensure_ascii=False),
+        'body': vipdengjimiaoshu[zhifutype],
+        'attach': json.dumps({'zhifutype': zhifutype, 'detail': vipdengjimiaoshu[zhifutype], 'unionid': unionid},
+                             ensure_ascii=False),
         'out_trade_no': str(int(time.time())) + '_' + str((random.randint(1000000, 9999999))),
         'total_fee': total_fees[zhifutype],
         'spbill_create_ip': request.remote_addr,
@@ -2057,7 +2075,7 @@ def paynotify():
             userdoc['xiaofeicishu'] += 1
             userdoc['xiaofeizonge'] += zhifures['total_fee']
             es.index(index='userinfo', doc_type='userinfo', id=unionid, body=userdoc)
-            if zhifutype > 1:
+            if zhifutype > 0:
                 search = {"query": {"match_all": {}}}
                 kechengDocs = es.search(index='kechenglist', doc_type='kechenglist', body=search)['hits']['hits']
                 try:

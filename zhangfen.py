@@ -50,24 +50,33 @@ BLOCK_SIZE = 16
 pad = lambda s: s + (BLOCK_SIZE - len(s) % BLOCK_SIZE) * bytes(chr(BLOCK_SIZE - len(s) % BLOCK_SIZE), encoding='utf8')
 unpad = lambda s: s[0:-ord(s[-1])]
 appids = {'wx6e2807f3bb07c07e': {'secret': 'b29938d98625ae82e4125f3cd4bf0a95', 'weixinhao': 'Love---Union',
-                                 'weixinshenhe': 0},
+                                 'weixinshenhe': 0, 'mch_id': '1519367291',
+                                 'merchant_key': 'shenzhenyuzikejiyouxiangongsi888'},
           'wx80aa847a59c8e287': {'secret': '35fbe6b7eb3883a65ac2f9e2cd568bfc', 'weixinhao': 'QQ756782789',
-                                 'weixinshenhe': 0},
-          'wxc24f6a48620a38d5': {'secret': 'f76856de670c076656b7c867829c091f', 'weixinhao': 'chenelina0909',
-                                 'weixinshenhe': 0}}
-mch_id = '1519367291'
-merchant_key = 'shenzhenyuzikejiyouxiangongsi888'
+                                 'weixinshenhe': 0, 'mch_id': '1519367291',
+                                 'merchant_key': 'shenzhenyuzikejiyouxiangongsi888'},
+          'wxc24f6a48620a38d5': {'secret': 'f76856de670c076656b7c867829c091f', 'weixinhao': 'Love---Union',
+                                 'weixinshenhe': 0, 'mch_id': '1519367291',
+                                 'merchant_key': 'shenzhenyuzikejiyouxiangongsi888'},
+          'wx311bf0a55020cb9e': {'secret': '24231fcd562d3acc5ee2b546132c6fe9', 'weixinhao': '18756168518',
+                                 'weixinshenhe': 0, 'mch_id': '1596830831',
+                                 'merchant_key': 'Aa888888888888888888888888888888'},
+          'wx2cc1bc5a412d44d2': {'secret': '3290467fd91f3e4ae427fca28d0137c9', 'weixinhao': 'Love---Union',
+                                 'weixinshenhe': 0, 'mch_id': '1519367291',
+                                 'merchant_key': 'shenzhenyuzikejiyouxiangongsi888'}}
 fuwuhaoappid = 'wx2cc1bc5a412d44d2'
 fuwuhaoAppSecret = '3290467fd91f3e4ae427fca28d0137c9'
-vipdengji = [0, 1]
-viptime = [86400, 315360000, 2592000]
-total_fees = [0, 10000, 1500]
+vipdengji = [0, 1, 2, 3, 4]
+viptime = [600, 604800, 2592000, 7776000, 31536000]
+vipdengjimiaoshu = ['非会员', '周会员', '月会员', '季会员', '年会员']
+total_fees = [0, 6900, 9900, 14900, 19900]
 meirigeshu = 100
 tuweiqinghua = []
 for line in open('tuweiqinghua.json'):
     line = json.loads(line)
     tuweiqinghua.append(line['id'])
 weixinpingguoshenhe = 1
+liaomeishenhe = 0
 if weixinpingguoshenhe == 1:
     ioswenan = '由于相关规范，小程序下IOS虚拟商品支付暂不可用。'
 else:
@@ -76,7 +85,7 @@ apiqianzui = '/zhangfen/'
 
 
 def adduserhis(userhis):
-    # mydb['userhis'].update_one({}, {'$set': userhis}, True)
+    mydb['userhis'].update_one({}, {'$set': userhis}, True)
     return None
 
 
@@ -91,10 +100,11 @@ def getIslianmeng():
     if system[:3].lower() == 'ios':
         return encrypt(json.dumps(
             {'MSG': 'OK', 'weixinshenhe': appids[params['nametype']]['weixinshenhe'],
-             'weixinpingguoshenhe': weixinpingguoshenhe}))
+             'weixinpingguoshenhe': weixinpingguoshenhe, 'liaomeishenhe': liaomeishenhe}))
     else:
         return encrypt(json.dumps(
-            {'MSG': 'OK', 'weixinshenhe': appids[params['nametype']]['weixinshenhe'], 'weixinpingguoshenhe': 0}))
+            {'MSG': 'OK', 'weixinshenhe': appids[params['nametype']]['weixinshenhe'], 'weixinpingguoshenhe': 0,
+             'liaomeishenhe': liaomeishenhe}))
 
 
 @app.route(apiqianzui + "getShouyekuai", methods=["POST"])
@@ -105,7 +115,7 @@ def getShouyekuai():
         logger.error(e)
         return json.dumps({'MSG': '警告！非法入侵！！！'})
     return encrypt(json.dumps({'MSG': 'OK', 'lunbotu': [
-        {'title': '和友商对比', 'adurl': wangzhi + '/shouye/lunbotu/duibi.jpeg',
+        {'title': '和友商对比', 'adurl': wangzhi + '/shouye/lunbotu/WechatIMG43.jpeg',
          'type': 'html', 'url': 'https://mp.weixin.qq.com/s/xR2iH6bHkY9OUvRVYHWv9w'},
     ],
                                'tubiao': [{'title': '土味情话', 'image': wangzhi + '/shouye/tubiao/tuweiqinghua.png',
@@ -130,11 +140,27 @@ def getShouyeman():
     except Exception as e:
         logger.error(e)
         return json.dumps({'MSG': '警告！非法入侵！！！'})
+    kecheng = {'image': wangzhi + '/shouye/wenzi/kecheng.png', 'data': []}
     xingxiangjianshe = {'image': wangzhi + '/shouye/wenzi/xingxiangjianshe.png', 'data': []}
     qingganbaike = {'image': wangzhi + '/shouye/wenzi/qingganbaike.png', 'data': []}
     liaomeishizhan = {'image': wangzhi + '/shouye/wenzi/liaotianshizhan.png', 'data': []}
     xinliceshi = {'image': wangzhi + '/shouye/wenzi/xinliceshi.png', 'data': []}
     search = {"query": {"match_all": {}}}
+    Docs = es.search(index='kechenglist', doc_type='kechenglist', body=search, size=3)['hits']['hits']
+    try:
+        goumaidoc = mydb['kechenggoumai'].find_one({'_id': unionid + params['nametype']})
+        goumaidoc['data'] = json.loads(goumaidoc['data'])
+    except:
+        goumaidoc = {}
+        goumaidoc['data'] = {}
+    for u, doc in enumerate(Docs):
+        doc = doc['_source']
+        doc['newimage'] = wangzhi + '/shouye/images/kecheng' + str(u + 1) + '.png'
+        if doc['id'] in goumaidoc['data']:
+            doc['yigoumai'] = 1
+        else:
+            doc['yigoumai'] = 0
+        kecheng['data'].append(doc)
     Docs = es.search(index='xingxiangjianshe', doc_type='xingxiangjianshe', body=search, size=4)['hits']['hits']
     for u, doc in enumerate(Docs):
         doc = doc['_source']
@@ -158,6 +184,7 @@ def getShouyeman():
     return encrypt(json.dumps({'MSG': 'OK',
                                'gengduotext': '更多',
                                'gengduoicon': wangzhi + '/shouye/gengduo.png',
+                               'kecheng': kecheng,
                                'xingxiangjianshe': xingxiangjianshe,
                                'qingganbaike': qingganbaike,
                                'liaomeishizhan': liaomeishizhan,
@@ -291,10 +318,10 @@ def getUnionid():
         userinfo['xiaofeicishu'] = 0
         userinfo['xiaofeizonge'] = 0
         userinfo['tingyong'] = 0
-        userinfo['apptype'] = params['apptype']
-        userinfo['nametype'] = params['nametype']
     if 'options' not in userinfo:
         userinfo['options'] = options
+    userinfo['apptype'] = params['apptype']
+    userinfo['nametype'] = params['nametype']
     mydb['userinfo'].update_one({'_id': unionid + nametype}, {'$set': userinfo}, True)
     adduserhis({'time': getTime(), 'event': 'getUnionid', 'detail': params})
     return encrypt(json.dumps({'MSG': 'OK', 'data': {'unionid': unionid}}))
@@ -339,8 +366,8 @@ def getFwhnionid():
         resdata['xiaofeicishu'] = 0
         resdata['xiaofeizonge'] = 0
         resdata['tingyong'] = 0
-        resdata['apptype'] = apptype
-        resdata['nametype'] = fuwuhaoappid
+    resdata['apptype'] = apptype
+    resdata['nametype'] = fuwuhaoappid
     mydb['userinfo'].update_one({'_id': unionid + fuwuhaoappid}, {'$set': resdata}, True)
     return encrypt(json.dumps({'MSG': 'OK', 'data': {'unionid': unionid}}))
 
@@ -655,6 +682,70 @@ def getLiaomeishizhan():
     es.index(index='liaomeishizhanlist', doc_type='liaomeishizhanlist', id=liaomeishizhanid, body=doc)
     doc = es.get(index='liaomeishizhan', doc_type='liaomeishizhan', id=liaomeishizhanid)['_source']
     return encrypt(json.dumps({'MSG': 'OK', 'data': doc}))
+
+
+@app.route(apiqianzui + "getKechengList", methods=["POST"])
+def getKechengList():
+    try:
+        params = json.loads(decrypt(request.stream.read()))
+        unionid = params['unionid']
+        scroll = params['scroll']
+    except Exception as e:
+        logger.error(e)
+        return json.dumps({'MSG': '警告！非法入侵！！！'})
+    adduserhis({'time': getTime(), 'event': 'getKechengList', 'detail': params})
+    retdata = []
+    search = {"query": {"match_all": {}}}
+    if scroll:
+        try:
+            Docs = es.scroll(scroll_id=scroll, scroll="5m")
+        except:
+            Docs = es.search(index='kechenglist', doc_type='kechenglist', body=search, size=10, scroll="5m")
+
+    else:
+        Docs = es.search(index='kechenglist', doc_type='kechenglist', body=search, size=10, scroll="5m")
+    scroll = Docs['_scroll_id']
+    Docs = Docs['hits']['hits']
+    try:
+        goumaidoc = mydb['kechenggoumai'].find_one({'_id': unionid + params['nametype']})
+        goumaidoc['data'] = json.loads(goumaidoc['data'])
+    except:
+        goumaidoc = {}
+        goumaidoc['data'] = {}
+    for doc in Docs:
+        doc = doc['_source']
+        if doc['id'] in goumaidoc['data']:
+            doc['yigoumai'] = 1
+        else:
+            doc['yigoumai'] = 0
+        retdata.append(doc)
+    return encrypt(json.dumps({'MSG': 'OK', 'data': retdata, 'scroll': scroll}))
+
+
+@app.route(apiqianzui + "getKecheng", methods=["POST"])
+def getKecheng():
+    try:
+        params = json.loads(decrypt(request.stream.read()))
+        unionid = params['unionid']
+        kechengid = params['kechengid']
+        neirongid = params['neirongid']
+        kefenxiang = params['kefenxiang']
+    except Exception as e:
+        logger.error(e)
+        return json.dumps({'MSG': '警告！非法入侵！！！'})
+    adduserhis({'time': getTime(), 'event': 'getKecheng', 'detail': params})
+    if kefenxiang == '0':
+        try:
+            goumaidoc = mydb['kechenggoumai'].find_one({'_id': unionid + params['nametype']})
+            goumaidoc['data'] = json.loads(goumaidoc['data'])
+            if kechengid in goumaidoc['data']:
+                kefenxiang = '1'
+        except:
+            None
+    if kefenxiang == '1':
+        doc = es.get(index='kecheng', doc_type='kecheng', id=neirongid)['_source']
+        return encrypt(json.dumps({'MSG': 'YES', 'data': doc}))
+    return encrypt(json.dumps({'MSG': 'NO'}))
 
 
 @app.route(apiqianzui + "searchWenzhangList", methods=["POST"])
@@ -980,7 +1071,14 @@ def getvipdengji():
         logger.error(e)
         return json.dumps({'MSG': '警告！非法入侵！！！'})
     doc = mydb['userinfo'].find_one({'_id': unionid + params['nametype']})
-    return encrypt(json.dumps({'MSG': 'OK', 'vipdengji': doc['vipdengji'], 'wenhouyu': 'HI，欢迎您~'}))
+    viptimestr = ''
+    if doc['viptime'] > time.time():
+        viptimestr = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(doc['viptime']))
+    else:
+        viptimestr = '已到期'
+    return encrypt(json.dumps(
+        {'MSG': 'OK', 'vipdengji': doc['vipdengji'], 'vipdengjimiaoshu': vipdengjimiaoshu[doc['vipdengji']],
+         'viptime': viptimestr, 'wenhouyu': 'HI，欢迎您~'}))
 
 
 @app.route(apiqianzui + "getweixinhao", methods=["POST"])
@@ -992,7 +1090,7 @@ def getweixinhao():
         return json.dumps({'MSG': '警告！非法入侵！！！'})
     weixinhao = appids[params['nametype']]['weixinhao']
     ifkefu = 0
-    ifweixin = 0
+    ifweixin = 1
     ifxiaochengxu = 0
     return encrypt(json.dumps(
         {'MSG': 'OK', 'weixinhao': weixinhao, 'ifkefu': ifkefu, 'ifweixin': ifweixin, 'ifxiaochengxu': ifxiaochengxu}))
@@ -1112,7 +1210,7 @@ def get_jiage():
         logger.error(e)
         return json.dumps({'MSG': '警告！非法入侵！！！'})
     adduserhis({'time': getTime(), 'event': 'get_jiage', 'params': params})
-    jiage = {'jiage': total_fees[1] * 0.01, 'miaoshu': '终身授权码'}
+    jiage = {'jiage': total_fees[4] * 0.005, 'miaoshu': '年授权码'}
     return encrypt(json.dumps(
         {'MSG': 'OK', 'jiage': jiage}))
 
@@ -1123,32 +1221,41 @@ def get_prepay_id():
         params = json.loads(decrypt(request.stream.read()))
         unionid = params['unionid']
         zhifutype = int(params['zhifutype'])
-        detail = params['detail']
         apptype = params['apptype']
         nametype = params['nametype']
     except Exception as e:
         logger.error(e)
         return json.dumps({'MSG': '警告！非法入侵！！！'})
-    nowappid = fuwuhaoappid
     trade_type = 'JSAPI'
-    openid = mydb['userinfo'].find_one({'_id': unionid + fuwuhaoappid})['fwhid']
+    zhifubili = 1.0
+    profit_sharing = 'Y'
+    if apptype == 'fwh':
+        nowappid = fuwuhaoappid
+        zhifubili = 0.5
+        profit_sharing = 'N'
+        openid = mydb['userinfo'].find_one({'_id': unionid + nowappid})['fwhid']
+    if apptype == 'weixin':
+        nowappid = nametype
+        openid = mydb['userinfo'].find_one({'_id': unionid + nametype})['openid']
     url = 'https://api.mch.weixin.qq.com/pay/unifiedorder'
     prepaydata = {
         'appid': nowappid,
-        'mch_id': mch_id,
+        'mch_id': appids[params['nametype']]['mch_id'],
         'nonce_str': ''.join(random.sample(string.ascii_letters + string.digits, 32)),
         'device_info': nametype,
-        'body': detail,
-        'attach': json.dumps({'zhifutype': zhifutype, 'detail': detail, 'unionid': unionid}, ensure_ascii=False),
+        'body': vipdengjimiaoshu[zhifutype],
+        'attach': json.dumps({'zhifutype': zhifutype, 'detail': vipdengjimiaoshu[zhifutype], 'unionid': unionid},
+                             ensure_ascii=False),
         'out_trade_no': str(int(time.time())) + '_' + str((random.randint(1000000, 9999999))),
-        'total_fee': total_fees[zhifutype],
+        'total_fee': int(total_fees[zhifutype] * zhifubili),
         'spbill_create_ip': request.remote_addr,
         'notify_url': wangzhi + apiqianzui + "paynotify",
         'trade_type': trade_type,
         'openid': openid,
+        'profit_sharing': profit_sharing,
     }
     stringA = '&'.join(["{0}={1}".format(k, prepaydata.get(k)) for k in sorted(prepaydata)])
-    stringSignTemp = '{0}&key={1}'.format(stringA, merchant_key)
+    stringSignTemp = '{0}&key={1}'.format(stringA, appids[params['nametype']]['merchant_key'])
     sign = hashlib.md5(stringSignTemp.encode('utf8')).hexdigest()
     prepaydata['sign'] = sign
     req = urllib.request.Request(url, dict_to_xml(prepaydata).encode('utf8'),
@@ -1167,14 +1274,14 @@ def get_prepay_id():
     else:
         paySign_data = {
             'appid': nowappid,
-            'partnerid': mch_id,
+            'partnerid': appids[params['nametype']]['mch_id'],
             'prepayid': prepay_id,
             'package': 'Sign=WXPay',
             'noncestr': result['nonce_str'],
             'timestamp': str(int(time.time())),
         }
     stringA = '&'.join(["{0}={1}".format(k, paySign_data.get(k)) for k in sorted(paySign_data)])
-    stringSignTemp = '{0}&key={1}'.format(stringA, merchant_key)
+    stringSignTemp = '{0}&key={1}'.format(stringA, appids[params['nametype']]['merchant_key'])
     paySign = hashlib.md5(stringSignTemp.encode('utf8')).hexdigest()
     if apptype == 'weixin' or apptype == 'fwh':
         paySign_data['paySign'] = paySign
@@ -1183,22 +1290,31 @@ def get_prepay_id():
     return encrypt(json.dumps({'MSG': 'OK', 'data': paySign_data}))
 
 
+def fenzhang(req):
+    # result = urllib.request.urlopen(req, timeout=10).read().decode('utf8')
+    # result = xml_to_dict(result)
+    return None
+
+
 @app.route(apiqianzui + "paynotify", methods=["POST"])
 def paynotify():
     zhifures = xml_to_dict(request.stream.read().decode('utf8'))
     sign = zhifures['sign']
     zhifures.pop('sign')
+    unionid = json.loads(zhifures['attach'])['unionid']
+    nowappid = zhifures['device_info']
+    params = mydb['userinfo'].find_one({'_id': unionid + nowappid})
     stringA = '&'.join(["{0}={1}".format(k, zhifures.get(k)) for k in sorted(zhifures)])
-    stringSignTemp = '{0}&key={1}'.format(stringA, merchant_key)
+    stringSignTemp = '{0}&key={1}'.format(stringA, appids[params['nametype']]['merchant_key'])
     paySign = hashlib.md5(stringSignTemp.encode('utf8')).hexdigest().upper()
     if sign != paySign:
         return dict_to_xml({'return_code': 'FAIL', 'return_msg': 'SIGNERROR'})
-    unionid = json.loads(zhifures['attach'])['unionid']
     zhifudata = [zhifures]
+    zhifutype = int(json.loads(zhifures['attach'])['zhifutype'])
     isnew = 1
     flag = 1
     try:
-        doc = mydb['userzhifu'].find_one({'_id': unionid})
+        doc = mydb['userzhifu'].find_one({'_id': unionid + nowappid})
         isnew = 0
         for line in doc['zhifudata']:
             if line['transaction_id'] == zhifudata[0]['transaction_id']:
@@ -1207,28 +1323,51 @@ def paynotify():
             zhifudata += doc['zhifudata']
     except Exception as e:
         logger.error(e)
+    zhifures['total_fee'] = int(zhifures['total_fee'])
     if isnew or (isnew == 0 and flag == 1):
-        mydb['userzhifu'].update_one({'_id': unionid}, {
+        mydb['userzhifu'].update_one({'_id': unionid + nowappid}, {
             '$set': {'unionid': unionid, 'zhifudata': zhifudata, 'updatatime': zhifures['time_end']}}, True)
-        userdoc = mydb['userinfo'].find_one({'_id': unionid + fuwuhaoappid})
-        zhifures['total_fee'] = int(zhifures['total_fee'])
+        userdoc = mydb['userinfo'].find_one({'_id': unionid + nowappid})
         try:
+            if userdoc['vipdengji'] < zhifutype:
+                userdoc['vipdengji'] = zhifutype
+            if userdoc['viptime'] < int(time.time()):
+                userdoc['viptime'] = int(time.time()) + viptime[zhifutype]
+            else:
+                userdoc['viptime'] += viptime[zhifutype]
             userdoc['xiaofeicishu'] += 1
             userdoc['xiaofeizonge'] += zhifures['total_fee']
-            mydb['userinfo'].update_one({'_id': unionid + fuwuhaoappid}, {'$set': userdoc}, True)
+            mydb['userinfo'].update_one({'_id': unionid + nowappid}, {'$set': userdoc}, True)
         except Exception as e:
             logger.error(e)
-    try:
+    if nowappid == 'wx2cc1bc5a412d44d2':
         shouquanma = ''.join(random.sample(string.ascii_letters + string.digits, 8))
         while mydb['shouquanma'].find_one({'_id': shouquanma}):
             shouquanma = ''.join(random.sample(string.ascii_letters + string.digits, 8))
         nowtime = getTime()
         mydb['shouquanma'].update_one({'_id': shouquanma}, {
-            '$set': {'shouquanma': shouquanma, 'goumaiunionid': unionid, 'zhuangtai': '未激活', 'jiage': total_fees[1],
-                     'viptime': viptime[1], 'vipdengji': 1, 'zhifuzhuangtai': 1, 'goumaishijian': nowtime,
+            '$set': {'shouquanma': shouquanma, 'goumaiunionid': unionid, 'zhuangtai': '未激活',
+                     'jiage': total_fees[1] * 0.5,
+                     'viptime': viptime[4], 'vipdengji': 4, 'zhifuzhuangtai': 1, 'goumaishijian': nowtime,
                      'jiesuanshijian': nowtime, 'jihuoshijian': '-', 'jihuoopenid': '-', 'jihuorenyuan': '-'}}, True)
-    except:
-        None
+    if nowappid == 'wx311bf0a55020cb9e':
+        url = 'https://api.mch.weixin.qq.com/secapi/pay/profitsharing'
+        prepaydata = {
+            'appid': nowappid,
+            'mch_id': appids[params['nametype']]['mch_id'],
+            'nonce_str': ''.join(random.sample(string.ascii_letters + string.digits, 32)),
+            'transaction_id': zhifures['transaction_id'],
+            'out_order_no': zhifures['transaction_id'] + zhifures['transaction_id'],
+            'receivers': [{'type': 'PERSONAL_OPENID', 'account': 'oM9fn5Tl5K-4CEj-hVR1FHyeyKq0',
+                           'amount': int(zhifures['total_fee'] * 0.2), 'description': '分账到个人'}]
+        }
+        stringA = '&'.join(["{0}={1}".format(k, prepaydata.get(k)) for k in sorted(prepaydata)])
+        stringSignTemp = '{0}&key={1}'.format(stringA, appids[params['nametype']]['merchant_key'])
+        sign = hashlib.md5(stringSignTemp.encode('utf8')).hexdigest()
+        prepaydata['sign'] = sign
+        req = urllib.request.Request(url, dict_to_xml(prepaydata).encode('utf8'),
+                                     headers={'Content-Type': 'application/xml'})
+        fenzhang(req)
     return dict_to_xml({'return_code': 'SUCCESS', 'return_msg': 'OK'})
 
 
@@ -1244,7 +1383,7 @@ def jieqing_prepay_id():
         return json.dumps({'MSG': '警告！非法入侵！！！'})
     nowappid = fuwuhaoappid
     trade_type = 'JSAPI'
-    openid = mydb['userinfo'].find_one({'_id': unionid + fuwuhaoappid})['fwhid']
+    openid = mydb['userinfo'].find_one({'_id': unionid + nowappid})['fwhid']
     docs = mydb['shouquanma'].find(
         {'goumaiunionid': params['unionid'], 'zhifuzhuangtai': 0, 'tingyong': 0, 'zhuangtai': '已激活'}).limit(10000)
     yuekashu = 0
@@ -1262,7 +1401,7 @@ def jieqing_prepay_id():
     url = 'https://api.mch.weixin.qq.com/pay/unifiedorder'
     prepaydata = {
         'appid': nowappid,
-        'mch_id': mch_id,
+        'mch_id': appids[params['nametype']]['mch_id'],
         'nonce_str': ''.join(random.sample(string.ascii_letters + string.digits, 32)),
         'device_info': nametype,
         'body': getTime(),
@@ -1276,7 +1415,7 @@ def jieqing_prepay_id():
         'openid': openid,
     }
     stringA = '&'.join(["{0}={1}".format(k, prepaydata.get(k)) for k in sorted(prepaydata)])
-    stringSignTemp = '{0}&key={1}'.format(stringA, merchant_key)
+    stringSignTemp = '{0}&key={1}'.format(stringA, appids[params['nametype']]['merchant_key'])
     sign = hashlib.md5(stringSignTemp.encode('utf8')).hexdigest()
     prepaydata['sign'] = sign
     req = urllib.request.Request(url, dict_to_xml(prepaydata).encode('utf8'),
@@ -1295,14 +1434,14 @@ def jieqing_prepay_id():
     else:
         paySign_data = {
             'appid': nowappid,
-            'partnerid': mch_id,
+            'partnerid': appids[params['nametype']]['mch_id'],
             'prepayid': prepay_id,
             'package': 'Sign=WXPay',
             'noncestr': result['nonce_str'],
             'timestamp': str(int(time.time())),
         }
     stringA = '&'.join(["{0}={1}".format(k, paySign_data.get(k)) for k in sorted(paySign_data)])
-    stringSignTemp = '{0}&key={1}'.format(stringA, merchant_key)
+    stringSignTemp = '{0}&key={1}'.format(stringA, appids[params['nametype']]['merchant_key'])
     paySign = hashlib.md5(stringSignTemp.encode('utf8')).hexdigest()
     if apptype == 'weixin' or apptype == 'fwh':
         paySign_data['paySign'] = paySign
@@ -1316,17 +1455,19 @@ def jieqing_paynotify():
     zhifures = xml_to_dict(request.stream.read().decode('utf8'))
     sign = zhifures['sign']
     zhifures.pop('sign')
+    unionid = json.loads(zhifures['attach'])['unionid']
+    nowappid = zhifures['device_info']
+    params = mydb['userinfo'].find_one({'_id': unionid + nowappid})
     stringA = '&'.join(["{0}={1}".format(k, zhifures.get(k)) for k in sorted(zhifures)])
-    stringSignTemp = '{0}&key={1}'.format(stringA, merchant_key)
+    stringSignTemp = '{0}&key={1}'.format(stringA, appids[params['nametype']]['merchant_key'])
     paySign = hashlib.md5(stringSignTemp.encode('utf8')).hexdigest().upper()
     if sign != paySign:
         return dict_to_xml({'return_code': 'FAIL', 'return_msg': 'SIGNERROR'})
-    unionid = json.loads(zhifures['attach'])['unionid']
     zhifudata = [zhifures]
     isnew = 1
     flag = 1
     try:
-        doc = mydb['userzhifu'].find_one({'_id': unionid})
+        doc = mydb['userzhifu'].find_one({'_id': unionid + nowappid})
         isnew = 0
         for line in doc['zhifudata']:
             if line['transaction_id'] == zhifudata[0]['transaction_id']:
@@ -1336,14 +1477,14 @@ def jieqing_paynotify():
     except Exception as e:
         logger.error(e)
     if isnew or (isnew == 0 and flag == 1):
-        mydb['userzhifu'].update_one({'_id': unionid}, {
+        mydb['userzhifu'].update_one({'_id': unionid + nowappid}, {
             '$set': {'unionid': unionid, 'zhifudata': zhifudata, 'updatatime': zhifures['time_end']}}, True)
-        userdoc = mydb['userinfo'].find_one({'_id': unionid + fuwuhaoappid})
+        userdoc = mydb['userinfo'].find_one({'_id': unionid + nowappid})
         zhifures['total_fee'] = int(zhifures['total_fee'])
         try:
             userdoc['xiaofeicishu'] += 1
             userdoc['xiaofeizonge'] += zhifures['total_fee']
-            mydb['userinfo'].update_one({'_id': unionid + fuwuhaoappid}, {'$set': userdoc}, True)
+            mydb['userinfo'].update_one({'_id': unionid + nowappid}, {'$set': userdoc}, True)
         except Exception as e:
             logger.error(e)
     try:
@@ -1576,6 +1717,156 @@ def get_zhongshenshouquanma():
             None
     return encrypt(
         json.dumps({'MSG': 'OK', 'zhongshenshouquanma': zhongshenshouquanma}, ensure_ascii=False))
+
+
+@app.route(apiqianzui + "get_kechengprepay_id", methods=["POST"])
+def get_kechengprepay_id():
+    try:
+        params = json.loads(decrypt(request.stream.read()))
+        unionid = params['unionid']
+        kechengid = params['kechengid']
+        detail = params['detail']
+        nametype = params['nametype']
+        apptype = params['apptype']
+    except Exception as e:
+        logger.error(e)
+        return json.dumps({'MSG': '警告！非法入侵！！！'})
+    if apptype == 'weixin':
+        nowappid = nametype
+        trade_type = 'JSAPI'
+        openid = mydb['userinfo'].find_one({'_id': unionid + nametype})['openid']
+    elif apptype == 'fwh':
+        nowappid = fuwuhaoappid
+        trade_type = 'JSAPI'
+        openid = mydb['userinfo'].find_one({'_id': unionid + nametype})['openid']['fwhid']
+    else:
+        nametype = params['nametype']
+        nowappid = apps[nametype]['appid']
+        trade_type = 'APP'
+        openid = es.get(index='userinfo', doc_type='userinfo', id=unionid)['_source']['yingyongid']
+    kechengjiage = int(es.get(index='kechenglist', doc_type='kechenglist', id=kechengid)['_source']['jiage'] * 100)
+    url = 'https://api.mch.weixin.qq.com/pay/unifiedorder'
+    prepaydata = {
+        'appid': nowappid,
+        'mch_id': appids[params['nametype']]['mch_id'],
+        'nonce_str': ''.join(random.sample(string.ascii_letters + string.digits, 32)),
+        'device_info': nametype,
+        'body': detail,
+        'attach': json.dumps({'kechengid': kechengid, 'detail': '课程', 'unionid': unionid}, ensure_ascii=False),
+        'out_trade_no': str(int(time.time())) + '_' + str((random.randint(1000000, 9999999))),
+        'total_fee': kechengjiage,
+        'spbill_create_ip': request.remote_addr,
+        'notify_url': wangzhi + apiqianzui + "kechengpaynotify",
+        'trade_type': trade_type,
+        'openid': openid,
+        'profit_sharing': 'Y',
+    }
+    stringA = '&'.join(["{0}={1}".format(k, prepaydata.get(k)) for k in sorted(prepaydata)])
+    stringSignTemp = '{0}&key={1}'.format(stringA, appids[params['nametype']]['merchant_key'])
+    sign = hashlib.md5(stringSignTemp.encode('utf8')).hexdigest()
+    prepaydata['sign'] = sign
+    req = urllib.request.Request(url, dict_to_xml(prepaydata).encode('utf8'),
+                                 headers={'Content-Type': 'application/xml'})
+    result = urllib.request.urlopen(req, timeout=10).read().decode('utf8')
+    result = xml_to_dict(result)
+    prepay_id = result['prepay_id']
+    if apptype == 'weixin' or apptype == 'fwh':
+        paySign_data = {
+            'appId': nowappid,
+            'timeStamp': str(int(time.time())),
+            'nonceStr': result['nonce_str'],
+            'package': 'prepay_id={0}'.format(prepay_id),
+            'signType': 'MD5'
+        }
+    else:
+        paySign_data = {
+            'appid': nowappid,
+            'partnerid': appids[params['nametype']]['mch_id'],
+            'prepayid': prepay_id,
+            'package': 'Sign=WXPay',
+            'noncestr': result['nonce_str'],
+            'timestamp': str(int(time.time())),
+        }
+    stringA = '&'.join(["{0}={1}".format(k, paySign_data.get(k)) for k in sorted(paySign_data)])
+    stringSignTemp = '{0}&key={1}'.format(stringA, appids[params['nametype']]['merchant_key'])
+    paySign = hashlib.md5(stringSignTemp.encode('utf8')).hexdigest()
+    if apptype == 'weixin' or apptype == 'fwh':
+        paySign_data['paySign'] = paySign
+    else:
+        paySign_data['sign'] = paySign
+    return encrypt(json.dumps({'MSG': 'OK', 'data': paySign_data}))
+
+
+@app.route(apiqianzui + "kechengpaynotify", methods=["POST"])
+def kechengpaynotify():
+    zhifures = xml_to_dict(request.stream.read().decode('utf8'))
+    sign = zhifures['sign']
+    zhifures.pop('sign')
+    unionid = json.loads(zhifures['attach'])['unionid']
+    nowappid = zhifures['device_info']
+    params = mydb['userinfo'].find_one({'_id': unionid + nowappid})
+    stringA = '&'.join(["{0}={1}".format(k, zhifures.get(k)) for k in sorted(zhifures)])
+    stringSignTemp = '{0}&key={1}'.format(stringA, appids[params['nametype']]['merchant_key'])
+    paySign = hashlib.md5(stringSignTemp.encode('utf8')).hexdigest().upper()
+    if sign != paySign:
+        return dict_to_xml({'return_code': 'FAIL', 'return_msg': 'SIGNERROR'})
+    zhifudata = [zhifures]
+    isnew = 1
+    flag = 1
+    try:
+        doc = mydb['userzhifu'].find_one({'_id': unionid + params['nametype']})
+        isnew = 0
+        for line in doc['zhifudata']:
+            if line['transaction_id'] == zhifudata[0]['transaction_id']:
+                flag = 0
+        if flag:
+            zhifudata += doc['_source']['zhifudata']
+    except Exception as e:
+        logger.error(e)
+    if isnew or (isnew == 0 and flag == 1):
+        mydb['userzhifu'].update_one({'_id': unionid + nowappid}, {
+            '$set': {'unionid': unionid, 'zhifudata': zhifudata, 'updatatime': zhifures['time_end']}}, True)
+        userdoc = mydb['userinfo'].find_one({'_id': unionid + nowappid})
+        zhifures['total_fee'] = int(zhifures['total_fee'])
+        try:
+            userdoc['xiaofeicishu'] += 1
+            userdoc['xiaofeizonge'] += zhifures['total_fee']
+            mydb['userinfo'].update_one({'_id': unionid + nowappid}, {'$set': userdoc}, True)
+        except Exception as e:
+            logger.error(e)
+        try:
+            kechengid = json.loads(zhifures['attach'])['kechengid']
+            try:
+                goumaidoc = mydb['kechenggoumai'].find_one({'_id': unionid + nowappid})
+                goumaidoc['data'] = json.loads(goumaidoc['data'])
+                goumaidoc['data'][kechengid] = 1
+            except:
+                goumaidoc = {}
+                goumaidoc['unionid'] = unionid
+                goumaidoc['data'] = {}
+                goumaidoc['data'][kechengid] = 1
+            goumaidoc['data'] = json.dumps(goumaidoc['data'], ensure_ascii=False)
+            mydb['kechenggoumai'].update_one({'_id': unionid + nowappid}, {'$set': goumaidoc}, True)
+        except Exception as e:
+            logger.error(e)
+    return dict_to_xml({'return_code': 'SUCCESS', 'return_msg': 'OK'})
+
+
+@app.route(apiqianzui + "getJiagelist", methods=["POST"])
+def getJiagelist():
+    try:
+        params = json.loads(decrypt(request.stream.read()))
+    except Exception as e:
+        logger.error(e)
+        return json.dumps({'MSG': '警告！非法入侵！！！'})
+    contentlist = ['1、20万+条撩妹话术可供搜索', '2、上万+条撩妹套路可供参考', '3、百万+张逗趣表情可供搜索', '4、丰富的聊天实战案例', '5、丰富的展示面案例', '6、丰富的恋爱百科知识',
+                   '7、丰富的土味情话', '8、丰富的心理测试', '9、500人答疑群']
+    jiagelist = [{'jiage': total_fees[0], 'miaoshu': vipdengjimiaoshu[0], 'contentlist': contentlist},
+                 {'jiage': total_fees[1], 'miaoshu': vipdengjimiaoshu[1], 'contentlist': contentlist},
+                 {'jiage': total_fees[2], 'miaoshu': vipdengjimiaoshu[2], 'contentlist': contentlist},
+                 {'jiage': total_fees[3], 'miaoshu': vipdengjimiaoshu[3], 'contentlist': contentlist},
+                 {'jiage': total_fees[4], 'miaoshu': vipdengjimiaoshu[4], 'contentlist': contentlist}, ]
+    return encrypt(json.dumps({'MSG': 'OK', 'jiagelist': jiagelist}))
 
 
 if __name__ == "__main__":
