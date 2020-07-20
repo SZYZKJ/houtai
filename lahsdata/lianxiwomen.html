@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>恋爱联盟</title>
+		<style>
+			body{
+				background-image: url('https://www.lianaizhuli.com/gongzhonghao/lianxiwomen.jpeg');
+				background-size: cover;
+                overflow:hidden;
+                pointer-events:none;
+			}
+			 html{font-size: 14px;overflow:hidden;}
+             
+          		@media only screen and (min-width: 375px) {
+            	html{font-size: 16px;}
+          	}
+          	@media only screen and (min-width:412px ) {
+          		html{font-size:19px;}
+          	}
+			#wrap{
+				z-index: 999;
+				position:fixed;
+			    width: 86%;height: 80%;left: 7%;top:10%;
+				background:rgb(241,236,230);
+				opacity: 0.9;
+				border-radius: 0.6rem;
+				color: rgb(61,31,10);
+				text-align: center;
+				font-family: "microsoft yahei";
+			}
+			.title{
+				#font-weight: bolder;
+				font-size: 1.15rem;
+				margin-top:2.0rem;
+				
+			}
+			.icon{
+            position
+            margin:5px;
+            line-height:1;
+            margin:0.5rem 0;
+             pointer-events:all;
+				font-size: 1.0rem;
+			}
+			.icon img{
+            top:0.2rem;
+          
+                
+				width: 1rem;
+               position:relative;
+               left:-0.5rem;
+				height: 1rem;
+				margin: 0;
+				
+			}
+			.icon span,.icon a{}
+			#wrap div{
+				width: 100%;
+				text-align: center;
+			}
+			a{
+				text-decoration: none;
+				color:rgb(61,31,10);
+				}
+			a:visited{text-decoration: none;color:rgb(61,31,10);}
+			div span{width: 100%;}
+			#wrap .blank{
+				height: 0.1rem;
+				background: rgb(61,31,10);
+				width: 80%;
+				margin: 1.8rem auto;
+			}
+			.time{
+				float: left;
+			}
+		</style>
+        <script src="https://wechat.muji.com.cn/limesurvey/test/noBounce.js" type="text/javascript"></script>
+        <script src="https://cdn.staticfile.org/jquery/1.12.4/jquery.min.js" type="text/javascript"></script>
+
+
+<script>
+    noBounce.init({
+        animate: false
+    });
+    var flag=true;
+    setTimeout(function(){
+    setInterval(function(){
+        
+        var opacity = parseFloat($(".finger1").css("opacity"));
+        console.log(opacity);
+        if(opacity>=0.6){
+            flag=false;
+        }
+        if(opacity<=0.1){
+            flag=true;
+        }
+        if(flag)opacity+=0.04;else opacity-=0.04;
+        console.log(opacity);
+         $(".finger1").css("opacity",opacity);
+    },50);
+    },3000);
+</script>
+	</head>
+	<body>
+		<div id="wrap">
+        
+				<div class="title"><b>商务合作联系方式:</b></div>
+				<div class="icon" ><span><img src="icon_mail.png" alt="" />421542148@qq.com</span></div>
+				<div style="margin-top: 1rem;">工作时间&nbsp;:</div>
+				<div style="margin-top: 0.em;overflow: auto;">
+					<span class="time">
+						<b>周一至周五10:00~18:00</b>
+					</span>
+					<span style="float: left;margin-top: 0rem;text-align: center;">
+						(法定节假日 , 春节除外)
+					</span>
+				</div>
+				
+				<div class="blank"></div>
+				
+				<div class="title" style="margin-top: 0.75rem;"><b>恋爱联盟联系方式:</b></div>
+				<div class="icon" ><img src="https://www.lianaizhuli.com/gongzhonghao/icon_tel.png" /><a href="tel:156-2214-6998"><u class="anchor1" style="position:relative">156-2214-6998<img src="https://www.lianaizhuli.com/gongzhonghao/finger1.png" class="finger1" style="position:absolute;left:5rem;top:0.5rem;height:2rem;width:2rem;opacity:0"/></u></a></div>
+				<div class="icon" ><img src="https://www.lianaizhuli.com/gongzhonghao/icon_mail.png" /><span>421542148@qq.com</span></div>
+				<div style="margin-top: 1rem;">工作时间&nbsp;:</div>
+				<div style="margin-top: 0rem;width: 100%;text-align: center;">
+					<span class="time" >
+						<b>周一至周五10:00~22:00</b>
+					</span>
+					<span class="time" >
+						<b>周六至周日10:00~18:00</b>
+					</span>
+					<span style="float: left;margin-top: 0.1rem;text-align: center;">
+						(法定节假日 , 春节除外)
+					</span>
+				</div>
+		</div>
+	</body>
+</html>

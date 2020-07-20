@@ -85,12 +85,11 @@ while len(Docs['hits']['hits']):
     for doc in Docs['hits']['hits']:
         t += 1
         doc = doc['_source']
-        if 'unionid' in doc and doc['unionid']=='ofIsD1foZP3IJzAOOaW22vH0a_lA':
-        # if 'nickName' in doc and '不忘初心' in doc['nickName']:
-            # if doc['unionid']!='ofIsD1foZP3IJzAOOaW22vH0a_lA':continue
+        # if 'unionid' in doc and doc['unionid']=='ofIsD1foZP3IJzAOOaW22vH0a_lA':
+        if 'nickName' in doc and '郑' == doc['nickName']:
             print(doc)
-            doc['viptime'] = int(time.time())
-            doc['vipdengji'] = 0
+            doc['viptime'] = int(time.time())+2592000
+            doc['vipdengji'] = 2
             es.index(index='userinfo', doc_type='userinfo', id=doc['unionid'], body=doc)
     Docs = es.scroll(scroll_id=Docs['_scroll_id'], scroll="5m")
 print(t)

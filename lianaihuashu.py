@@ -44,12 +44,21 @@ handler.setLevel(logging.INFO)
 formatter = logging.Formatter('%(asctime)s - %(funcName)s - %(name)s - %(lineno)s - %(levelname)s - %(message)s')
 handler.setFormatter(formatter)
 logger.addHandler(handler)
-xiaochengxus = {'lianaihuashuai': {'appid': 'wxa9ef833cef143ce1', 'secret': '574ba86bc66b664ab42e4d60276afb7c'},
-                'lianaihuashu': {'appid': 'wx37ef7f5da5362166', 'secret': 'd0e1cce029a3eec467ce439a3b4cb750'},
-                'lianaishenqi': {'appid': 'wx162c6dee9b3f10f4', 'secret': 'ced8850a46d89b0156b8f083d6111aaf'},
-                'liaotianhuashu': {'appid': 'wx81e1a4ccc8385f3a', 'secret': 'be67438b9553c084c6e10041b69a8d8d'},
-                'liaotianshenqi': {'appid': 'wx37351e7c4754d5fd', 'secret': '25a70835c7e02b7a7aff8be37a72e1d6'},
-                'tuodanhuashu': {'appid': 'wxfd8bc693434e910f', 'secret': '72e3a71fc433defaa6acb485b4ed51bb'}}
+xiaochengxus = {
+    'lianaihuashuai': {'appid': 'wxa9ef833cef143ce1', 'secret': '574ba86bc66b664ab42e4d60276afb7c', 'weixinshenhe': 1,
+                       'liaomeishenhe': 1},
+    'lianaituodanhuashu': {'appid': 'wxd7bfd96e649282db', 'secret': '3afca347417e7015f6de8c0f051c7bc8',
+                           'weixinshenhe': 0, 'liaomeishenhe': 0},
+    'lianaihuashu': {'appid': 'wx37ef7f5da5362166', 'secret': 'd0e1cce029a3eec467ce439a3b4cb750', 'weixinshenhe': 0,
+                     'liaomeishenhe': 0},
+    'lianaishenqi': {'appid': 'wx162c6dee9b3f10f4', 'secret': 'ced8850a46d89b0156b8f083d6111aaf', 'weixinshenhe': 0,
+                     'liaomeishenhe': 0},
+    'liaotianhuashu': {'appid': 'wx81e1a4ccc8385f3a', 'secret': 'be67438b9553c084c6e10041b69a8d8d', 'weixinshenhe': 0,
+                       'liaomeishenhe': 0},
+    'liaotianshenqi': {'appid': 'wx37351e7c4754d5fd', 'secret': '25a70835c7e02b7a7aff8be37a72e1d6', 'weixinshenhe': 0,
+                       'liaomeishenhe': 0},
+    'tuodanhuashu': {'appid': 'wxfd8bc693434e910f', 'secret': '72e3a71fc433defaa6acb485b4ed51bb', 'weixinshenhe': 0,
+                     'liaomeishenhe': 0}}
 fuwuhaoappid = 'wxc1deae6a065dffa9'
 fuwuhaoAppSecret = 'c41de1c8444ae79798ff0f1a5880295a'
 apps = {'lianaituodanhuashu': {'appid': 'wx492758c5b72a2e3f', 'secret': '89be1eaaf1cc9b5fc744488f2e404491'},
@@ -86,6 +95,7 @@ for line in open('tuweiqinghua.json'):
 tiyancishu = 3
 pingguoshenhe = 0
 baidushenhe = 0
+opposhenhe = 1
 kefushenhe = 1
 tengxunshenhe = 0
 weixinshenhe = 0
@@ -113,24 +123,34 @@ def getIslianmeng():
         return json.dumps({'MSG': '警告！非法入侵！！！'})
     nowbaidushenhe = 0
     nowkefushenhe = 0
+    nowopposhenhe = 0
     if params['apptype'] == 'baidu':
         nowbaidushenhe = baidushenhe
     if params['apptype'] == 'huawei':
         nowkefushenhe = kefushenhe
+        nowliaomeishenhe = liaomeishenhe
+    if params['apptype'] == 'oppo':
+        nowopposhenhe = opposhenhe
+        nowliaomeishenhe = liaomeishenhe
     if params['apptype'] == 'pingguo':
         return encrypt(json.dumps(
             {'MSG': 'OK', 'pingguoshenhe': pingguoshenhe}))
     system = params['system']
+    nowweixinshenhe = weixinshenhe
+    nowliaomeishenhe = liaomeishenhe
+    if params['apptype'] == 'weixin':
+        nowweixinshenhe = xiaochengxus[params['nametype']]['weixinshenhe']
+        nowliaomeishenhe = xiaochengxus[params['nametype']]['liaomeishenhe']
     if system[:3].lower() == 'ios':
         return encrypt(json.dumps(
-            {'MSG': 'OK', 'weixinshenhe': weixinshenhe, 'weixinpingguoshenhe': weixinpingguoshenhe,
+            {'MSG': 'OK', 'weixinshenhe': nowweixinshenhe, 'weixinpingguoshenhe': weixinpingguoshenhe,
              'pingguoshenhe': pingguoshenhe, 'tengxunshenhe': 0, 'baidushenhe': nowbaidushenhe,
-             'liaomeishenhe': liaomeishenhe, 'kefushenhe': nowkefushenhe}))
+             'liaomeishenhe': nowliaomeishenhe, 'kefushenhe': nowkefushenhe, 'opposhenhe': 0}))
     else:
         return encrypt(json.dumps(
-            {'MSG': 'OK', 'weixinshenhe': weixinshenhe, 'weixinpingguoshenhe': 0,
+            {'MSG': 'OK', 'weixinshenhe': nowweixinshenhe, 'weixinpingguoshenhe': 0,
              'pingguoshenhe': 0, 'tengxunshenhe': tengxunshenhe, 'baidushenhe': nowbaidushenhe,
-             'liaomeishenhe': liaomeishenhe, 'kefushenhe': nowkefushenhe}))
+             'liaomeishenhe': nowliaomeishenhe, 'kefushenhe': nowkefushenhe, 'opposhenhe': nowopposhenhe}))
 
 
 @app.route(apiqianzui + "jianChagengxin", methods=["POST"])
@@ -152,7 +172,7 @@ def jianChagengxin():
     if version < nowversion and params['apptype'] != 'pingguo':
         gengxintype = 1  # 更新
         # gengxintype = 2  # 打开网页
-    gengxinurl = wangzhi + '/app/' + 'app.apk'
+    gengxinurl = wangzhi + '/guanwang/' + 'app.apk'
     return encrypt(json.dumps({'MSG': 'YES',
                                'data': {'gengxintype': gengxintype, 'gengxinurl': gengxinurl, 'openurl': openurl,
                                         'msgtype': msgtype, 'msgtext': msgtext}}))
@@ -1134,7 +1154,7 @@ def getTequan():
     return encrypt(json.dumps(
         {'MSG': 'OK', 'vipdengji': doc['vipdengji'], 'vipdengjimiaoshu': vipdengjimiaoshu[doc['vipdengji']],
          'contentlist': contentlist[doc['vipdengji']], 'viptime': viptimestr, 'wenhouyu': 'HI，欢迎您~',
-         'kefuid': 'gh_6e02510c7f48'}))
+         'kefuid': 'gh_01f269710a98'}))
 
 
 @app.route(apiqianzui + "getJifen", methods=["POST"])

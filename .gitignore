@@ -3,4 +3,5 @@ data/event.csv
 data/query.txt
 data/wx_ip_list.txt
 data/biaoqing.json
-data/opendata
+lashdata/
+data/log/

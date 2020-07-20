@@ -43,9 +43,9 @@ if __name__ == '__main__':
             {
                 "name": "小程序",
                 "type": "miniprogram",
-                "appid": "wx37ef7f5da5362166",
+                "appid": "wxd7bfd96e649282db",
                 "pagepath": "pages/home",
-                "url": "https://www.lianaizhuli.com/gongzhonghao/lianxiwomen.html",
+                "url": "https://www.lianaizhuli.com/guanwang/lianxiwomen.html",
                 "sub_button": []
             },
             {
@@ -54,15 +54,15 @@ if __name__ == '__main__':
                     {
                         "name": "咨询客服",
                         "type": "miniprogram",
-                        "appid": "wx37ef7f5da5362166",
+                        "appid": "wxd7bfd96e649282db",
                         "pagepath": "pages/info",
-                        "url": "https://www.lianaizhuli.com/gongzhonghao/lianxiwomen.html",
+                        "url": "https://www.lianaizhuli.com/guanwang/lianxiwomen.html",
                         "sub_button": []
                     },
                     {
                         "type": "view",
                         "name": "联系我们",
-                        "url": "https://www.lianaizhuli.com/gongzhonghao/lianxiwomen.html",
+                        "url": "https://www.lianaizhuli.com/guanwang/lianxiwomen.html",
                         "sub_button": []
                     },
                     {
